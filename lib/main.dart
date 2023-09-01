@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.customercreation,
+      initialRoute: Routes.loginpage,
       getPages: getPages,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFF6F6F6),
