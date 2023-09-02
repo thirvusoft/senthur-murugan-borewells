@@ -148,8 +148,23 @@ class _CustomercreationState extends State<Customercreation> {
                 CustomFormButton(
                   innerText: 'Submit',
                   onPressed: () async {
-                    final response =
-                        await apiService.get('login', {"usr": "9600946191", "pwd": "admin@123"});
+                    final response = await apiService.get(
+                        'ssm_bore_wells.ssm_bore_wells.utlis.api.new_customer',
+                        {
+                          "customer_name": _usernameController.text,
+                          "customer_type": "Individual",
+                          "customer_group": "Individual",
+                          "date_of_birth": _dateController.text,
+                          "territory": _areaController.text,
+                          "mobile_number": _mobileController.text,
+                          "email_address": _emailController.text,
+                          "address_line1": "Test ",
+                          "address_line2": "",
+                          "city": _districtController.text,
+                          "state": _talukController.text,
+                          "country": "India",
+                          "pincode": _pincodeController.text
+                        });
 
                     print('Status Code: ${response.statusCode}');
                     print('Response Body: ${response.body}');
