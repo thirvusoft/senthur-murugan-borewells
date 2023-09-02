@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: createMaterialColor(const Color(0xFF752FFF)),
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      ),  
     );
   }
 }

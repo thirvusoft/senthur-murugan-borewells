@@ -41,6 +41,7 @@ dependencies:
   heroicons: ^0.9.0
   syncfusion_flutter_datepicker: ^22.2.11
   flutter_dotenv: ^5.1.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,10 @@ flutter:
     - .env
     # - images/a_dot_ham.jpeg
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/logo.png'
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
