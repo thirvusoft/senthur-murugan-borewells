@@ -148,11 +148,11 @@ class _CustomercreationState extends State<Customercreation> {
                 CustomFormButton(
                   innerText: 'Submit',
                   onPressed: () async {
-                    // final response =
-                    //     await apiService.get('frappe.auth.get_logged_user',);
+                    final response =
+                        await apiService.get('login', {"usr": "9600946191", "pwd": "admin@123"});
 
-                    // print('Status Code: ${response.statusCode}');
-                    // print('Response Body: ${response.body}');
+                    print('Status Code: ${response.statusCode}');
+                    print('Response Body: ${response.body}');
                     if (_customerFormKey.currentState!.validate()) {}
                   },
                 )
