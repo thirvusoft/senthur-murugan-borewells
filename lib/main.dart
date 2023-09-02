@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'controller/routes.dart';
 
-void main() {
+void main() async{
   runApp(const MyApp());
+  await dotenv.load(fileName: ".env");
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.loginpage,
+      initialRoute: Routes.customercreation,
       getPages: getPages,
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xFFF6F6F6),
