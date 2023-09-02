@@ -4,7 +4,6 @@ import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/widgets/appbar.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
 import 'package:senthur_murugan/widgets/datepicker.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../widgets/textformfield.dart';
 
@@ -149,11 +148,11 @@ class _CustomercreationState extends State<Customercreation> {
                 CustomFormButton(
                   innerText: 'Submit',
                   onPressed: () async {
-                    final response =
-                        await apiService.get('frappe.auth.get_logged_user',);
+                    // final response =
+                    //     await apiService.get('frappe.auth.get_logged_user',);
 
-                    print('Status Code: ${response.statusCode}');
-                    print('Response Body: ${response.body}');
+                    // print('Status Code: ${response.statusCode}');
+                    // print('Response Body: ${response.body}');
                     if (_customerFormKey.currentState!.validate()) {}
                   },
                 )
