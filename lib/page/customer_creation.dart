@@ -168,7 +168,7 @@ class _CustomercreationState extends State<Customercreation> {
                           "pincode": _pincodeController.text
                         });
 
-                    print('Status Code: ${response.statusCode}');
+                    print('Status Code: ${response.statusCode}'); 
                     print('Response Body: ${response.body}');
                     if (_customerFormKey.currentState!.validate()) {}
                   },

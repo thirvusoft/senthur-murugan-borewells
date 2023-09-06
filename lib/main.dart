@@ -16,10 +16,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.homepage,
+      initialRoute: Routes.loginpage,
       getPages: getPages,
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFF6F6F6),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFF752FFF),
+        ),
+        // scaffoldBackgroundColor: const Color(0xFFF6F6F6),
         textTheme: GoogleFonts.nunitoSansTextTheme(
           Theme.of(context).textTheme,
         ),

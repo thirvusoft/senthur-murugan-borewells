@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
 import 'package:senthur_murugan/widgets/textformfield.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loginpage extends StatelessWidget {
   Loginpage({super.key});
   final _loginFormkey = GlobalKey<FormState>();
+  final ApiService apiService = ApiService();
 
   final TextEditingController _mobilenumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -20,8 +26,9 @@ class Loginpage extends StatelessWidget {
           title: const Text("Senthur Murugan",
               style: TextStyle(
                   fontSize: 25,
+                  color: Color(0xFFFFFFFF),
                   fontWeight: FontWeight.bold,
-                  letterSpacing: .1)),
+                  letterSpacing: .3)),
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -109,7 +116,24 @@ class Loginpage extends StatelessWidget {
                     CustomFormButton(
                       innerText: 'Login',
                       onPressed: () async {
-                        if (_loginFormkey.currentState!.validate()) {}
+                        if (_loginFormkey.currentState!.validate()) {
+                          final response = await apiService.get("login", {
+                            "usr": _mobilenumberController.text,
+                            "pwd": _passwordController.text
+                          });
+                          if (response.statusCode == 200) {
+                            response.header['cookie'] =
+                                "${response.header['set-cookie'].toString()};";
+                            response.header.removeWhere((key, value) =>
+                                ["set-cookie", 'content-length'].contains(key));
+
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            await prefs.setString(
+                                'request-header', json.encode(response.header));
+                            Get.toNamed("/homepage");
+                          }
+                        }
                       },
                     )
                   ],

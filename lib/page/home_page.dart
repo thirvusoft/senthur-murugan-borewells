@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:senthur_murugan/controller/apiservice.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -12,12 +13,15 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final ApiService apiService = ApiService();
+
   @override
   final ButtonStyle style =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 15));
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0XFFFFFFFF),
         leading: Padding(
           padding: const EdgeInsets.only(left: 2),
           child: ClipOval(
@@ -78,11 +82,17 @@ class _HomepageState extends State<Homepage> {
                           subtitle: Text("Check In 8:00 AM"),
                         )),
                         Expanded(
-                          child: 
-                          ElevatedButton(
+                          child: ElevatedButton(
                             style: style,
-                            onPressed: () {
-                              Get.toNamed("/attendance");
+                            onPressed: () async {
+                              // final response = await apiService.get("login", {
+                              //   "usr": "barath@gmail.com",
+                              //   "pwd": "admin@123"
+                              // });
+                              // print(response.statusCode);
+                              // print(response.body);
+                              // print(response.header);
+                              // Get.toNamed("/attendance");
                             },
                             child: const Text('Check In'),
                           ),

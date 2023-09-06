@@ -13,12 +13,9 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: leading,
       centerTitle: true,
       elevation: 0,
-      backgroundColor: const Color(0xFFF6F6F6),
       title: Text(title,
-          style: const TextStyle(
-              color: Color(0xFF752FFF),
-              fontWeight: FontWeight.bold,
-              letterSpacing: .3)),
+          style:
+              const TextStyle(fontWeight: FontWeight.bold, letterSpacing: .3)),
       // actions: actions,
     );
   }
