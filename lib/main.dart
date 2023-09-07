@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'controller/routes.dart';
 
-void main() async{
+void main() async {
   runApp(const MyApp());
   await dotenv.load(fileName: ".env");
 }
@@ -16,16 +16,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.customercreation,
+      initialRoute: Routes.loginpage,
       getPages: getPages,
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFF6F6F6),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFF752FFF),
+        ),
+        // scaffoldBackgroundColor: const Color(0xFFF6F6F6),
         textTheme: GoogleFonts.nunitoSansTextTheme(
           Theme.of(context).textTheme,
         ),
+        primaryColor: const Color(0xFF752FFF),
         primarySwatch: createMaterialColor(const Color(0xFF752FFF)),
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),  
+      ),
     );
   }
 }

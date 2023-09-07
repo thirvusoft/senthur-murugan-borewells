@@ -30,7 +30,9 @@ class _CustomercreationState extends State<Customercreation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: ReusableAppBar(
+        appBar:
+        
+         ReusableAppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back,
                 color: Color(0xFF752FFF)), // Provide your leading icon
@@ -166,7 +168,7 @@ class _CustomercreationState extends State<Customercreation> {
                           "pincode": _pincodeController.text
                         });
 
-                    print('Status Code: ${response.statusCode}');
+                    print('Status Code: ${response.statusCode}'); 
                     print('Response Body: ${response.body}');
                     if (_customerFormKey.currentState!.validate()) {}
                   },
