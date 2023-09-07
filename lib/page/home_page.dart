@@ -39,12 +39,12 @@ class _HomepageState extends State<Homepage> {
               style: TextStyle(color: Color(0xFF752FFF)),
             )),
         actions: [
-          IconButton(
-            onPressed: () {
-              Get.toNamed("/Customercreation");
-            },
-            icon: const HeroIcon(HeroIcons.userPlus),
-          )
+          // IconButton(
+          //   onPressed: () {
+          //     Get.toNamed("/Customercreation");
+          //   },
+          //   icon: const HeroIcon(HeroIcons.userPlus),
+          // )
         ],
       ),
       body: SingleChildScrollView(

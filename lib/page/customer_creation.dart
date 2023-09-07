@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
-import 'package:senthur_murugan/controller/Territory.dart';
+import 'package:senthur_murugan/controller/api.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/widgets/appbar.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
@@ -226,8 +226,6 @@ class _CustomercreationState extends State<Customercreation> {
                             "pincode": _pincodeController.text
                           });
 
-                      print('Status Code: ${response.statusCode}');
-                      print('Response Body: ${response.body}');
                       if (response.statusCode == 200) {
                         _usernameController.clear();
                         _pincodeController.clear();
@@ -237,6 +235,7 @@ class _CustomercreationState extends State<Customercreation> {
                         _emailController.clear();
                         _districtController.clear();
                         _talukController.clear();
+                        _dateController.clear();
 
                         final message = json.decode(response.body);
                         Get.snackbar(

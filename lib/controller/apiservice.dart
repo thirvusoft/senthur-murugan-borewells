@@ -13,20 +13,31 @@ class ApiService extends GetxService {
   ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final url = "${dotenv.env['API_URL']}/api/method/$methodName";
-    final uri = Uri.parse(url).replace(queryParameters: args);
     if ((prefs.getString('request-header') ?? "").toString().isNotEmpty) {
       json
           .decode(prefs.getString('request-header').toString())
           .forEach((k, v) => {apiHeaders[k.toString()] = v.toString()});
     }
-    print("cccccccccccccc");
-    print(apiHeaders);
-    final response = await http.get(uri, headers: apiHeaders);
+    if (args.toString() == '{}') {
+      final uri = Uri.parse(url);
+      final response = await http.get(uri, headers: apiHeaders);
+      return ApiResponse(
+          statusCode: response.statusCode,
+          body: response.body,
+          header: response.headers);
+    } else {
+      final uri = Uri.parse(url).replace(queryParameters: args);
+      final response = await http.get(uri, headers: apiHeaders);
 
-    return ApiResponse(
-        statusCode: response.statusCode,
-        body: response.body,
-        header: response.headers);
+      // if(response.headers.toString().contains("system_user=yes"))
+      // {
+      //   Get.toNamed("/loginpage");
+      // }
+      return ApiResponse(
+          statusCode: response.statusCode,
+          body: response.body,
+          header: response.headers);
+    }
   }
 }
 
