@@ -45,6 +45,7 @@ dependencies:
   percent_indicator: ^4.2.3
   flutter_phosphor_icons: ^0.0.1+6
   shared_preferences: ^2.2.1
+  searchfield: ^0.8.4
 
 dev_dependencies:
   flutter_test:

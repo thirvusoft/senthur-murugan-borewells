@@ -19,6 +19,8 @@ class ApiService extends GetxService {
           .decode(prefs.getString('request-header').toString())
           .forEach((k, v) => {apiHeaders[k.toString()] = v.toString()});
     }
+    print("cccccccccccccc");
+    print(apiHeaders);
     final response = await http.get(uri, headers: apiHeaders);
 
     return ApiResponse(

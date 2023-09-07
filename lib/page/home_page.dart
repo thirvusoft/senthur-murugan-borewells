@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
@@ -39,8 +38,13 @@ class _HomepageState extends State<Homepage> {
               "vigneshmanimsc@gmail.com",
               style: TextStyle(color: Color(0xFF752FFF)),
             )),
-        actions: const [
-          HeroIcon(HeroIcons.arrowLeft),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed("/Customercreation");
+            },
+            icon: const HeroIcon(HeroIcons.userPlus),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -85,14 +89,7 @@ class _HomepageState extends State<Homepage> {
                           child: ElevatedButton(
                             style: style,
                             onPressed: () async {
-                              // final response = await apiService.get("login", {
-                              //   "usr": "barath@gmail.com",
-                              //   "pwd": "admin@123"
-                              // });
-                              // print(response.statusCode);
-                              // print(response.body);
-                              // print(response.header);
-                              // Get.toNamed("/attendance");
+                              Get.toNamed("/attendance");
                             },
                             child: const Text('Check In'),
                           ),
