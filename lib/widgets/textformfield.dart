@@ -9,7 +9,7 @@ class ReusableTextField extends StatefulWidget {
   final HeroIcons? suffixIcon;
   final int? maxLength;
   final FormFieldValidator<String>? validator;
-
+  final Function(String)? onChange;
   ReusableTextField({
     required this.labelText,
     required this.controller,
@@ -18,6 +18,7 @@ class ReusableTextField extends StatefulWidget {
     this.suffixIcon,
     this.maxLength,
     this.validator,
+    this.onChange,
   });
 
   @override
@@ -36,6 +37,12 @@ class _ReusableTextFieldState extends State<ReusableTextField> {
           (widget.obscureText != true) ? widget.obscureText : _obscureText,
       validator: widget.validator,
       maxLength: widget.maxLength,
+      onChanged: (text) {
+        
+        if (widget.onChange != null) {
+          widget.onChange!(text);
+        }
+      },
       decoration: InputDecoration(
         labelText: widget.labelText,
         border: const OutlineInputBorder(
@@ -54,12 +61,6 @@ class _ReusableTextFieldState extends State<ReusableTextField> {
                 },
               ),
       ),
-      // validator: (value) {
-      //   if (value == null || value.isEmpty) {
-      //     return 'Please enter some text.';
-      //   }
-      //   return null;
-      // },
     );
   }
 }

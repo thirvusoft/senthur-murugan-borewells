@@ -1,9 +1,15 @@
+import 'dart:convert';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:senthur_murugan/controller/Territory.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/widgets/appbar.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
 import 'package:senthur_murugan/widgets/datepicker.dart';
+import 'package:searchfield/searchfield.dart';
 
 import '../widgets/textformfield.dart';
 
@@ -17,7 +23,7 @@ class Customercreation extends StatefulWidget {
 class _CustomercreationState extends State<Customercreation> {
   final _customerFormKey = GlobalKey<FormState>();
   final ApiService apiService = ApiService();
-
+  final Customer customer = Customer();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -30,15 +36,10 @@ class _CustomercreationState extends State<Customercreation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:
-        
-         ReusableAppBar(
+        appBar: ReusableAppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back,
-                color: Color(0xFF752FFF)), // Provide your leading icon
-            onPressed: () {
-              // Add your leading icon functionality here
-            },
+            icon: const Icon(Icons.arrow_back, color: Color(0xFF752FFF)),
+            onPressed: () {},
           ),
           title: 'Customer Creation',
           // actions: [
@@ -110,12 +111,68 @@ class _CustomercreationState extends State<Customercreation> {
                 const SizedBox(
                   height: 20,
                 ),
-                ReusableTextField(
-                  labelText: 'Area',
-                  controller: _areaController,
-                  obscureText: false,
-                  suffixIcon: HeroIcons.mapPin,
-                ),
+                Obx(() => SearchField(
+                      controller: _areaController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select State';
+                        }
+
+                        return null;
+                      },
+                      suggestions: customer.territorylist_
+                          .map((String) => SearchFieldListItem(String))
+                          .toList(),
+                      suggestionState: Suggestion.expand,
+                      onSuggestionTap: (f) async {
+                        FocusScope.of(context).unfocus();
+                        print(_areaController.text);
+                        final response = await apiService.get(
+                            "ssm_bore_wells.ssm_bore_wells.utlis.api.state_district_list",
+                            {
+                              "territory": _areaController.text,
+                            });
+                        print(response.body);
+
+                        if (response.statusCode == 200) {
+                          final district = json.decode(response.body);
+
+                          final state = json.decode(response.body);
+
+                          setState(() {
+                            List<String> parts =
+                                _areaController.text.split('-');
+                            print(parts[1]);
+                            _pincodeController.text = parts[1];
+                            _districtController.text =
+                                district["message"]['district'];
+                            _talukController.text = state["message"]['state'];
+                          });
+                          print(response.body);
+                        }
+                      },
+                      suggestionsDecoration: SuggestionDecoration(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 5, bottom: 20),
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
+                      textInputAction: TextInputAction.next,
+                      marginColor: Colors.white,
+                      searchStyle: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black.withOpacity(0.8),
+                      ),
+                      onSearchTextChanged: (p0) {
+                        customer.territory(_areaController.text);
+                      },
+                      searchInputDecoration: const InputDecoration(
+                          labelText: "Area",
+                          suffixIcon: HeroIcon(HeroIcons.mapPin),
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Color(0x0ff2d2e4)))),
+                    )),
                 const SizedBox(
                   height: 20,
                 ),
@@ -150,27 +207,53 @@ class _CustomercreationState extends State<Customercreation> {
                 CustomFormButton(
                   innerText: 'Submit',
                   onPressed: () async {
-                    final response = await apiService.get(
-                        'ssm_bore_wells.ssm_bore_wells.utlis.api.new_customer',
-                        {
-                          "customer_name": _usernameController.text,
-                          "customer_type": "Individual",
-                          "customer_group": "Individual",
-                          "date_of_birth": _dateController.text,
-                          "territory": _areaController.text,
-                          "mobile_number": _mobileController.text,
-                          "email_address": _emailController.text,
-                          "address_line1": "Test ",
-                          "address_line2": "",
-                          "city": _districtController.text,
-                          "state": _talukController.text,
-                          "country": "India",
-                          "pincode": _pincodeController.text
-                        });
+                    if (_customerFormKey.currentState!.validate()) {
+                      final response = await apiService.get(
+                          'ssm_bore_wells.ssm_bore_wells.utlis.api.new_customer',
+                          {
+                            "customer_name": _usernameController.text,
+                            "customer_type": "Individual",
+                            "customer_group": "Individual",
+                            "date_of_birth": _dateController.text,
+                            "territory": _areaController.text,
+                            "mobile_number": _mobileController.text,
+                            "email_address": _emailController.text,
+                            "address_line1": "Test ",
+                            "address_line2": "",
+                            "city": _districtController.text,
+                            "state": _talukController.text,
+                            "country": "India",
+                            "pincode": _pincodeController.text
+                          });
 
-                    print('Status Code: ${response.statusCode}'); 
-                    print('Response Body: ${response.body}');
-                    if (_customerFormKey.currentState!.validate()) {}
+                      print('Status Code: ${response.statusCode}');
+                      print('Response Body: ${response.body}');
+                      if (response.statusCode == 200) {
+                        _usernameController.clear();
+                        _pincodeController.clear();
+                        _usernameController.clear();
+                        _areaController.clear();
+                        _mobileController.clear();
+                        _emailController.clear();
+                        _districtController.clear();
+                        _talukController.clear();
+
+                        final message = json.decode(response.body);
+                        Get.snackbar(
+                          "Success",
+                          message['message'],
+                          icon: HeroIcon(HeroIcons.check, color: Colors.white),
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Color(0x0ff35394E),
+                          borderRadius: 20,
+                          margin: EdgeInsets.all(15),
+                          colorText: Colors.white,
+                          duration: Duration(seconds: 4),
+                          isDismissible: true,
+                          forwardAnimationCurve: Curves.easeOutBack,
+                        );
+                      }
+                    }
                   },
                 )
               ],
