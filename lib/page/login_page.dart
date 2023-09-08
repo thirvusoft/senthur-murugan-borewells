@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
@@ -21,6 +22,8 @@ class Loginpage extends StatelessWidget {
     return Scaffold(
         backgroundColor: const Color(0xFF752FFF),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color(0xFF752FFF),
           toolbarHeight: 120,
           centerTitle: true,
           title: const Text("Senthur Murugan",
@@ -121,7 +124,6 @@ class Loginpage extends StatelessWidget {
                             "usr": _mobilenumberController.text,
                             "pwd": _passwordController.text
                           });
-                          print(response.body);
                           if (response.statusCode == 200) {
                             response.header['cookie'] =
                                 "${response.header['set-cookie'].toString()};";
@@ -132,7 +134,7 @@ class Loginpage extends StatelessWidget {
                                 await SharedPreferences.getInstance();
                             await prefs.setString(
                                 'request-header', json.encode(response.header));
-                            Get.toNamed("/homepage");
+                            Get.toNamed("/Bottomnavigation");
                           }
                         }
                       },

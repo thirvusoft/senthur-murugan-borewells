@@ -62,7 +62,9 @@ class _AttendanceState extends State<Attendance> {
               Row(
                 children: [
                   Expanded(
-                    child: ElevatedButton(
+                    child: 
+                    
+                    ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(
                             0xFF752FFF), // Change the button color to blue
@@ -80,17 +82,19 @@ class _AttendanceState extends State<Attendance> {
                     width: 15,
                   ),
                   Expanded(
-                      child: OutlinedButton(
+                      child: 
+                      
+                      OutlinedButton(
                     child: Text('Check Out'),
                     onPressed: () {
-                      print('Pressed');
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(
                           color:
                               Color(0xFF752FFF)), // Set the border color to red
                     ),
-                  ))
+                  )
+                  )
                 ],
               )
             ],

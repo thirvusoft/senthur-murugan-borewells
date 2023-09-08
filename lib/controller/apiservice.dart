@@ -21,6 +21,9 @@ class ApiService extends GetxService {
     if (args.toString() == '{}') {
       final uri = Uri.parse(url);
       final response = await http.get(uri, headers: apiHeaders);
+      if (response.headers.toString().contains("system_user=no")) {
+        Get.toNamed("/loginpage");
+      }
       return ApiResponse(
           statusCode: response.statusCode,
           body: response.body,
@@ -28,11 +31,10 @@ class ApiService extends GetxService {
     } else {
       final uri = Uri.parse(url).replace(queryParameters: args);
       final response = await http.get(uri, headers: apiHeaders);
-
-      // if(response.headers.toString().contains("system_user=yes"))
-      // {
-      //   Get.toNamed("/loginpage");
-      // }
+     
+      if (response.headers.toString().contains("system_user=no")) {
+        Get.toNamed("/loginpage");
+      }
       return ApiResponse(
           statusCode: response.statusCode,
           body: response.body,

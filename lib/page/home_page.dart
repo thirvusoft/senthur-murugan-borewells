@@ -39,12 +39,15 @@ class _HomepageState extends State<Homepage> {
               style: TextStyle(color: Color(0xFF752FFF)),
             )),
         actions: [
-          // IconButton(
-          //   onPressed: () {
-          //     Get.toNamed("/Customercreation");
-          //   },
-          //   icon: const HeroIcon(HeroIcons.userPlus),
-          // )
+          IconButton(
+            onPressed: () async {
+              final response = await apiService.get("logout", {});
+              if (response.statusCode == 200) {
+                Get.toNamed("/loginpage");
+              }
+            },
+            icon: const Icon(Icons.exit_to_app_outlined),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -89,7 +92,7 @@ class _HomepageState extends State<Homepage> {
                           child: ElevatedButton(
                             style: style,
                             onPressed: () async {
-                              Get.toNamed("/attendance");
+                              
                             },
                             child: const Text('Check In'),
                           ),

@@ -10,8 +10,10 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: (title == "Senthur Murugan")
+          ? const Color(0xFF752FFF)
+          : const Color(0xFFFFFFFF),
       leading: leading,
-      centerTitle: true,
       elevation: 0,
       automaticallyImplyLeading: false,
 
@@ -20,7 +22,7 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
               fontWeight: FontWeight.bold,
               fontSize: 20,
               letterSpacing: .3,
-              color: Color(0xFF752FFF))),
+              color: Color(0xFF000000))),
       // actions: actions,
     );
   }

@@ -37,10 +37,10 @@ class _CustomercreationState extends State<Customercreation> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: ReusableAppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Color(0xFF752FFF)),
-            onPressed: () {},
-          ),
+          // leading: IconButton(
+          //   icon: const Icon(Icons.arrow_back, color: Color(0xFF752FFF)),
+          //   onPressed: () {},
+          // ),
           title: 'Customer Creation',
           // actions: [
           //   IconButton(
@@ -72,6 +72,12 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _usernameController,
                   obscureText: false,
                   suffixIcon: HeroIcons.user,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Customer Name can't be empty";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -81,6 +87,12 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _emailController,
                   obscureText: false,
                   suffixIcon: HeroIcons.envelope,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Email can't be empty";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -115,7 +127,7 @@ class _CustomercreationState extends State<Customercreation> {
                       controller: _areaController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please select State';
+                          return "State can't empty ";
                         }
 
                         return null;
@@ -126,13 +138,11 @@ class _CustomercreationState extends State<Customercreation> {
                       suggestionState: Suggestion.expand,
                       onSuggestionTap: (f) async {
                         FocusScope.of(context).unfocus();
-                        print(_areaController.text);
                         final response = await apiService.get(
                             "ssm_bore_wells.ssm_bore_wells.utlis.api.state_district_list",
                             {
                               "territory": _areaController.text,
                             });
-                        print(response.body);
 
                         if (response.statusCode == 200) {
                           final district = json.decode(response.body);
@@ -142,13 +152,11 @@ class _CustomercreationState extends State<Customercreation> {
                           setState(() {
                             List<String> parts =
                                 _areaController.text.split('-');
-                            print(parts[1]);
                             _pincodeController.text = parts[1];
                             _districtController.text =
                                 district["message"]['district'];
                             _talukController.text = state["message"]['state'];
                           });
-                          print(response.body);
                         }
                       },
                       suggestionsDecoration: SuggestionDecoration(
@@ -181,6 +189,12 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _districtController,
                   obscureText: false,
                   suffixIcon: HeroIcons.globeEuropeAfrica,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "District can't be empty";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -190,12 +204,19 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _talukController,
                   obscureText: false,
                   suffixIcon: HeroIcons.buildingOffice,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "State can't be empty";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ReusableTextField(
                   labelText: 'Pincode',
+                  maxLength: 6,
                   keyboardType: TextInputType.phone,
                   controller: _pincodeController,
                   obscureText: false,
