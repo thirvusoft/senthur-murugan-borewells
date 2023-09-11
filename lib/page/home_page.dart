@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:heroicons/heroicons.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
 
@@ -40,10 +39,13 @@ class _HomepageState extends State<Homepage> {
             )),
         actions: [
           IconButton(
-            onPressed: () {
-              Get.toNamed("/Customercreation");
+            onPressed: () async {
+              final response = await apiService.get("logout", {});
+              if (response.statusCode == 200) {
+                Get.offAllNamed("/loginpage");
+              }
             },
-            icon: const HeroIcon(HeroIcons.userPlus),
+            icon: const Icon(Icons.exit_to_app_outlined),
           )
         ],
       ),
@@ -88,9 +90,7 @@ class _HomepageState extends State<Homepage> {
                         Expanded(
                           child: ElevatedButton(
                             style: style,
-                            onPressed: () async {
-                              Get.toNamed("/attendance");
-                            },
+                            onPressed: () async {},
                             child: const Text('Check In'),
                           ),
                         )

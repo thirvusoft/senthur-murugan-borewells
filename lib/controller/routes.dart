@@ -1,7 +1,9 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:senthur_murugan/page/attendance.dart';
+import 'package:senthur_murugan/widgets/bottom_navigation.dart';
 import 'package:senthur_murugan/page/home_page.dart';
 import 'package:senthur_murugan/page/login_page.dart';
+import 'package:senthur_murugan/page/splash_page.dart';
 import '../page/customer_creation.dart';
 
 class Routes {
@@ -9,6 +11,8 @@ class Routes {
   static String loginpage = '/loginpage';
   static String homepage = '/homepage';
   static String attendance = '/attendance';
+  static String splashscreen = "/splashscreen";
+  static String bottomnavigation = '/Bottomnavigation';
 }
 
 final getPages = [
@@ -27,5 +31,13 @@ final getPages = [
   GetPage(
     name: Routes.attendance,
     page: () => const Attendance(),
+  ),
+  GetPage(
+    name: Routes.splashscreen,
+    page: () => const Splashscreen(),
+  ),
+  GetPage(
+    name: Routes.bottomnavigation,
+    page: () => const Bottomnavigation(),
   ),
 ];
