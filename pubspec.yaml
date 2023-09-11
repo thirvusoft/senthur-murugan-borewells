@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.2.1
   searchfield: ^0.8.4
   salomon_bottom_bar: ^3.3.2
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
