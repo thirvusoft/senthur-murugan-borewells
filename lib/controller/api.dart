@@ -32,10 +32,10 @@ class Customer extends GetxController {
   Future splash() async {
     final response = await apiService.get("frappe.auth.get_logged_user", {});
     if (response.statusCode == 200) {
-      await Future.delayed(const Duration(seconds: 3));
+      // await Future.delayed(const Duration(seconds: 3));
       Get.offAllNamed("/Bottomnavigation");
     } else {
-      await Future.delayed(const Duration(seconds: 3));
+      // await Future.delayed(const Duration(seconds: 3));
       Get.offAllNamed("/loginpage");
     }
   }

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:senthur_murugan/controller/api.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
@@ -10,6 +12,7 @@ import 'package:senthur_murugan/widgets/appbar.dart';
 import 'package:senthur_murugan/widgets/bottomsheet.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
 import 'package:senthur_murugan/widgets/datepicker.dart';
+import 'package:senthur_murugan/widgets/internet_checker.dart';
 import 'package:senthur_murugan/widgets/textformfield.dart';
 
 class Employee extends StatefulWidget {
@@ -45,6 +48,11 @@ class _EmployeeState extends State<Employee> {
         child: SingleChildScrollView(
             child: Column(
           children: [
+            Visibility(
+              visible: Provider.of<InternetConnectionStatus>(context) ==
+                  InternetConnectionStatus.disconnected,
+              child: const InternetNotAvailable(),
+            ),
             SizedBox(
                 height: MediaQuery.of(context).size.height / 1.4,
                 child: Obx(
@@ -83,7 +91,6 @@ class _EmployeeState extends State<Employee> {
                                                   .employeelist[index]['name'],
                                               "status": "Present"
                                             });
-                                      
 
                                         final message =
                                             json.decode(response.body);
@@ -275,7 +282,6 @@ class _EmployeeState extends State<Employee> {
                                                 forwardAnimationCurve:
                                                     Curves.easeOutBack,
                                               );
-                                             
                                             }
                                           }
                                         })

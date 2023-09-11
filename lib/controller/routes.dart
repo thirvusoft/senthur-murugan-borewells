@@ -40,4 +40,5 @@ final getPages = [
     name: Routes.bottomnavigation,
     page: () => const Bottomnavigation(),
   ),
+ 
 ];

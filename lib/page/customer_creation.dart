@@ -4,12 +4,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 import 'package:senthur_murugan/controller/api.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/widgets/appbar.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
 import 'package:senthur_murugan/widgets/datepicker.dart';
 import 'package:searchfield/searchfield.dart';
+import 'package:senthur_murugan/widgets/internet_checker.dart';
 
 import '../widgets/textformfield.dart';
 
@@ -63,7 +66,13 @@ class _CustomercreationState extends State<Customercreation> {
           child: Form(
             key: _customerFormKey,
             child: Column(
+              
               children: [
+                 Visibility(
+                  visible: Provider.of<InternetConnectionStatus>(context) ==
+                      InternetConnectionStatus.disconnected,
+                  child: const InternetNotAvailable(),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
