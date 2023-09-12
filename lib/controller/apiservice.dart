@@ -29,9 +29,10 @@ class ApiService extends GetxService {
           body: response.body,
           header: response.headers);
     } else {
+      print(args);
       final uri = Uri.parse(url).replace(queryParameters: args);
       final response = await http.get(uri, headers: apiHeaders);
-     
+
       if (response.headers.toString().contains("system_user=no")) {
         Get.toNamed("/loginpage");
       }

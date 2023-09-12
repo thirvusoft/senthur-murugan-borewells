@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -9,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -19,9 +18,13 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final ApiService apiService = ApiService();
+  double percentage = 0.0;
+  String present = "0";
+  String absent = "0";
   String customercount_ = "";
   String employeecount_ = "";
   String fullname = "";
+  var calcount = [];
   String imgurl =
       "https://i.pinimg.com/736x/87/67/64/8767644bc68a14c50addf8cb2de8c59e.jpg";
   @override
@@ -29,6 +32,38 @@ class _HomepageState extends State<Homepage> {
     super.initState();
 
     count();
+    attendance();
+    creationcreate();
+  }
+
+  creationcreate() async {
+    final response = await apiService.get(
+        "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_customers_count", {});
+    var response_ = json.decode(response.body);
+    calcount = (response_["message"]);
+  }
+
+  attendance() async {
+    DateTime today = DateTime.now();
+    DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+    String formattedDate = dateFormat.format(today);
+
+    final response = await apiService
+        .get("ssm_bore_wells.ssm_bore_wells.utlis.api.attendance_count_day", {
+      "filters": jsonEncode({"attendance_date": formattedDate})
+    });
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      var temp = jsonResponse["message"];
+      setState(() {
+        double pCount = temp[0]["p_count"];
+        double aCount = temp[0]["a_count"];
+        present = temp[0]["p_count"].toString();
+        absent = temp[0]["a_count"].toString();
+        double total = pCount + aCount;
+        percentage = (pCount / total) * 100;
+      });
+    }
   }
 
   Future count() async {
@@ -37,13 +72,11 @@ class _HomepageState extends State<Homepage> {
         .get("ssm_bore_wells.ssm_bore_wells.utlis.api.count", {});
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      print(jsonResponse);
       setState(() {
         customercount_ = jsonResponse["message"]["customer"].toString();
         employeecount_ = jsonResponse["message"]["employee"].toString();
         imgurl = prefs.getString('image')!;
         fullname = prefs.getString('full_name')!;
-        print(fullname);
       });
     }
   }
@@ -76,8 +109,7 @@ class _HomepageState extends State<Homepage> {
           IconButton(
             onPressed: () async {
               final response = await apiService.get("logout", {});
-              print(response.statusCode);
-              print(response.body);
+
               if (response.statusCode == 200) {
                 Get.offAllNamed("/loginpage");
               }
@@ -213,31 +245,27 @@ class _HomepageState extends State<Homepage> {
                             animation: true,
                             animationDuration: 1200,
                             lineWidth: 15.0,
-                            percent: 0.4,
-                            // center: new Text(
-                            //   "40 hours",
-                            //   style: new TextStyle(
-                            //       fontWeight: FontWeight.bold, fontSize: 20.0),
-                            // ),
+                            percent: percentage / 100,
                             circularStrokeCap: CircularStrokeCap.round,
-                            backgroundColor: const Color(0xFF752FFF),
-                            progressColor: Colors.red,
+                            backgroundColor: Colors.red,
+                            progressColor: const Color(0xFF752FFF),
                           ),
                         ),
-                        const Expanded(
+                        Expanded(
                             child: ListTile(
                                 title: Text(
-                                  "50",
-                                  style: TextStyle(color: Color(0xFF752FFF)),
+                                  present.replaceAll('.0', ''),
+                                  style:
+                                      const TextStyle(color: Color(0xFF752FFF)),
                                 ),
-                                subtitle: Text("Present"))),
-                        const Expanded(
+                                subtitle: const Text("Present"))),
+                        Expanded(
                             child: ListTile(
                                 title: Text(
-                                  "20",
-                                  style: TextStyle(color: Colors.red),
+                                  absent.replaceAll('.0', ''),
+                                  style: const TextStyle(color: Colors.red),
                                 ),
-                                subtitle: Text("Absent"))),
+                                subtitle: const Text("Absent"))),
                       ],
                     )
                   ],
@@ -264,7 +292,7 @@ class _HomepageState extends State<Homepage> {
                   children: [
                     const Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("    Attendance Details"),
+                      child: Text("    Creation Count"),
                     ),
                     const SizedBox(
                       height: 15,
@@ -285,7 +313,7 @@ class _HomepageState extends State<Homepage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: ListView.separated(
-                            itemCount: 12,
+                            itemCount: calcount.length,
                             separatorBuilder: (BuildContext context,
                                     int index) =>
                                 const Padding(
@@ -308,31 +336,33 @@ class _HomepageState extends State<Homepage> {
                                         ),
                                       ],
                                     ),
-                                    child: const Column(
+                                    child: Column(
                                       children: [
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 5,
                                         ),
                                         Text(
-                                          "Fri",
-                                          style: TextStyle(color: Colors.white),
+                                          calcount[index]["month_name"]
+                                              .substring(0, 3),
+                                          style: const TextStyle(
+                                              color: Colors.white),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 5,
                                         ),
-                                        Text(
+                                        const Text(
                                           "23",
                                           style: TextStyle(color: Colors.white),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  trailing: const Text(
-                                    "GFG",
-                                    style: TextStyle(
-                                        color: Colors.green, fontSize: 15),
+                                  trailing: Text(
+                                    "              ${calcount[index]["e_count"]}",
+                                    style: const TextStyle(fontSize: 18),
                                   ),
-                                  title: Text("           List item $index"));
+                                  title: Text(
+                                      "              ${calcount[index]["c_count"]}"));
                             }),
                       ),
                     ),
