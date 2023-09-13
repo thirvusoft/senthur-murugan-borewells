@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:senthur_murugan/controller/api.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
@@ -10,6 +13,7 @@ import 'package:senthur_murugan/widgets/appbar.dart';
 import 'package:senthur_murugan/widgets/bottomsheet.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
 import 'package:senthur_murugan/widgets/datepicker.dart';
+import 'package:senthur_murugan/widgets/internet_checker.dart';
 import 'package:senthur_murugan/widgets/textformfield.dart';
 
 class Employee extends StatefulWidget {
@@ -45,6 +49,11 @@ class _EmployeeState extends State<Employee> {
         child: SingleChildScrollView(
             child: Column(
           children: [
+            Visibility(
+              visible: Provider.of<InternetConnectionStatus>(context) ==
+                  InternetConnectionStatus.disconnected,
+              child: const InternetNotAvailable(),
+            ),
             SizedBox(
                 height: MediaQuery.of(context).size.height / 1.4,
                 child: Obx(
@@ -70,43 +79,111 @@ class _EmployeeState extends State<Employee> {
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color(0xFF752FFF),
+                                    Container(
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: const Color(0xFF752FFF),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(
+                                                230, 233, 230, 1),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                          ),
+                                        ],
                                       ),
-                                      onPressed: () async {
-                                        final response = await apiService.get(
-                                            "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
-                                            {
-                                              "employee": customer
-                                                  .employeelist[index]['name'],
-                                              "status": "Present"
-                                            });
-                                      
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          PhosphorIcons.user_minus_light,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () async {
+                                          final response = await apiService.get(
+                                              "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
+                                              {
+                                                "employee":
+                                                    customer.employeelist[index]
+                                                        ['name'],
+                                                "status": "Absent"
+                                              });
 
-                                        final message =
-                                            json.decode(response.body);
-                                        Get.snackbar(
-                                          "Success",
-                                          message['message'],
-                                          icon: const HeroIcon(HeroIcons.check,
-                                              color: Colors.white),
-                                          snackPosition: SnackPosition.BOTTOM,
-                                          backgroundColor:
-                                              const Color(0x0ff35394E),
-                                          borderRadius: 20,
-                                          margin: const EdgeInsets.all(15),
-                                          colorText: Colors.white,
-                                          duration: const Duration(seconds: 4),
-                                          isDismissible: true,
-                                          forwardAnimationCurve:
-                                              Curves.easeOutBack,
-                                        );
-                                      },
-                                      child: const Text(
-                                        'Attendance',
-                                        style: TextStyle(color: Colors.white),
+                                          final message =
+                                              json.decode(response.body);
+                                          Get.snackbar(
+                                            "Success",
+                                            message['message'],
+                                            icon: const HeroIcon(
+                                                HeroIcons.check,
+                                                color: Colors.white),
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            backgroundColor:
+                                                const Color(0xff35394e),
+                                            borderRadius: 20,
+                                            margin: const EdgeInsets.all(15),
+                                            colorText: Colors.white,
+                                            duration:
+                                                const Duration(seconds: 2),
+                                            isDismissible: true,
+                                            forwardAnimationCurve:
+                                                Curves.easeOutBack,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 25,
+                                    ),
+                                    Container(
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: const Color(0xFF752FFF),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Color.fromRGBO(
+                                                230, 233, 230, 1),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                          ),
+                                        ],
+                                      ),
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          PhosphorIcons.user_plus_light,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () async {
+                                          final response = await apiService.get(
+                                              "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
+                                              {
+                                                "employee":
+                                                    customer.employeelist[index]
+                                                        ['name'],
+                                                "status": "Present"
+                                              });
+
+                                          final message =
+                                              json.decode(response.body);
+                                          Get.snackbar(
+                                            "Success",
+                                            message['message'],
+                                            icon: const HeroIcon(
+                                                HeroIcons.check,
+                                                color: Colors.white),
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            backgroundColor:
+                                                const Color(0xff35394e),
+                                            borderRadius: 20,
+                                            margin: const EdgeInsets.all(15),
+                                            colorText: Colors.white,
+                                            duration:
+                                                const Duration(seconds: 4),
+                                            isDismissible: true,
+                                            forwardAnimationCurve:
+                                                Curves.easeOutBack,
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],
@@ -275,7 +352,6 @@ class _EmployeeState extends State<Employee> {
                                                 forwardAnimationCurve:
                                                     Curves.easeOutBack,
                                               );
-                                             
                                             }
                                           }
                                         })

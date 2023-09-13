@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../controller/api.dart';
 
@@ -13,7 +14,7 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
-    final Customer customer = Customer();
+    final Customer customer = Get.put(Customer());
     customer.splash();
   }
 

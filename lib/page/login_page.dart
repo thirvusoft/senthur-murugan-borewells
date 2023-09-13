@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:heroicons/heroicons.dart';
@@ -125,16 +126,36 @@ class Loginpage extends StatelessWidget {
                             "pwd": _passwordController.text
                           });
                           if (response.statusCode == 200) {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            final Response = json.decode(response.body);
+                            await prefs.setString(
+                                'full_name', Response["full_name"]);
+                            Get.offAllNamed("/Bottomnavigation");
+
                             response.header['cookie'] =
                                 "${response.header['set-cookie'].toString()};";
                             response.header.removeWhere((key, value) =>
                                 ["set-cookie", 'content-length'].contains(key));
 
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
                             await prefs.setString(
                                 'request-header', json.encode(response.header));
-                            Get.toNamed("/Bottomnavigation");
+                            var temp = json
+                                .encode(response.header["cookie"])
+                                .toString();
+                            String extractUserImage(String input) {
+                              RegExp regExp = RegExp(r'user_image=([^;]+)');
+                              Match? match = regExp.firstMatch(input);
+                              if (match != null) {
+                                return Uri.decodeComponent(match.group(1)!);
+                              }
+
+                              return "";
+                            }
+
+                            var userImage =
+                                "${dotenv.env['API_URL']}${extractUserImage(temp)}";
+                            await prefs.setString('image', userImage);
                           }
                         }
                       },

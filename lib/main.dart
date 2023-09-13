@@ -3,6 +3,8 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'controller/routes.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -14,23 +16,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: Routes.splashscreen,
-      getPages: getPages,
-      theme: ThemeData(
-        // appBarTheme: const AppBarTheme(
-        //   color: Color(0xFF752FFF),
-        // ),
-        // scaffoldBackgroundColor: const Color(0xFFF6F6F6),
-        textTheme: GoogleFonts.nunitoSansTextTheme(
-          Theme.of(context).textTheme,
-        ),
-        primaryColor: const Color(0xFF752FFF),
-        primarySwatch: createMaterialColor(const Color(0xFF752FFF)),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-    );
+    return StreamProvider<InternetConnectionStatus>(
+        initialData: InternetConnectionStatus.connected,
+        create: (_) {
+          return InternetConnectionChecker().onStatusChange;
+        },
+        child: GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: Routes.splashscreen,
+          getPages: getPages,
+          theme: ThemeData(
+            textTheme: GoogleFonts.nunitoSansTextTheme(
+              Theme.of(context).textTheme,
+            ),
+            primaryColor: const Color(0xFF752FFF),
+            primarySwatch: createMaterialColor(const Color(0xFF752FFF)),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+        ));
   }
 }
 
