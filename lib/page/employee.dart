@@ -27,11 +27,13 @@ class _EmployeeState extends State<Employee> {
   final ApiService apiService = ApiService();
   final Customer customer = Get.put(Customer());
   final _attendanceFormKey = GlobalKey<FormState>();
+  final TextEditingController searchcontroller = TextEditingController();
   final TextEditingController _dojcontroller = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   List gender = ["Male", "Female"];
+  var sort = "";
   @override
   void initState() {
     super.initState();
@@ -54,12 +56,35 @@ class _EmployeeState extends State<Employee> {
                   InternetConnectionStatus.disconnected,
               child: const InternetNotAvailable(),
             ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              height: 50,
+              child: ReusableTextField(
+                labelText: 'Search',
+                controller: searchcontroller,
+                obscureText: false,
+                suffixIcon: HeroIcons.magnifyingGlass,
+                onChange: ((value) {
+                  setState(() {
+                    sort = value;
+                  });
+                  customer.fliter(sort);
+                }),
+              ),
+            ),
             SizedBox(
                 height: MediaQuery.of(context).size.height / 1.4,
                 child: Obx(
                   () => ListView.builder(
-                      itemCount: customer.employeelist.length,
+                      itemCount: (sort.isEmpty)
+                          ? customer.employeelist.length
+                          : customer.fliterlist.length,
                       itemBuilder: (BuildContext context, int index) {
+                        final user = (sort.isNotEmpty)
+                            ? customer.fliterlist[index]
+                            : customer.employeelist[index];
                         return Padding(
                           padding: const EdgeInsets.only(top: 15.0),
                           child: Container(
@@ -83,7 +108,8 @@ class _EmployeeState extends State<Employee> {
                                       width: 50,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: const Color(0xFF752FFF),
+                                        color: const Color.fromARGB(
+                                            255, 241, 77, 65),
                                         boxShadow: const [
                                           BoxShadow(
                                             color: Color.fromRGBO(
@@ -138,7 +164,7 @@ class _EmployeeState extends State<Employee> {
                                       width: 50,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: const Color(0xFF752FFF),
+                                        color: Colors.green,
                                         boxShadow: const [
                                           BoxShadow(
                                             color: Color.fromRGBO(
@@ -188,10 +214,8 @@ class _EmployeeState extends State<Employee> {
                                     ),
                                   ],
                                 ),
-                                subtitle:
-                                    Text(customer.employeelist[index]['name']),
-                                title: Text(customer.employeelist[index]
-                                    ['first_name'])),
+                                subtitle: Text(user['name']),
+                                title: Text(user['first_name'])),
                           ),
                         );
                       }),
