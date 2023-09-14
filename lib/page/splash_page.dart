@@ -14,7 +14,13 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     super.initState();
+
+    splash();
+  }
+
+  splash() async {
     final Customer customer = Get.put(Customer());
+    await Future.delayed(const Duration(seconds: 3));
     customer.splash();
   }
 

@@ -7,6 +7,7 @@ class Customer extends GetxController {
   final ApiService apiService = ApiService();
   List territorylist_ = [].obs;
   var employeelist = [].obs;
+  var fliterlist = [].obs;
 
   Future territory(name) async {
     final response = await apiService.get("frappe.desk.search.search_link", {
@@ -46,6 +47,23 @@ class Customer extends GetxController {
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       employeelist.value = jsonResponse["message"];
+    }
+  }
+
+  void fliter(change) {
+    // employeelist.clear();
+    List<Map<String, dynamic>> temp = [];
+    for (var i in employeelist) {
+      if ((i["first_name"]
+          .toLowerCase()
+          .contains(change.trim().toLowerCase()))) {
+        var name = <String, dynamic>{};
+        name['first_name'] = i["first_name"];
+        name['name'] = i["name"];
+        temp.add(name);
+        fliterlist.value = temp;
+        print(employeelist);
+      }
     }
   }
 }
