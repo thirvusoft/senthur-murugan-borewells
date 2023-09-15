@@ -26,7 +26,7 @@ class Customercreation extends StatefulWidget {
 class _CustomercreationState extends State<Customercreation> {
   final _customerFormKey = GlobalKey<FormState>();
   final ApiService apiService = ApiService();
-  final Customer customer = Customer();
+  final Customer customer = Get.put(Customer());
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -40,25 +40,15 @@ class _CustomercreationState extends State<Customercreation> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: ReusableAppBar(
-          // leading: IconButton(
-          //   icon: const Icon(Icons.arrow_back, color: Color(0xFF752FFF)),
-          //   onPressed: () {},
-          // ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
           title: 'Customer Creation',
-          // actions: [
-          //   IconButton(
-          //     icon: Icon(Icons.search),
-          //     onPressed: () {
-          //       // Add your search functionality here
-          //     },
-          //   ),
-          //   IconButton(
-          //     icon: Icon(Icons.settings),
-          //     onPressed: () {
-          //       // Add your settings functionality here
-          //     },
-          //   ),
-          // ],
         ),
         body: SingleChildScrollView(
             child: Padding(
@@ -244,6 +234,11 @@ class _CustomercreationState extends State<Customercreation> {
                           });
 
                       if (response.statusCode == 200) {
+                        final Customer customer = Get.put(Customer());
+
+                        customer.customerlist_();
+
+                        Get.back();
                         _usernameController.clear();
                         _pincodeController.clear();
                         _usernameController.clear();
