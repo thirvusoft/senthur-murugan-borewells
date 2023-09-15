@@ -66,9 +66,8 @@ class _CustomercreationState extends State<Customercreation> {
           child: Form(
             key: _customerFormKey,
             child: Column(
-              
               children: [
-                 Visibility(
+                Visibility(
                   visible: Provider.of<InternetConnectionStatus>(context) ==
                       InternetConnectionStatus.disconnected,
                   child: const InternetNotAvailable(),
@@ -87,6 +86,7 @@ class _CustomercreationState extends State<Customercreation> {
                     }
                     return null;
                   },
+                  readyonly: false,
                 ),
                 const SizedBox(
                   height: 20,
@@ -96,12 +96,7 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _emailController,
                   obscureText: false,
                   suffixIcon: HeroIcons.envelope,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Email can't be empty";
-                    }
-                    return null;
-                  },
+                  readyonly: false,
                 ),
                 const SizedBox(
                   height: 20,
@@ -117,6 +112,7 @@ class _CustomercreationState extends State<Customercreation> {
                     }
                     return null;
                   },
+                  readyonly: false,
                   maxLength: 10,
                   keyboardType: TextInputType.phone,
                   obscureText: false,
@@ -136,7 +132,7 @@ class _CustomercreationState extends State<Customercreation> {
                       controller: _areaController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "State can't empty ";
+                          return "Area can't empty ";
                         }
 
                         return null;
@@ -194,36 +190,27 @@ class _CustomercreationState extends State<Customercreation> {
                   height: 20,
                 ),
                 ReusableTextField(
+                  readyonly: true,
                   labelText: 'District',
                   controller: _districtController,
                   obscureText: false,
                   suffixIcon: HeroIcons.globeEuropeAfrica,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "District can't be empty";
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ReusableTextField(
+                  readyonly: true,
                   labelText: 'State',
                   controller: _talukController,
                   obscureText: false,
                   suffixIcon: HeroIcons.buildingOffice,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "State can't be empty";
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ReusableTextField(
+                  readyonly: true,
                   labelText: 'Pincode',
                   maxLength: 6,
                   keyboardType: TextInputType.phone,

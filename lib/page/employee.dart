@@ -72,6 +72,7 @@ class _EmployeeState extends State<Employee> {
                   });
                   customer.fliter(sort);
                 }),
+                readyonly: false,
               ),
             ),
             SizedBox(
@@ -254,6 +255,7 @@ class _EmployeeState extends State<Employee> {
                                         return null;
                                       },
                                       suffixIcon: HeroIcons.user,
+                                      readyonly: false,
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -278,7 +280,7 @@ class _EmployeeState extends State<Employee> {
                                                   top: 10.0,
                                                   left: 5,
                                                   bottom: 20),
-                                              color: Colors.white,
+                                              color: const Color(0xFFfffbff),
                                               borderRadius:
                                                   const BorderRadius.all(
                                                       Radius.circular(10))),
@@ -288,6 +290,8 @@ class _EmployeeState extends State<Employee> {
                                         fontSize: 15,
                                         color: Colors.black.withOpacity(0.8),
                                       ),
+                                      maxSuggestionsInViewPort: 6,
+                                      itemHeight: 25,
                                       onSearchTextChanged: (p0) {},
                                       searchInputDecoration:
                                           const InputDecoration(
