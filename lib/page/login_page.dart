@@ -67,20 +67,22 @@ class Loginpage extends StatelessWidget {
                       height: 30,
                     ),
                     ReusableTextField(
-                        labelText: 'Mobile Number',
-                        controller: _mobilenumberController,
-                        obscureText: false,
-                        suffixIcon: HeroIcons.devicePhoneMobile,
-                        keyboardType: TextInputType.phone,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Mobile Number can't be empty";
-                          } else if (value.length != 10) {
-                            return "Invalid Mobile Number ";
-                          }
-                          return null;
-                        },
-                        maxLength: 10),
+                      labelText: 'Mobile Number',
+                      controller: _mobilenumberController,
+                      obscureText: false,
+                      suffixIcon: HeroIcons.devicePhoneMobile,
+                      keyboardType: TextInputType.phone,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Mobile Number can't be empty";
+                        } else if (value.length != 10) {
+                          return "Invalid Mobile Number ";
+                        }
+                        return null;
+                      },
+                      maxLength: 10,
+                      readyonly: false,
+                    ),
                     const SizedBox(
                       height: 40,
                     ),
@@ -95,6 +97,7 @@ class Loginpage extends StatelessWidget {
                         }
                         return null;
                       },
+                      readyonly: false,
                     ),
                     const SizedBox(
                       height: 10,

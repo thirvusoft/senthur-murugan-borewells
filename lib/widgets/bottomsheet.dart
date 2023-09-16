@@ -16,12 +16,12 @@ class CustomBottomSheet extends StatelessWidget {
           color: Colors.transparent,
           child: SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              // mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 // SizedBox(height: 16.0), // Add spacing from the bottom
                 Material(
                   elevation: 5.0,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   ),
@@ -31,16 +31,16 @@ class CustomBottomSheet extends StatelessWidget {
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
                           title,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      Divider(), // Add a divider
+                      const Divider(), // Add a divider
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: child, // Content passed to the bottom sheet
+                        child: child,
                       ),
                     ],
                   ),

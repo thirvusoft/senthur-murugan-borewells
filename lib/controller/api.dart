@@ -7,7 +7,12 @@ class Customer extends GetxController {
   final ApiService apiService = ApiService();
   List territorylist_ = [].obs;
   var employeelist = [].obs;
+  var customerlist = [].obs;
+  var customerlistisLoading = true.obs;
+  var employeelistisLoading = true.obs;
+
   var fliterlist = [].obs;
+  var customerfliterlist = [].obs;
 
   Future territory(name) async {
     final response = await apiService.get("frappe.desk.search.search_link", {
@@ -42,11 +47,14 @@ class Customer extends GetxController {
   }
 
   Future employeelist_() async {
+    employeelistisLoading.value = true;
     final response = await apiService
         .get("ssm_bore_wells.ssm_bore_wells.utlis.api.employeelist", {});
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       employeelist.value = jsonResponse["message"];
+      await Future.delayed(const Duration(seconds: 1));
+      employeelistisLoading.value = false;
     }
   }
 
@@ -63,6 +71,36 @@ class Customer extends GetxController {
         temp.add(name);
         fliterlist.value = temp;
         print(employeelist);
+      }
+    }
+  }
+
+  Future customerlist_() async {
+    customerlistisLoading.value = true;
+    final response = await apiService
+        .get("ssm_bore_wells.ssm_bore_wells.utlis.api.customerlist", {});
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      customerlist.value = jsonResponse["message"];
+      await Future.delayed(const Duration(seconds: 1));
+      customerlistisLoading.value = false;
+    }
+  }
+
+  void customerfliter(change) {
+    List<Map<String, dynamic>> temp = [];
+    for (var i in customerlist) {
+      if ((i["customer_name"]
+              .toLowerCase()
+              .contains(change.trim().toLowerCase())) ||
+          (i["mobile_no"]
+              .toLowerCase()
+              .contains(change.trim().toLowerCase()))) {
+        var name = <String, dynamic>{};
+        name["customer_name"] = i["customer_name"];
+        name["mobile_no"] = i["mobile_no"];
+        temp.add(name);
+        customerfliterlist.value = temp;
       }
     }
   }

@@ -275,7 +275,7 @@ class _HomepageState extends State<Homepage> {
                 height: 25,
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 2,
+                height: MediaQuery.of(context).size.height / 2.3,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -351,7 +351,7 @@ class _HomepageState extends State<Homepage> {
                                           height: 5,
                                         ),
                                         const Text(
-                                          "23",
+                                          "1",
                                           style: TextStyle(color: Colors.white),
                                         ),
                                       ],
@@ -362,7 +362,12 @@ class _HomepageState extends State<Homepage> {
                                     style: const TextStyle(fontSize: 18),
                                   ),
                                   title: Text(
-                                      "              ${calcount[index]["c_count"]}"));
+                                    "              ${calcount[index]["c_count"]}",
+                                    style: TextStyle(
+                                        color: (calcount[index]["c_count"] <= 5)
+                                            ? Colors.red
+                                            : Colors.black),
+                                  ));
                             }),
                       ),
                     ),

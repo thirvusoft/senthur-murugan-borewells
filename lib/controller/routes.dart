@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:senthur_murugan/page/attendance.dart';
+import 'package:senthur_murugan/page/customerlist.dart';
 import 'package:senthur_murugan/widgets/bottom_navigation.dart';
 import 'package:senthur_murugan/page/home_page.dart';
 import 'package:senthur_murugan/page/login_page.dart';
@@ -13,6 +14,7 @@ class Routes {
   static String attendance = '/attendance';
   static String splashscreen = "/splashscreen";
   static String bottomnavigation = '/Bottomnavigation';
+  static String customerlist = '/customerlist';
 }
 
 final getPages = [
@@ -40,5 +42,8 @@ final getPages = [
     name: Routes.bottomnavigation,
     page: () => const Bottomnavigation(),
   ),
- 
+   GetPage(
+    name: Routes.customerlist,
+    page: () => const Cusomerlist(),
+  ),
 ];

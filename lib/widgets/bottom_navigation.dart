@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:senthur_murugan/page/customer_creation.dart';
+import 'package:senthur_murugan/page/customerlist.dart';
 import 'package:senthur_murugan/page/employee.dart';
 import 'package:senthur_murugan/page/home_page.dart';
 
@@ -17,7 +17,7 @@ class _BottomnavigationState extends State<Bottomnavigation> {
   final List<Widget> _widgetOptions = <Widget>[
     const Homepage(),
     const Employee(),
-    const Customercreation(),
+    const Cusomerlist(),
   ];
   @override
   Widget build(BuildContext context) {

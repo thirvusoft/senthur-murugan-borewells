@@ -26,7 +26,7 @@ class Customercreation extends StatefulWidget {
 class _CustomercreationState extends State<Customercreation> {
   final _customerFormKey = GlobalKey<FormState>();
   final ApiService apiService = ApiService();
-  final Customer customer = Customer();
+  final Customer customer = Get.put(Customer());
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -40,25 +40,15 @@ class _CustomercreationState extends State<Customercreation> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: ReusableAppBar(
-          // leading: IconButton(
-          //   icon: const Icon(Icons.arrow_back, color: Color(0xFF752FFF)),
-          //   onPressed: () {},
-          // ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {
+              Get.back();
+            },
+          ),
           title: 'Customer Creation',
-          // actions: [
-          //   IconButton(
-          //     icon: Icon(Icons.search),
-          //     onPressed: () {
-          //       // Add your search functionality here
-          //     },
-          //   ),
-          //   IconButton(
-          //     icon: Icon(Icons.settings),
-          //     onPressed: () {
-          //       // Add your settings functionality here
-          //     },
-          //   ),
-          // ],
         ),
         body: SingleChildScrollView(
             child: Padding(
@@ -66,9 +56,8 @@ class _CustomercreationState extends State<Customercreation> {
           child: Form(
             key: _customerFormKey,
             child: Column(
-              
               children: [
-                 Visibility(
+                Visibility(
                   visible: Provider.of<InternetConnectionStatus>(context) ==
                       InternetConnectionStatus.disconnected,
                   child: const InternetNotAvailable(),
@@ -87,6 +76,7 @@ class _CustomercreationState extends State<Customercreation> {
                     }
                     return null;
                   },
+                  readyonly: false,
                 ),
                 const SizedBox(
                   height: 20,
@@ -96,12 +86,7 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _emailController,
                   obscureText: false,
                   suffixIcon: HeroIcons.envelope,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Email can't be empty";
-                    }
-                    return null;
-                  },
+                  readyonly: false,
                 ),
                 const SizedBox(
                   height: 20,
@@ -117,6 +102,7 @@ class _CustomercreationState extends State<Customercreation> {
                     }
                     return null;
                   },
+                  readyonly: false,
                   maxLength: 10,
                   keyboardType: TextInputType.phone,
                   obscureText: false,
@@ -136,7 +122,7 @@ class _CustomercreationState extends State<Customercreation> {
                       controller: _areaController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "State can't empty ";
+                          return "Area can't empty ";
                         }
 
                         return null;
@@ -194,36 +180,27 @@ class _CustomercreationState extends State<Customercreation> {
                   height: 20,
                 ),
                 ReusableTextField(
+                  readyonly: true,
                   labelText: 'District',
                   controller: _districtController,
                   obscureText: false,
                   suffixIcon: HeroIcons.globeEuropeAfrica,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "District can't be empty";
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ReusableTextField(
+                  readyonly: true,
                   labelText: 'State',
                   controller: _talukController,
                   obscureText: false,
                   suffixIcon: HeroIcons.buildingOffice,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "State can't be empty";
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ReusableTextField(
+                  readyonly: true,
                   labelText: 'Pincode',
                   maxLength: 6,
                   keyboardType: TextInputType.phone,
@@ -257,6 +234,11 @@ class _CustomercreationState extends State<Customercreation> {
                           });
 
                       if (response.statusCode == 200) {
+                        final Customer customer = Get.put(Customer());
+
+                        customer.customerlist_();
+
+                        Get.back();
                         _usernameController.clear();
                         _pincodeController.clear();
                         _usernameController.clear();
