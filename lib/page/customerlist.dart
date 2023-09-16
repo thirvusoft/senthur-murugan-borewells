@@ -70,7 +70,6 @@ class _CusomerlistState extends State<Cusomerlist> {
                           final user = (sort.isEmpty)
                               ? customer.customerlist[index]
                               : customer.customerfliterlist[index];
-                          print("[]][]][][]][][]][][]");
                           return Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: Container(
@@ -86,11 +85,36 @@ class _CusomerlistState extends State<Cusomerlist> {
                                 ],
                               ),
                               child: ListTile(
-                                  leading: Text((index + 1).toString()),
+                                  leading: Text(
+                                    (index + 1).toString(),
+                                    style: TextStyle(fontSize: 15),
+                                  ),
                                   title: Text(user['customer_name']),
-                                  trailing: const HeroIcon(
-                                    HeroIcons.pencilSquare,
-                                    color: Color(0xFF752FFF),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        width: 45,
+                                        height: 45,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Color(0xFF752FFF),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Color.fromRGBO(
+                                                  230, 233, 230, 1),
+                                              spreadRadius: 2,
+                                              blurRadius: 5,
+                                            ),
+                                          ],
+                                        ),
+                                        child: const HeroIcon(
+                                          HeroIcons.pencilSquare,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   subtitle: Text(user['mobile_no'])),
                             ),
