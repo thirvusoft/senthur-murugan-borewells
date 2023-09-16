@@ -39,10 +39,8 @@ class Loginpage extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0), // Adjust these values as needed
-
-                topRight:
-                    Radius.circular(20.0), // Adjust these values as needed
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
               ),
               color: Colors.white,
             ),
@@ -134,7 +132,6 @@ class Loginpage extends StatelessWidget {
                             await prefs.setString(
                                 'full_name', Response["full_name"]);
                             Get.offAllNamed("/Bottomnavigation");
-
                             response.header['cookie'] =
                                 "${response.header['set-cookie'].toString()};";
                             response.header.removeWhere((key, value) =>
@@ -145,19 +142,31 @@ class Loginpage extends StatelessWidget {
                             var temp = json
                                 .encode(response.header["cookie"])
                                 .toString();
-                            String extractUserImage(String input) {
+                            Object extractUserImage(String input) {
                               RegExp regExp = RegExp(r'user_image=([^;]+)');
+                              RegExp regExp1 = RegExp(r'user_id=([^;]+)');
+
                               Match? match = regExp.firstMatch(input);
+                              Match? match1 = regExp1.firstMatch(input);
+
                               if (match != null) {
-                                return Uri.decodeComponent(match.group(1)!);
+                                return {
+                                  "image": Uri.decodeComponent(match.group(1)!),
+                                  "email":
+                                      Uri.decodeComponent(match1!.group(1)!)
+                                };
                               }
 
                               return "";
                             }
 
+                            List t = [];
+                            t.add((extractUserImage(temp)));
                             var userImage =
-                                "${dotenv.env['API_URL']}${extractUserImage(temp)}";
+                                "${dotenv.env['API_URL']}${t[0]["image"].toString()}";
+                            var email = t[0]["email"];
                             await prefs.setString('image', userImage);
+                            await prefs.setString('email', email);
                           }
                         }
                       },

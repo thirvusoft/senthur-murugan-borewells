@@ -26,6 +26,7 @@ class _HomepageState extends State<Homepage> {
   String customercount_ = "";
   String employeecount_ = "";
   String fullname = "";
+  String email = "";
   var calcount = [];
   String imgurl =
       "https://i.pinimg.com/736x/87/67/64/8767644bc68a14c50addf8cb2de8c59e.jpg";
@@ -79,6 +80,7 @@ class _HomepageState extends State<Homepage> {
         employeecount_ = jsonResponse["message"]["employee"].toString();
         imgurl = prefs.getString('image')!;
         fullname = prefs.getString('full_name')!;
+        email = prefs.getString('email')!;
       });
     }
   }
@@ -103,9 +105,9 @@ class _HomepageState extends State<Homepage> {
         ),
         title: ListTile(
             title: Text(fullname),
-            subtitle: const Text(
-              "vigneshmanimsc@gmail.com",
-              style: TextStyle(color: Color(0xFF752FFF)),
+            subtitle: Text(
+              email,
+              style: const TextStyle(color: Color(0xFF752FFF)),
             )),
         actions: [
           Container(
