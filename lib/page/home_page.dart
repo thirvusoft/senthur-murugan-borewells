@@ -410,7 +410,43 @@ class _HomepageState extends State<Homepage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return PopupWidget();
+        return PopupWidget(
+          title: 'Logout',
+          content:
+              '    Do you want to log out from \n                   Sk Borewell?',
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  TextButton(
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      }),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  ElevatedButton(
+                    child: const Text(
+                      'Yes, Logout',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () async {
+                      final response = await apiService.get("logout", {});
+
+                      if (response.statusCode == 200) {
+                        Get.offAllNamed("/loginpage");
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
       },
     );
   }

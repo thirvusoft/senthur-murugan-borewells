@@ -6,6 +6,7 @@ import 'package:senthur_murugan/page/home_page.dart';
 import 'package:senthur_murugan/page/login_page.dart';
 import 'package:senthur_murugan/page/splash_page.dart';
 import '../page/customer_creation.dart';
+import '../page/expense_entry.dart';
 
 class Routes {
   static String customercreation = '/Customercreation';
@@ -15,6 +16,7 @@ class Routes {
   static String splashscreen = "/splashscreen";
   static String bottomnavigation = '/Bottomnavigation';
   static String customerlist = '/customerlist';
+  static String expense = '/customerlist';
 }
 
 final getPages = [
@@ -42,8 +44,12 @@ final getPages = [
     name: Routes.bottomnavigation,
     page: () => const Bottomnavigation(),
   ),
-   GetPage(
+  GetPage(
     name: Routes.customerlist,
     page: () => const Cusomerlist(),
+  ),
+  GetPage(
+    name: Routes.expense,
+    page: () => const Expenseentry(),
   ),
 ];

@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:senthur_murugan/controller/api.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
+import 'package:senthur_murugan/page/popup.dart';
 import 'package:senthur_murugan/widgets/appbar.dart';
 import 'package:senthur_murugan/widgets/bottomsheet.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
@@ -27,11 +28,15 @@ class _EmployeeState extends State<Employee> {
   final ApiService apiService = ApiService();
   final Customer customer = Get.put(Customer());
   final _attendanceFormKey = GlobalKey<FormState>();
+  final TextEditingController _amountController = TextEditingController();
+
   final TextEditingController searchcontroller = TextEditingController();
   final TextEditingController _dojcontroller = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _expensetypeController = TextEditingController();
+
   List gender = ["Male", "Female"];
   var sort = "";
   @override
@@ -60,7 +65,7 @@ class _EmployeeState extends State<Employee> {
               height: 5,
             ),
             SizedBox(
-              height: 50,
+              height: 40,
               child: ReusableTextField(
                 labelText: 'Search',
                 controller: searchcontroller,
@@ -75,7 +80,8 @@ class _EmployeeState extends State<Employee> {
                 readyonly: false,
               ),
             ),
-            SizedBox(
+            Container(
+                color: Colors.transparent,
                 height: MediaQuery.of(context).size.height / 1.48,
                 child: Obx(
                   () {
@@ -115,25 +121,17 @@ class _EmployeeState extends State<Employee> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Container(
-                                          width: 50,
+                                          width: 40,
+                                          height: 40,
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: const Color.fromARGB(
-                                                255, 241, 77, 65),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                color: Color.fromRGBO(
-                                                    230, 233, 230, 1),
-                                                spreadRadius: 2,
-                                                blurRadius: 5,
-                                              ),
-                                            ],
+                                                BorderRadius.circular(5),
+                                            color: const Color(0xFFffcccc),
                                           ),
                                           child: IconButton(
                                             icon: const Icon(
                                               PhosphorIcons.user_minus_light,
-                                              color: Colors.white,
+                                              color: Color(0xFFff0000),
                                             ),
                                             onPressed: () async {
                                               final response = await apiService.get(
@@ -171,27 +169,20 @@ class _EmployeeState extends State<Employee> {
                                           ),
                                         ),
                                         const SizedBox(
-                                          width: 25,
+                                          width: 15,
                                         ),
                                         Container(
-                                          width: 50,
+                                          width: 40,
+                                          height: 40,
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: Colors.green,
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                color: Color.fromRGBO(
-                                                    230, 233, 230, 1),
-                                                spreadRadius: 2,
-                                                blurRadius: 5,
-                                              ),
-                                            ],
+                                                BorderRadius.circular(5),
+                                            color: const Color(0xffccffcc),
                                           ),
                                           child: IconButton(
                                             icon: const Icon(
                                               PhosphorIcons.user_plus_light,
-                                              color: Colors.white,
+                                              color: Colors.green,
                                             ),
                                             onPressed: () async {
                                               final response = await apiService.get(
@@ -228,6 +219,166 @@ class _EmployeeState extends State<Employee> {
                                             },
                                           ),
                                         ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: const Color(0xFFeee6ff),
+                                          ),
+                                          child: IconButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return PopupWidget(
+                                                      title: 'Expense Entry',
+                                                      content:
+                                                          user['first_name'],
+                                                      child: Column(
+                                                        children: [
+                                                          SearchField(
+                                                            controller:
+                                                                _expensetypeController,
+                                                            suggestions: customer
+                                                                .expenselist
+                                                                .map((String) =>
+                                                                    SearchFieldListItem(
+                                                                        String))
+                                                                .toList(),
+                                                            suggestionState:
+                                                                Suggestion
+                                                                    .expand,
+                                                            onSuggestionTap:
+                                                                (f) async {
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .unfocus();
+                                                            },
+                                                            suggestionsDecoration: SuggestionDecoration(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        top:
+                                                                            10.0,
+                                                                        left: 5,
+                                                                        bottom:
+                                                                            20),
+                                                                color: Colors
+                                                                    .white,
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .all(
+                                                                        Radius.circular(
+                                                                            10))),
+                                                            textInputAction:
+                                                                TextInputAction
+                                                                    .next,
+                                                            marginColor:
+                                                                Colors.white,
+                                                            searchStyle:
+                                                                TextStyle(
+                                                              fontSize: 15,
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.8),
+                                                            ),
+                                                            searchInputDecoration: const InputDecoration(
+                                                                labelText:
+                                                                    "Expense Type",
+                                                                suffixIcon: HeroIcon(
+                                                                    HeroIcons
+                                                                        .queueList),
+                                                                border: OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                            color:
+                                                                                Color(0x0ff2d2e4)))),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 15,
+                                                          ),
+                                                          ReusableDatePickerTextField(
+                                                            controller:
+                                                                _dateController,
+                                                            labelText: 'Date',
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 15,
+                                                          ),
+                                                          ReusableTextField(
+                                                            readyonly: false,
+                                                            labelText: 'Amount',
+                                                            maxLength: 6,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .phone,
+                                                            controller:
+                                                                _amountController,
+                                                            obscureText: false,
+                                                            suffixIcon: HeroIcons
+                                                                .currencyRupee,
+                                                          ),
+                                                          const SizedBox(
+                                                            width: 15,
+                                                          ),
+                                                          CustomFormButton(
+                                                              innerText:
+                                                                  'Submit',
+                                                              onPressed:
+                                                                  () async {
+                                                                print(
+                                                                    "vvvvvvvv");
+                                                                final response =
+                                                                    await apiService
+                                                                        .get(
+                                                                            "ssm_bore_wells.ssm_bore_wells.utlis.api.journal_entry_creation",
+                                                                            {
+                                                                      "exp_type":
+                                                                          _expensetypeController
+                                                                              .text,
+                                                                      "date": _dateController
+                                                                          .text,
+                                                                      "amount":
+                                                                          _amountController
+                                                                              .text,
+                                                                      "custom_employee":
+                                                                          user[
+                                                                              'name'],
+                                                                    });
+                                                                if (response
+                                                                        .statusCode ==
+                                                                    200) {
+                                                                  _expensetypeController
+                                                                      .clear();
+                                                                  _dateController
+                                                                      .clear();
+                                                                  _amountController
+                                                                      .clear();
+                                                                  Get.back();
+                                                                }
+                                                                print(response
+                                                                    .statusCode);
+                                                                print(response
+                                                                    .body);
+                                                              })
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              icon: const HeroIcon(
+                                                HeroIcons.currencyRupee,
+                                                color: Color(0xFF752FFF),
+                                              )),
+                                        ),
                                       ],
                                     ),
                                     subtitle: Text(user['name']),
@@ -238,7 +389,8 @@ class _EmployeeState extends State<Employee> {
                     }
                   },
                 )),
-            SizedBox(
+            Container(
+              color: Colors.transparent,
               height: 62,
               child: Stack(children: [
                 Positioned(

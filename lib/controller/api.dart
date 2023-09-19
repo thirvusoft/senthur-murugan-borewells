@@ -8,11 +8,17 @@ class Customer extends GetxController {
   List territorylist_ = [].obs;
   var employeelist = [].obs;
   var customerlist = [].obs;
+  var expenselist = [].obs;
   var customerlistisLoading = true.obs;
   var employeelistisLoading = true.obs;
-
   var fliterlist = [].obs;
   var customerfliterlist = [].obs;
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    expensetype();
+  }
 
   Future territory(name) async {
     final response = await apiService.get("frappe.desk.search.search_link", {
@@ -101,6 +107,16 @@ class Customer extends GetxController {
         temp.add(name);
         customerfliterlist.value = temp;
       }
+    }
+  }
+
+  Future expensetype() async {
+    expenselist.clear();
+    final response = await apiService
+        .get("ssm_bore_wells.ssm_bore_wells.utlis.api.expense_claim_type", {});
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      expenselist.value = jsonResponse["message"];
     }
   }
 }
