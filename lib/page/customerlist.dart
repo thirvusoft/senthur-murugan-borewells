@@ -150,6 +150,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                     .min,
                                                             children: <Widget>[
                                                               ReusableTextField(
+                                                                maxLength: 10,
                                                                 labelText:
                                                                     'Mobile Number',
                                                                 controller:
@@ -349,10 +350,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                               "pincode": _pincodeController.text
                                                                             })
                                                                           });
-                                                                      print(response
-                                                                          .statusCode);
-                                                                      print(response
-                                                                          .body);
+
                                                                       if (response
                                                                               .statusCode ==
                                                                           200) {

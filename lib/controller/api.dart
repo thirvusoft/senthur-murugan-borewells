@@ -70,7 +70,6 @@ class Customer extends GetxController {
         name['name'] = i["name"];
         temp.add(name);
         fliterlist.value = temp;
-        print(employeelist);
       }
     }
   }
