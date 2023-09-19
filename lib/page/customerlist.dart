@@ -76,268 +76,253 @@ class _CusomerlistState extends State<Cusomerlist> {
                       ],
                     );
                   } else {
-                    return ListView.builder(
-                        itemCount: (sort.isEmpty)
-                            ? customer.customerlist.length
-                            : customer.customerfliterlist.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final user = (sort.isEmpty)
-                              ? customer.customerlist[index]
-                              : customer.customerfliterlist[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(230, 233, 230, 1),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
+                    return RefreshIndicator(
+                        onRefresh: () async {
+                          await Future.delayed(Duration(seconds: 2));
+                          customer.customerlist_();
+                        },
+                        child: ListView.builder(
+                            itemCount: (sort.isEmpty)
+                                ? customer.customerlist.length
+                                : customer.customerfliterlist.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final user = (sort.isEmpty)
+                                  ? customer.customerlist[index]
+                                  : customer.customerfliterlist[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Color.fromRGBO(230, 233, 230, 1),
+                                        spreadRadius: 2,
+                                        blurRadius: 5,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              child: ListTile(
-                                  leading: Text(
-                                    (index + 1).toString(),
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
-                                  title: Text(user['customer_name']),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                          width: 45,
-                                          height: 45,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: const Color(0xFF752FFF),
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                color: Color.fromRGBO(
-                                                    230, 233, 230, 1),
-                                                spreadRadius: 2,
-                                                blurRadius: 5,
+                                  child: ListTile(
+                                      leading: Text(
+                                        (index + 1).toString(),
+                                        style: const TextStyle(fontSize: 15),
+                                      ),
+                                      title: Text(user['customer_name']),
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                              width: 45,
+                                              height: 45,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: const Color(0xFF752FFF),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    color: Color.fromRGBO(
+                                                        230, 233, 230, 1),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 5,
+                                                  ),
+                                                ],
                                               ),
-                                            ],
-                                          ),
-                                          child: IconButton(
-                                            onPressed: () {
-                                              showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return Padding(
-                                                      padding: EdgeInsets.only(
-                                                          bottom: MediaQuery.of(
-                                                                  context)
-                                                              .viewInsets
-                                                              .bottom),
-                                                      child: CustomBottomSheet(
-                                                        title: user[
-                                                            'customer_name'],
-                                                        child:
-                                                            SingleChildScrollView(
-                                                                child: Form(
-                                                          key:
-                                                              _attendanceFormKey,
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: <Widget>[
-                                                              ReusableTextField(
-                                                                maxLength: 10,
-                                                                labelText:
-                                                                    'Mobile Number',
-                                                                controller:
-                                                                    _mobileController,
-                                                                keyboardType:
-                                                                    TextInputType
-                                                                        .phone,
-                                                                obscureText:
-                                                                    false,
-                                                                suffixIcon:
-                                                                    HeroIcons
-                                                                        .devicePhoneMobile,
-                                                                readyonly:
-                                                                    false,
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              ReusableDatePickerTextField(
-                                                                controller:
-                                                                    _dateController,
-                                                                labelText:
-                                                                    'Date Of Brith',
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              Obx(() =>
-                                                                  SearchField(
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  showModalBottomSheet(
+                                                    isScrollControlled: true,
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return Padding(
+                                                          padding: EdgeInsets.only(
+                                                              bottom: MediaQuery
+                                                                      .of(
+                                                                          context)
+                                                                  .viewInsets
+                                                                  .bottom),
+                                                          child:
+                                                              CustomBottomSheet(
+                                                            title: user[
+                                                                'customer_name'],
+                                                            child:
+                                                                SingleChildScrollView(
+                                                                    child: Form(
+                                                              key:
+                                                                  _attendanceFormKey,
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .min,
+                                                                children: <Widget>[
+                                                                  ReusableTextField(
+                                                                    maxLength:
+                                                                        10,
+                                                                    labelText:
+                                                                        'Mobile Number',
                                                                     controller:
-                                                                        _areaController,
-                                                                    suggestions: customer
-                                                                        .territorylist_
-                                                                        .map((String) =>
-                                                                            SearchFieldListItem(String))
-                                                                        .toList(),
-                                                                    suggestionState:
-                                                                        Suggestion
-                                                                            .expand,
-                                                                    onSuggestionTap:
-                                                                        (f) async {
-                                                                      FocusScope.of(
-                                                                              context)
-                                                                          .unfocus();
-                                                                      final response =
-                                                                          await apiService.get(
-                                                                              "ssm_bore_wells.ssm_bore_wells.utlis.api.state_district_list",
-                                                                              {
+                                                                        _mobileController,
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .phone,
+                                                                    obscureText:
+                                                                        false,
+                                                                    suffixIcon:
+                                                                        HeroIcons
+                                                                            .devicePhoneMobile,
+                                                                    readyonly:
+                                                                        false,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  ReusableDatePickerTextField(
+                                                                    controller:
+                                                                        _dateController,
+                                                                    labelText:
+                                                                        'Date Of Brith',
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  Obx(() =>
+                                                                      SearchField(
+                                                                        controller:
+                                                                            _areaController,
+                                                                        suggestions: customer
+                                                                            .territorylist_
+                                                                            .map((String) =>
+                                                                                SearchFieldListItem(String))
+                                                                            .toList(),
+                                                                        suggestionState:
+                                                                            Suggestion.expand,
+                                                                        onSuggestionTap:
+                                                                            (f) async {
+                                                                          FocusScope.of(context)
+                                                                              .unfocus();
+                                                                          final response =
+                                                                              await apiService.get("ssm_bore_wells.ssm_bore_wells.utlis.api.state_district_list", {
                                                                             "territory":
                                                                                 _areaController.text,
                                                                           });
 
-                                                                      if (response
-                                                                              .statusCode ==
-                                                                          200) {
-                                                                        final district =
-                                                                            json.decode(response.body);
+                                                                          if (response.statusCode ==
+                                                                              200) {
+                                                                            final district =
+                                                                                json.decode(response.body);
 
-                                                                        final state =
-                                                                            json.decode(response.body);
+                                                                            final state =
+                                                                                json.decode(response.body);
 
-                                                                        setState(
-                                                                            () {
-                                                                          List<String>
-                                                                              parts =
-                                                                              _areaController.text.split('-');
-                                                                          _pincodeController.text =
-                                                                              parts[1];
-                                                                          _districtController.text =
-                                                                              district["message"]['district'];
-                                                                          _talukController.text =
-                                                                              state["message"]['state'];
-                                                                        });
-                                                                      }
-                                                                    },
-                                                                    suggestionsDecoration: SuggestionDecoration(
-                                                                        padding: const EdgeInsets
-                                                                            .only(
-                                                                            top:
-                                                                                10.0,
-                                                                            left:
-                                                                                5,
-                                                                            bottom:
-                                                                                20),
-                                                                        color: Colors
-                                                                            .white,
-                                                                        borderRadius: const BorderRadius
-                                                                            .all(
-                                                                            Radius.circular(10))),
-                                                                    textInputAction:
-                                                                        TextInputAction
-                                                                            .next,
-                                                                    marginColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    searchStyle:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      color: Colors
-                                                                          .black
-                                                                          .withOpacity(
-                                                                              0.8),
-                                                                    ),
-                                                                    onSearchTextChanged:
-                                                                        (p0) {
-                                                                      customer.territory(
-                                                                          _areaController
-                                                                              .text);
-                                                                    },
-                                                                    searchInputDecoration: const InputDecoration(
-                                                                        labelText:
-                                                                            "Area",
-                                                                        suffixIcon:
-                                                                            HeroIcon(HeroIcons
-                                                                                .mapPin),
-                                                                        border: OutlineInputBorder(
-                                                                            borderSide:
-                                                                                BorderSide(color: Color(0x0ff2d2e4)))),
-                                                                  )),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              ReusableTextField(
-                                                                readyonly: true,
-                                                                labelText:
-                                                                    'District',
-                                                                controller:
-                                                                    _districtController,
-                                                                obscureText:
-                                                                    false,
-                                                                suffixIcon:
-                                                                    HeroIcons
-                                                                        .globeEuropeAfrica,
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 20,
-                                                              ),
-                                                              ReusableTextField(
-                                                                readyonly: true,
-                                                                labelText:
-                                                                    'State',
-                                                                controller:
-                                                                    _talukController,
-                                                                obscureText:
-                                                                    false,
-                                                                suffixIcon:
-                                                                    HeroIcons
-                                                                        .buildingOffice,
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 20,
-                                                              ),
-                                                              ReusableTextField(
-                                                                readyonly: true,
-                                                                labelText:
-                                                                    'Pincode',
-                                                                maxLength: 6,
-                                                                keyboardType:
-                                                                    TextInputType
-                                                                        .phone,
-                                                                controller:
-                                                                    _pincodeController,
-                                                                obscureText:
-                                                                    false,
-                                                                suffixIcon:
-                                                                    HeroIcons
-                                                                        .newspaper,
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 20,
-                                                              ),
-                                                              CustomFormButton(
-                                                                  innerText:
-                                                                      'Submit',
-                                                                  onPressed:
-                                                                      () async {
-                                                                    if (_attendanceFormKey
-                                                                        .currentState!
-                                                                        .validate()) {
-                                                                      final response =
-                                                                          await apiService.get(
-                                                                              "ssm_bore_wells.ssm_bore_wells.utlis.api.customer_update",
-                                                                              {
+                                                                            setState(() {
+                                                                              List<String> parts = _areaController.text.split('-');
+                                                                              _pincodeController.text = parts[1];
+                                                                              _districtController.text = district["message"]['district'];
+                                                                              _talukController.text = state["message"]['state'];
+                                                                            });
+                                                                          }
+                                                                        },
+                                                                        suggestionsDecoration: SuggestionDecoration(
+                                                                            padding: const EdgeInsets.only(
+                                                                                top: 10.0,
+                                                                                left: 5,
+                                                                                bottom: 20),
+                                                                            color: Colors.white,
+                                                                            borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                                                        textInputAction:
+                                                                            TextInputAction.next,
+                                                                        marginColor:
+                                                                            Colors.white,
+                                                                        searchStyle:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              15,
+                                                                          color: Colors
+                                                                              .black
+                                                                              .withOpacity(0.8),
+                                                                        ),
+                                                                        onSearchTextChanged:
+                                                                            (p0) {
+                                                                          customer
+                                                                              .territory(_areaController.text);
+                                                                        },
+                                                                        searchInputDecoration: const InputDecoration(
+                                                                            labelText:
+                                                                                "Area",
+                                                                            suffixIcon:
+                                                                                HeroIcon(HeroIcons.mapPin),
+                                                                            border: OutlineInputBorder(borderSide: BorderSide(color: Color(0x0ff2d2e4)))),
+                                                                      )),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  ReusableTextField(
+                                                                    readyonly:
+                                                                        true,
+                                                                    labelText:
+                                                                        'District',
+                                                                    controller:
+                                                                        _districtController,
+                                                                    obscureText:
+                                                                        false,
+                                                                    suffixIcon:
+                                                                        HeroIcons
+                                                                            .globeEuropeAfrica,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 20,
+                                                                  ),
+                                                                  ReusableTextField(
+                                                                    readyonly:
+                                                                        true,
+                                                                    labelText:
+                                                                        'State',
+                                                                    controller:
+                                                                        _talukController,
+                                                                    obscureText:
+                                                                        false,
+                                                                    suffixIcon:
+                                                                        HeroIcons
+                                                                            .buildingOffice,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 20,
+                                                                  ),
+                                                                  ReusableTextField(
+                                                                    readyonly:
+                                                                        true,
+                                                                    labelText:
+                                                                        'Pincode',
+                                                                    maxLength:
+                                                                        6,
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .phone,
+                                                                    controller:
+                                                                        _pincodeController,
+                                                                    obscureText:
+                                                                        false,
+                                                                    suffixIcon:
+                                                                        HeroIcons
+                                                                            .newspaper,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 20,
+                                                                  ),
+                                                                  CustomFormButton(
+                                                                      innerText:
+                                                                          'Submit',
+                                                                      onPressed:
+                                                                          () async {
+                                                                        if (_attendanceFormKey
+                                                                            .currentState!
+                                                                            .validate()) {
+                                                                          final response =
+                                                                              await apiService.get("ssm_bore_wells.ssm_bore_wells.utlis.api.customer_update", {
                                                                             "customer":
                                                                                 jsonEncode({
                                                                               "name": user['customer_name'],
@@ -351,58 +336,45 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                             })
                                                                           });
 
-                                                                      if (response
-                                                                              .statusCode ==
-                                                                          200) {
-                                                                        Get.back();
-                                                                        final message =
-                                                                            json.decode(response.body);
-                                                                        Get.snackbar(
-                                                                          "Success",
-                                                                          message[
-                                                                              'message'],
-                                                                          icon: const HeroIcon(
-                                                                              HeroIcons.check,
-                                                                              color: Colors.white),
-                                                                          snackPosition:
-                                                                              SnackPosition.BOTTOM,
-                                                                          backgroundColor:
-                                                                              const Color(0x0ff35394E),
-                                                                          borderRadius:
-                                                                              20,
-                                                                          margin: const EdgeInsets
-                                                                              .all(
-                                                                              15),
-                                                                          colorText:
-                                                                              Colors.white,
-                                                                          duration:
-                                                                              const Duration(seconds: 4),
-                                                                          isDismissible:
-                                                                              true,
-                                                                          forwardAnimationCurve:
-                                                                              Curves.easeOutBack,
-                                                                        );
-                                                                      }
-                                                                    }
-                                                                  })
-                                                            ],
-                                                          ),
-                                                        )),
-                                                      ));
+                                                                          if (response.statusCode ==
+                                                                              200) {
+                                                                            Get.back();
+                                                                            final message =
+                                                                                json.decode(response.body);
+                                                                            Get.snackbar(
+                                                                              "Success",
+                                                                              message['message'],
+                                                                              icon: const HeroIcon(HeroIcons.check, color: Colors.white),
+                                                                              snackPosition: SnackPosition.BOTTOM,
+                                                                              backgroundColor: const Color(0x0ff35394E),
+                                                                              borderRadius: 20,
+                                                                              margin: const EdgeInsets.all(15),
+                                                                              colorText: Colors.white,
+                                                                              duration: const Duration(seconds: 4),
+                                                                              isDismissible: true,
+                                                                              forwardAnimationCurve: Curves.easeOutBack,
+                                                                            );
+                                                                          }
+                                                                        }
+                                                                      })
+                                                                ],
+                                                              ),
+                                                            )),
+                                                          ));
+                                                    },
+                                                  );
                                                 },
-                                              );
-                                            },
-                                            icon: const HeroIcon(
-                                              HeroIcons.pencilSquare,
-                                              color: Colors.white,
-                                            ),
-                                          )),
-                                    ],
-                                  ),
-                                  subtitle: Text(user['mobile_no'])),
-                            ),
-                          );
-                        });
+                                                icon: const HeroIcon(
+                                                  HeroIcons.pencilSquare,
+                                                  color: Colors.white,
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                      subtitle: Text(user['mobile_no'])),
+                                ),
+                              );
+                            }));
                   }
                 },
               ),

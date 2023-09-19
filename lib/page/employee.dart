@@ -93,299 +93,309 @@ class _EmployeeState extends State<Employee> {
                         ],
                       );
                     } else {
-                      return ListView.builder(
-                          itemCount: (sort.isEmpty)
-                              ? customer.employeelist.length
-                              : customer.fliterlist.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final user = (sort.isNotEmpty)
-                                ? customer.fliterlist[index]
-                                : customer.employeelist[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 15.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(230, 233, 230, 1),
-                                      spreadRadius: 2,
-                                      blurRadius: 5,
+                      return RefreshIndicator(
+                          onRefresh: () async {
+                            await Future.delayed(Duration(seconds: 2));
+                            customer.employeelist_();
+                          },
+                          child: ListView.builder(
+                              itemCount: (sort.isEmpty)
+                                  ? customer.employeelist.length
+                                  : customer.fliterlist.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final user = (sort.isNotEmpty)
+                                    ? customer.fliterlist[index]
+                                    : customer.employeelist[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 15.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color:
+                                              Color.fromRGBO(230, 233, 230, 1),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                child: ListTile(
-                                    leading: Text((index + 1).toString()),
-                                    trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                          width: 40,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: const Color(0xFFffcccc),
-                                          ),
-                                          child: IconButton(
-                                            icon: const Icon(
-                                              PhosphorIcons.user_minus_light,
-                                              color: Color(0xFFff0000),
-                                            ),
-                                            onPressed: () async {
-                                              final response = await apiService.get(
-                                                  "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
-                                                  {
-                                                    "employee": customer
-                                                            .employeelist[index]
-                                                        ['name'],
-                                                    "status": "Absent"
-                                                  });
+                                    child: ListTile(
+                                        leading: Text((index + 1).toString()),
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: const Color(0xFFffcccc),
+                                              ),
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  PhosphorIcons
+                                                      .user_minus_light,
+                                                  color: Color(0xFFff0000),
+                                                ),
+                                                onPressed: () async {
+                                                  final response =
+                                                      await apiService.get(
+                                                          "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
+                                                          {
+                                                        "employee": customer
+                                                                .employeelist[
+                                                            index]['name'],
+                                                        "status": "Absent"
+                                                      });
 
-                                              final message =
-                                                  json.decode(response.body);
-                                              Get.snackbar(
-                                                "Success",
-                                                message['message'],
-                                                icon: const HeroIcon(
-                                                    HeroIcons.check,
-                                                    color: Colors.white),
-                                                snackPosition:
-                                                    SnackPosition.BOTTOM,
-                                                backgroundColor:
-                                                    const Color(0xff35394e),
-                                                borderRadius: 20,
-                                                margin:
-                                                    const EdgeInsets.all(15),
-                                                colorText: Colors.white,
-                                                duration:
-                                                    const Duration(seconds: 2),
-                                                isDismissible: true,
-                                                forwardAnimationCurve:
-                                                    Curves.easeOutBack,
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                        Container(
-                                          width: 40,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: const Color(0xffccffcc),
-                                          ),
-                                          child: IconButton(
-                                            icon: const Icon(
-                                              PhosphorIcons.user_plus_light,
-                                              color: Colors.green,
+                                                  final message = json
+                                                      .decode(response.body);
+                                                  Get.snackbar(
+                                                    "Success",
+                                                    message['message'],
+                                                    icon: const HeroIcon(
+                                                        HeroIcons.check,
+                                                        color: Colors.white),
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    backgroundColor:
+                                                        const Color(0xff35394e),
+                                                    borderRadius: 20,
+                                                    margin:
+                                                        const EdgeInsets.all(
+                                                            15),
+                                                    colorText: Colors.white,
+                                                    duration: const Duration(
+                                                        seconds: 2),
+                                                    isDismissible: true,
+                                                    forwardAnimationCurve:
+                                                        Curves.easeOutBack,
+                                                  );
+                                                },
+                                              ),
                                             ),
-                                            onPressed: () async {
-                                              final response = await apiService.get(
-                                                  "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
-                                                  {
-                                                    "employee": customer
-                                                            .employeelist[index]
-                                                        ['name'],
-                                                    "status": "Present"
-                                                  });
+                                            const SizedBox(
+                                              width: 15,
+                                            ),
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: const Color(0xffccffcc),
+                                              ),
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  PhosphorIcons.user_plus_light,
+                                                  color: Colors.green,
+                                                ),
+                                                onPressed: () async {
+                                                  final response =
+                                                      await apiService.get(
+                                                          "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
+                                                          {
+                                                        "employee": customer
+                                                                .employeelist[
+                                                            index]['name'],
+                                                        "status": "Present"
+                                                      });
 
-                                              final message =
-                                                  json.decode(response.body);
-                                              Get.snackbar(
-                                                "Success",
-                                                message['message'],
-                                                icon: const HeroIcon(
-                                                    HeroIcons.check,
-                                                    color: Colors.white),
-                                                snackPosition:
-                                                    SnackPosition.BOTTOM,
-                                                backgroundColor:
-                                                    const Color(0xff35394e),
-                                                borderRadius: 20,
-                                                margin:
-                                                    const EdgeInsets.all(15),
-                                                colorText: Colors.white,
-                                                duration:
-                                                    const Duration(seconds: 4),
-                                                isDismissible: true,
-                                                forwardAnimationCurve:
-                                                    Curves.easeOutBack,
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 15,
-                                        ),
-                                        Container(
-                                          width: 40,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            color: const Color(0xFFeee6ff),
-                                          ),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return PopupWidget(
-                                                      title: 'Expense Entry',
-                                                      content:
-                                                          user['first_name'],
-                                                      child: Column(
-                                                        children: [
-                                                          SearchField(
-                                                            controller:
-                                                                _expensetypeController,
-                                                            suggestions: customer
-                                                                .expenselist
-                                                                .map((String) =>
-                                                                    SearchFieldListItem(
-                                                                        String))
-                                                                .toList(),
-                                                            suggestionState:
-                                                                Suggestion
-                                                                    .expand,
-                                                            onSuggestionTap:
-                                                                (f) async {
-                                                              FocusScope.of(
-                                                                      context)
-                                                                  .unfocus();
-                                                            },
-                                                            suggestionsDecoration: SuggestionDecoration(
-                                                                padding:
-                                                                    const EdgeInsets
+                                                  final message = json
+                                                      .decode(response.body);
+                                                  Get.snackbar(
+                                                    "Success",
+                                                    message['message'],
+                                                    icon: const HeroIcon(
+                                                        HeroIcons.check,
+                                                        color: Colors.white),
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    backgroundColor:
+                                                        const Color(0xff35394e),
+                                                    borderRadius: 20,
+                                                    margin:
+                                                        const EdgeInsets.all(
+                                                            15),
+                                                    colorText: Colors.white,
+                                                    duration: const Duration(
+                                                        seconds: 4),
+                                                    isDismissible: true,
+                                                    forwardAnimationCurve:
+                                                        Curves.easeOutBack,
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 15,
+                                            ),
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: const Color(0xFFeee6ff),
+                                              ),
+                                              child: IconButton(
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return PopupWidget(
+                                                          title:
+                                                              'Expense Entry',
+                                                          content: user[
+                                                              'first_name'],
+                                                          child: Column(
+                                                            children: [
+                                                              SearchField(
+                                                                controller:
+                                                                    _expensetypeController,
+                                                                suggestions: customer
+                                                                    .expenselist
+                                                                    .map((String) =>
+                                                                        SearchFieldListItem(
+                                                                            String))
+                                                                    .toList(),
+                                                                suggestionState:
+                                                                    Suggestion
+                                                                        .expand,
+                                                                onSuggestionTap:
+                                                                    (f) async {
+                                                                  FocusScope.of(
+                                                                          context)
+                                                                      .unfocus();
+                                                                },
+                                                                suggestionsDecoration: SuggestionDecoration(
+                                                                    padding: const EdgeInsets
                                                                         .only(
                                                                         top:
                                                                             10.0,
                                                                         left: 5,
                                                                         bottom:
                                                                             20),
-                                                                color: Colors
-                                                                    .white,
-                                                                borderRadius:
-                                                                    const BorderRadius
-                                                                        .all(
-                                                                        Radius.circular(
-                                                                            10))),
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            marginColor:
-                                                                Colors.white,
-                                                            searchStyle:
-                                                                TextStyle(
-                                                              fontSize: 15,
-                                                              color: Colors
-                                                                  .black
-                                                                  .withOpacity(
-                                                                      0.8),
-                                                            ),
-                                                            searchInputDecoration: const InputDecoration(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    borderRadius:
+                                                                        const BorderRadius
+                                                                            .all(
+                                                                            Radius.circular(10))),
+                                                                textInputAction:
+                                                                    TextInputAction
+                                                                        .next,
+                                                                marginColor:
+                                                                    Colors
+                                                                        .white,
+                                                                searchStyle:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                  color: Colors
+                                                                      .black
+                                                                      .withOpacity(
+                                                                          0.8),
+                                                                ),
+                                                                searchInputDecoration: const InputDecoration(
+                                                                    labelText:
+                                                                        "Expense Type",
+                                                                    suffixIcon: HeroIcon(
+                                                                        HeroIcons
+                                                                            .queueList),
+                                                                    border: OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(color: Color(0x0ff2d2e4)))),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 15,
+                                                              ),
+                                                              ReusableDatePickerTextField(
+                                                                controller:
+                                                                    _dateController,
                                                                 labelText:
-                                                                    "Expense Type",
-                                                                suffixIcon: HeroIcon(
+                                                                    'Date',
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 15,
+                                                              ),
+                                                              ReusableTextField(
+                                                                readyonly:
+                                                                    false,
+                                                                labelText:
+                                                                    'Amount',
+                                                                maxLength: 6,
+                                                                keyboardType:
+                                                                    TextInputType
+                                                                        .phone,
+                                                                controller:
+                                                                    _amountController,
+                                                                obscureText:
+                                                                    false,
+                                                                suffixIcon:
                                                                     HeroIcons
-                                                                        .queueList),
-                                                                border: OutlineInputBorder(
-                                                                    borderSide:
-                                                                        BorderSide(
-                                                                            color:
-                                                                                Color(0x0ff2d2e4)))),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 15,
-                                                          ),
-                                                          ReusableDatePickerTextField(
-                                                            controller:
-                                                                _dateController,
-                                                            labelText: 'Date',
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 15,
-                                                          ),
-                                                          ReusableTextField(
-                                                            readyonly: false,
-                                                            labelText: 'Amount',
-                                                            maxLength: 6,
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .phone,
-                                                            controller:
-                                                                _amountController,
-                                                            obscureText: false,
-                                                            suffixIcon: HeroIcons
-                                                                .currencyRupee,
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 15,
-                                                          ),
-                                                          CustomFormButton(
-                                                              innerText:
-                                                                  'Submit',
-                                                              onPressed:
-                                                                  () async {
-                                                                print(
-                                                                    "vvvvvvvv");
-                                                                final response =
-                                                                    await apiService
-                                                                        .get(
+                                                                        .currencyRupee,
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 15,
+                                                              ),
+                                                              CustomFormButton(
+                                                                  innerText:
+                                                                      'Submit',
+                                                                  onPressed:
+                                                                      () async {
+                                                                    print(
+                                                                        "vvvvvvvv");
+                                                                    final response =
+                                                                        await apiService.get(
                                                                             "ssm_bore_wells.ssm_bore_wells.utlis.api.journal_entry_creation",
                                                                             {
-                                                                      "exp_type":
-                                                                          _expensetypeController
-                                                                              .text,
-                                                                      "date": _dateController
-                                                                          .text,
-                                                                      "amount":
-                                                                          _amountController
-                                                                              .text,
-                                                                      "custom_employee":
-                                                                          user[
-                                                                              'name'],
-                                                                    });
-                                                                if (response
-                                                                        .statusCode ==
-                                                                    200) {
-                                                                  _expensetypeController
-                                                                      .clear();
-                                                                  _dateController
-                                                                      .clear();
-                                                                  _amountController
-                                                                      .clear();
-                                                                  Get.back();
-                                                                }
-                                                                print(response
-                                                                    .statusCode);
-                                                                print(response
-                                                                    .body);
-                                                              })
-                                                        ],
-                                                      ),
+                                                                          "exp_type":
+                                                                              _expensetypeController.text,
+                                                                          "date":
+                                                                              _dateController.text,
+                                                                          "amount":
+                                                                              _amountController.text,
+                                                                          "custom_employee":
+                                                                              user['name'],
+                                                                        });
+                                                                    if (response
+                                                                            .statusCode ==
+                                                                        200) {
+                                                                      _expensetypeController
+                                                                          .clear();
+                                                                      _dateController
+                                                                          .clear();
+                                                                      _amountController
+                                                                          .clear();
+                                                                      Get.back();
+                                                                    }
+                                                                    print(response
+                                                                        .statusCode);
+                                                                    print(response
+                                                                        .body);
+                                                                  })
+                                                            ],
+                                                          ),
+                                                        );
+                                                      },
                                                     );
                                                   },
-                                                );
-                                              },
-                                              icon: const HeroIcon(
-                                                HeroIcons.currencyRupee,
-                                                color: Color(0xFF752FFF),
-                                              )),
+                                                  icon: const HeroIcon(
+                                                    HeroIcons.currencyRupee,
+                                                    color: Color(0xFF752FFF),
+                                                  )),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                    subtitle: Text(user['name']),
-                                    title: Text(user['first_name'])),
-                              ),
-                            );
-                          });
+                                        subtitle: Text(user['name']),
+                                        title: Text(user['first_name'])),
+                                  ),
+                                );
+                              }));
                     }
                   },
                 )),
