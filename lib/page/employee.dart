@@ -150,30 +150,57 @@ class _EmployeeState extends State<Employee> {
                                                             index]['name'],
                                                         "status": "Absent"
                                                       });
+                                                  if (response.statusCode ==
+                                                      200) {
+                                                    final message = json
+                                                        .decode(response.body);
 
-                                                  final message = json
-                                                      .decode(response.body);
-                                                  Get.snackbar(
-                                                    "Success",
-                                                    message['message'],
-                                                    icon: const HeroIcon(
-                                                        HeroIcons.check,
-                                                        color: Colors.white),
-                                                    snackPosition:
-                                                        SnackPosition.BOTTOM,
-                                                    backgroundColor:
-                                                        const Color(0xff35394e),
-                                                    borderRadius: 20,
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            15),
-                                                    colorText: Colors.white,
-                                                    duration: const Duration(
-                                                        seconds: 2),
-                                                    isDismissible: true,
-                                                    forwardAnimationCurve:
-                                                        Curves.easeOutBack,
-                                                  );
+                                                    Get.snackbar(
+                                                      "Success",
+                                                      message['message'],
+                                                      icon: const HeroIcon(
+                                                          HeroIcons.check,
+                                                          color: Colors.white),
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xff35394e),
+                                                      borderRadius: 20,
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      colorText: Colors.white,
+                                                      duration: const Duration(
+                                                          seconds: 2),
+                                                      isDismissible: true,
+                                                      forwardAnimationCurve:
+                                                          Curves.easeOutBack,
+                                                    );
+                                                  } else {
+                                                    Get.snackbar(
+                                                      "Failed",
+                                                      "Duplicate Entry",
+                                                      icon: const HeroIcon(
+                                                          HeroIcons.xCircle,
+                                                          color: Colors.white),
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xff35394e),
+                                                      borderRadius: 20,
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      colorText: Colors.white,
+                                                      duration: const Duration(
+                                                          seconds: 2),
+                                                      isDismissible: true,
+                                                      forwardAnimationCurve:
+                                                          Curves.easeOutBack,
+                                                    );
+                                                  }
                                                 },
                                               ),
                                             ),
@@ -204,29 +231,57 @@ class _EmployeeState extends State<Employee> {
                                                         "status": "Present"
                                                       });
 
-                                                  final message = json
-                                                      .decode(response.body);
-                                                  Get.snackbar(
-                                                    "Success",
-                                                    message['message'],
-                                                    icon: const HeroIcon(
-                                                        HeroIcons.check,
-                                                        color: Colors.white),
-                                                    snackPosition:
-                                                        SnackPosition.BOTTOM,
-                                                    backgroundColor:
-                                                        const Color(0xff35394e),
-                                                    borderRadius: 20,
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            15),
-                                                    colorText: Colors.white,
-                                                    duration: const Duration(
-                                                        seconds: 4),
-                                                    isDismissible: true,
-                                                    forwardAnimationCurve:
-                                                        Curves.easeOutBack,
-                                                  );
+                                                  if (response.statusCode ==
+                                                      200) {
+                                                    final message = json
+                                                        .decode(response.body);
+
+                                                    Get.snackbar(
+                                                      "Success",
+                                                      message['message'],
+                                                      icon: const HeroIcon(
+                                                          HeroIcons.check,
+                                                          color: Colors.white),
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xff35394e),
+                                                      borderRadius: 20,
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      colorText: Colors.white,
+                                                      duration: const Duration(
+                                                          seconds: 1),
+                                                      isDismissible: true,
+                                                      forwardAnimationCurve:
+                                                          Curves.easeOutBack,
+                                                    );
+                                                  } else {
+                                                    Get.snackbar(
+                                                      "Failed",
+                                                      "Duplicate Entry",
+                                                      icon: const HeroIcon(
+                                                          HeroIcons.xCircle,
+                                                          color: Colors.white),
+                                                      snackPosition:
+                                                          SnackPosition.BOTTOM,
+                                                      backgroundColor:
+                                                          const Color(
+                                                              0xff35394e),
+                                                      borderRadius: 20,
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      colorText: Colors.white,
+                                                      duration: const Duration(
+                                                          seconds: 1),
+                                                      isDismissible: true,
+                                                      forwardAnimationCurve:
+                                                          Curves.easeOutBack,
+                                                    );
+                                                  }
                                                 },
                                               ),
                                             ),
