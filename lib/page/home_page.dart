@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
+import 'package:senthur_murugan/page/popup.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +26,7 @@ class _HomepageState extends State<Homepage> {
   String customercount_ = "";
   String employeecount_ = "";
   String fullname = "";
+  String email = "";
   var calcount = [];
   String imgurl =
       "https://i.pinimg.com/736x/87/67/64/8767644bc68a14c50addf8cb2de8c59e.jpg";
@@ -77,6 +80,7 @@ class _HomepageState extends State<Homepage> {
         employeecount_ = jsonResponse["message"]["employee"].toString();
         imgurl = prefs.getString('image')!;
         fullname = prefs.getString('full_name')!;
+        email = prefs.getString('email')!;
       });
     }
   }
@@ -101,20 +105,41 @@ class _HomepageState extends State<Homepage> {
         ),
         title: ListTile(
             title: Text(fullname),
-            subtitle: const Text(
-              "vigneshmanimsc@gmail.com",
-              style: TextStyle(color: Color(0xFF752FFF)),
+            subtitle: Text(
+              email,
+              style: const TextStyle(color: Color(0xFF752FFF)),
             )),
         actions: [
-          IconButton(
-            onPressed: () async {
-              final response = await apiService.get("logout", {});
+          Container(
+            width: 45,
+            height: 45,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromRGBO(230, 233, 230, 1),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                ),
+              ],
+            ),
+            child: IconButton(
+              onPressed: () async {
+                showPopup(context);
 
-              if (response.statusCode == 200) {
-                Get.offAllNamed("/loginpage");
-              }
-            },
-            icon: const Icon(Icons.exit_to_app_outlined),
+                // PopupWidget();
+                // final response = await apiService.get("logout", {});
+
+                // if (response.statusCode == 200) {
+                //   Get.offAllNamed("/loginpage");
+                // }
+                // },
+              },
+              icon: const Icon(
+                PhosphorIcons.sign_out_light,
+              ),
+            ),
           )
         ],
       ),
@@ -378,6 +403,51 @@ class _HomepageState extends State<Homepage> {
           ),
         ),
       ),
+    );
+  }
+
+  void showPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return PopupWidget(
+          title: 'Logout',
+          content:
+              '    Do you want to log out from \n                   Sk Borewell?',
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  TextButton(
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      }),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  ElevatedButton(
+                    child: const Text(
+                      'Yes, Logout',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () async {
+                      final response = await apiService.get("logout", {});
+
+                      if (response.statusCode == 200) {
+                        Get.offAllNamed("/loginpage");
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
