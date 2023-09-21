@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:get/get.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -57,9 +58,6 @@ class _HomepageState extends State<Homepage> {
   @override
   void initState() {
     super.initState();
-    print("dummmmyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-    print(dummyData2);
-    chart();
     count();
     attendance();
     creationcreate();
@@ -74,33 +72,39 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  chart() async {
-    final response = await apiService.get(
-        "ssm_bore_wells.ssm_bore_wells.utlis.api.account_amount",
-        {"from_date": "2023-09-19", "to_date": "2023-09-20"});
-    print("sdsfddsndsnvjdnvvsvnsdvnsdv");
-    var response_ = json.decode(response.body);
-    List<FlSpot> jsonData = [];
+  // chart() async {
+  //   final response = await apiService.get(
+  //       "ssm_bore_wells.ssm_bore_wells.utlis.api.account_amount",
+  //       {"from_date": "2023-09-19", "to_date": "2023-09-20"});
+  //   print("sdsfddsndsnvjdnvvsvnsdvnsdv");
+  //   var response_ = json.decode(response.body);
+  //   List<FlSpot> jsonData = [];
+  //   jsonData.add(FlSpot(0.0, 0.0));
 
-    print(response.statusCode);
-    for (var item in response_['message']) {
-      print(item['name']);
-      double value = item['value'].toDouble();
-      double roundedValue = (value / 100).round() * 1;
+  //   print(response.statusCode);
+  //   for (var item in response_['message']) {
+  //     print(item['name']);
+  //     double value = item['value'].toDouble();
+  //     double roundedValue = 0;
+  //     if (value >= 1000) {
+  //       roundedValue = (value / 10000.round());
+  //     } else {
+  //       roundedValue = (value / 1000.round());
+  //     }
 
-      print("sssssssssssss" + "" + roundedValue.toString());
-      // Create FlSpot objects and add them tpo the list
-      jsonData.add(FlSpot(
-        response_['message'].indexOf(item).toDouble(),
-        roundedValue,
-      ));
-    }
-    setState(() {
-      dummyData5 = jsonData;
-    });
-    print(jsonData);
-    print(dummyData5);
-  }
+  //     print("sssssssssssss" + "" + roundedValue.toString());
+  //     // Create FlSpot objects and add them tpo the list
+  //     jsonData.add(FlSpot(
+  //       response_['message'].indexOf(item).toDouble(),
+  //       roundedValue,
+  //     ));
+  //   }
+  //   setState(() {
+  //     dummyData5 = jsonData;
+  //   });
+  //   print(jsonData);
+  //   print(dummyData5);
+  // }
 
   attendance() async {
     DateTime today = DateTime.now();
@@ -166,6 +170,15 @@ class _HomepageState extends State<Homepage> {
               style: const TextStyle(color: Color(0xFF752FFF)),
             )),
         actions: [
+          IconButton(
+            onPressed: () async {
+              Get.toNamed('/dashboard');
+            },
+            icon: const HeroIcon(HeroIcons.wallet),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
           Container(
             width: 45,
             height: 45,
@@ -204,124 +217,121 @@ class _HomepageState extends State<Homepage> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                height: 300,
-                child: LineChart(
-                  LineChartData(
-                    borderData: FlBorderData(
-                        border: const Border(
-                            bottom: BorderSide(), left: BorderSide())),
-                    titlesData: FlTitlesData(
-                      bottomTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 30,
-                        getTitlesWidget: (value, meta) {
-                          String text = '';
+              // SizedBox(
+              //   height: 300,
+              //   child: LineChart(
+              //     LineChartData(
+              //       borderData: FlBorderData(
+              //           border: const Border(
+              //               bottom: BorderSide(), left: BorderSide())),
+              //       titlesData: FlTitlesData(
+              //         bottomTitles: AxisTitles(
+              //             sideTitles: SideTitles(
+              //           showTitles: true,
+              //           reservedSize: 30,
+              //           getTitlesWidget: (value, meta) {
+              //             String text = '';
 
-                          switch (value.toInt()) {
-                            case 1:
-                              text = 'Medical';
-                              break;
-                            case 3:
-                              text = 'Others';
-                              break;
-                            case 5:
-                              text = 'Travel';
-                              break;
-                            case 7:
-                              text = 'Fule';
-                              break;
-                            case 9:
-                              text = 'Food';
-                              break;
-                          }
+              //             switch (value.toInt()) {
+              //               case 1:
+              //                 text = 'Medical';
+              //                 break;
+              //               case 3:
+              //                 text = 'Others';
+              //                 break;
+              //               case 5:
+              //                 text = 'Travel';
+              //                 break;
+              //               case 7:
+              //                 text = 'Fule';
+              //                 break;
+              //               case 9:
+              //                 text = 'Food';
+              //                 break;
+              //             }
 
-                          return Text(
-                            text,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          );
-                        },
-                      )),
-                      leftTitles: AxisTitles(
-                          sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: (value, meta) {
-                          String text = '';
-                          switch (value.toInt()) {
-                            case 1:
-                              text = '100';
-                              break;
-                            case 2:
-                              text = '500';
-                              break;
-                            case 3:
-                              text = '1000';
-                              break;
-                            case 4:
-                              text = '1500';
-                              break;
-                            case 5:
-                              text = '2000';
-                              break;
-                          }
+              //             return Text(
+              //               text,
+              //               style: const TextStyle(
+              //                 color: Colors.black,
+              //                 fontWeight: FontWeight.bold,
+              //               ),
+              //             );
+              //           },
+              //         )),
+              //         leftTitles: AxisTitles(
+              //             sideTitles: SideTitles(
+              //           showTitles: true,
+              //           getTitlesWidget: (value, meta) {
+              //             String text = '';
+              //             switch (value.toInt()) {
+              //               case 1:
+              //                 text = '100';
+              //                 break;
+              //               case 2:
+              //                 text = '500';
+              //                 break;
+              //               case 3:
+              //                 text = '1000';
+              //                 break;
+              //               case 4:
+              //                 text = '1500';
+              //                 break;
+              //               case 5:
+              //                 text = '2000';
+              //                 break;
+              //             }
 
-                          return Text(
-                            text,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          );
-                        },
-                      )),
-                      topTitles:
-                          AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                      rightTitles:
-                          AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                    ),
-                    lineBarsData: [
-                      // The red line
-                      LineChartBarData(
-                        spots: dummyData1,
-                        isCurved: true,
-                        barWidth: 3,
-                        color: Colors.indigo,
-                      ),
-                      // The orange line
-                      LineChartBarData(
-                        spots: dummyData2,
-                        isCurved: true,
-                        barWidth: 3,
-                        color: Colors.red,
-                      ),
-                      // The blue line
-                      LineChartBarData(
-                        preventCurveOverShooting: true,
-                        isStrokeCapRound: true,
-                        curveSmoothness: 0.35,
-                        spots: dummyData3,
-                        isCurved: true,
-                        barWidth: 3,
-                        color: Colors.blue,
-                      ),
-                      LineChartBarData(
-                        spots: dummyData5,
-                        isCurved: true,
-                        barWidth: 3,
-                        color: Colors.black,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              //             return Text(
+              //               text,
+              //               style: const TextStyle(
+              //                 color: Colors.black,
+              //                 fontWeight: FontWeight.bold,
+              //                 fontSize: 12,
+              //               ),
+              //             );
+              //           },
+              //         )),
+              //         topTitles:
+              //             AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              //         rightTitles:
+              //             AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              //       ),
+              //       lineBarsData: [
+              //         // The red line
+              //         LineChartBarData(
+              //           spots: dummyData1,
+              //           isCurved: true,
+              //           barWidth: 3,
+              //           color: Colors.indigo,
+              //         ),
+              //         // The orange line
+              //         LineChartBarData(
+              //           spots: dummyData2,
+              //           isCurved: true,
+              //           barWidth: 3,
+              //           color: Colors.red,
+              //         ),
+              //         // The blue line
+              //         LineChartBarData(
+              //           preventCurveOverShooting: true,
+              //           isStrokeCapRound: true,
+              //           curveSmoothness: 0.35,
+              //           spots: dummyData3,
+              //           isCurved: true,
+              //           barWidth: 3,
+              //           color: Colors.blue,
+              //         ),
+              //         LineChartBarData(
+              //           spots: dummyData5,
+              //           isCurved: true,
+              //           barWidth: 3,
+              //           color: Colors.black,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 25,
               ),

@@ -5,11 +5,12 @@ class ReusableDatePickerTextField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
   final FormFieldValidator<String>? validator;
-
+  final VoidCallback? onTap;
   const ReusableDatePickerTextField({
     required this.controller,
     required this.labelText,
     this.validator,
+    this.onTap,
   });
 
   @override
@@ -24,11 +25,14 @@ class _ReusableDatePickerTextFieldState
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1950),
-      lastDate: DateTime(2101),
+      lastDate: DateTime.now(),
     );
 
     if (pickedDate != null && pickedDate != widget.controller.text) {
       widget.controller.text = pickedDate.toString().substring(0, 10);
+      if (widget.onTap != null) {
+        widget.onTap!(); // Call the onTap callback after selecting a date
+      }
     }
   }
 
@@ -47,7 +51,9 @@ class _ReusableDatePickerTextFieldState
       ),
       style: const TextStyle(),
       readOnly: true,
-      onTap: () => _selectDate(context),
+      onTap: () {
+        _selectDate(context);
+      },
     );
   }
 }

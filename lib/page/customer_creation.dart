@@ -118,9 +118,7 @@ class _CustomercreationState extends State<Customercreation> {
                 const SizedBox(
                   height: 20,
                 ),
-                Obx(() => 
-                
-                SearchField(
+                Obx(() => SearchField(
                       controller: _areaController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {

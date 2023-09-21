@@ -402,8 +402,7 @@ class _EmployeeState extends State<Employee> {
                                                                       'Submit',
                                                                   onPressed:
                                                                       () async {
-                                                                    print(
-                                                                        "vvvvvvvv");
+                                                                    
                                                                     final response =
                                                                         await apiService.get(
                                                                             "ssm_bore_wells.ssm_bore_wells.utlis.api.journal_entry_creation",
@@ -428,10 +427,7 @@ class _EmployeeState extends State<Employee> {
                                                                           .clear();
                                                                       Get.back();
                                                                     }
-                                                                    print(response
-                                                                        .statusCode);
-                                                                    print(response
-                                                                        .body);
+                                                                   
                                                                   })
                                                             ],
                                                           ),
