@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:math';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:get/get.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +13,7 @@ import 'package:senthur_murugan/page/popup.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -20,6 +24,8 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final ApiService apiService = ApiService();
+  final List points = [];
+
   double percentage = 0.0;
   String present = "0";
   String absent = "0";
@@ -28,12 +34,30 @@ class _HomepageState extends State<Homepage> {
   String fullname = "";
   String email = "";
   var calcount = [];
+  List<FlSpot> dummyData5 = [];
+  final List<FlSpot> dummyData1 = List.generate(7, (index) {
+    return FlSpot(index.toDouble(), index * Random().nextDouble());
+  });
+
+  // This will be used to draw the orange line
+  final List<FlSpot> dummyData2 = List.generate(7, (index) {
+    return FlSpot(index.toDouble(), index * Random().nextDouble());
+  });
+
+  // This will be used to draw the blue line
+  final List<FlSpot> dummyData3 = List.generate(7, (index) {
+    return FlSpot(index.toDouble(), index * Random().nextDouble());
+  });
+
+  final List<FlSpot> dummyData4 = List.generate(7, (index) {
+    return FlSpot(index.toDouble(), index * Random().nextDouble());
+  });
+
   String imgurl =
       "https://i.pinimg.com/736x/87/67/64/8767644bc68a14c50addf8cb2de8c59e.jpg";
   @override
   void initState() {
     super.initState();
-
     count();
     attendance();
     creationcreate();
@@ -43,8 +67,44 @@ class _HomepageState extends State<Homepage> {
     final response = await apiService.get(
         "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_customers_count", {});
     var response_ = json.decode(response.body);
-    calcount = (response_["message"]);
+    setState(() {
+      calcount = (response_["message"]);
+    });
   }
+
+  // chart() async {
+  //   final response = await apiService.get(
+  //       "ssm_bore_wells.ssm_bore_wells.utlis.api.account_amount",
+  //       {"from_date": "2023-09-19", "to_date": "2023-09-20"});
+  //   print("sdsfddsndsnvjdnvvsvnsdvnsdv");
+  //   var response_ = json.decode(response.body);
+  //   List<FlSpot> jsonData = [];
+  //   jsonData.add(FlSpot(0.0, 0.0));
+
+  //   print(response.statusCode);
+  //   for (var item in response_['message']) {
+  //     print(item['name']);
+  //     double value = item['value'].toDouble();
+  //     double roundedValue = 0;
+  //     if (value >= 1000) {
+  //       roundedValue = (value / 10000.round());
+  //     } else {
+  //       roundedValue = (value / 1000.round());
+  //     }
+
+  //     print("sssssssssssss" + "" + roundedValue.toString());
+  //     // Create FlSpot objects and add them tpo the list
+  //     jsonData.add(FlSpot(
+  //       response_['message'].indexOf(item).toDouble(),
+  //       roundedValue,
+  //     ));
+  //   }
+  //   setState(() {
+  //     dummyData5 = jsonData;
+  //   });
+  //   print(jsonData);
+  //   print(dummyData5);
+  // }
 
   attendance() async {
     DateTime today = DateTime.now();
@@ -110,6 +170,15 @@ class _HomepageState extends State<Homepage> {
               style: const TextStyle(color: Color(0xFF752FFF)),
             )),
         actions: [
+          IconButton(
+            onPressed: () async {
+              Get.toNamed('/dashboard');
+            },
+            icon: const HeroIcon(HeroIcons.wallet),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
           Container(
             width: 45,
             height: 45,
@@ -148,6 +217,121 @@ class _HomepageState extends State<Homepage> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              // SizedBox(
+              //   height: 300,
+              //   child: LineChart(
+              //     LineChartData(
+              //       borderData: FlBorderData(
+              //           border: const Border(
+              //               bottom: BorderSide(), left: BorderSide())),
+              //       titlesData: FlTitlesData(
+              //         bottomTitles: AxisTitles(
+              //             sideTitles: SideTitles(
+              //           showTitles: true,
+              //           reservedSize: 30,
+              //           getTitlesWidget: (value, meta) {
+              //             String text = '';
+
+              //             switch (value.toInt()) {
+              //               case 1:
+              //                 text = 'Medical';
+              //                 break;
+              //               case 3:
+              //                 text = 'Others';
+              //                 break;
+              //               case 5:
+              //                 text = 'Travel';
+              //                 break;
+              //               case 7:
+              //                 text = 'Fule';
+              //                 break;
+              //               case 9:
+              //                 text = 'Food';
+              //                 break;
+              //             }
+
+              //             return Text(
+              //               text,
+              //               style: const TextStyle(
+              //                 color: Colors.black,
+              //                 fontWeight: FontWeight.bold,
+              //               ),
+              //             );
+              //           },
+              //         )),
+              //         leftTitles: AxisTitles(
+              //             sideTitles: SideTitles(
+              //           showTitles: true,
+              //           getTitlesWidget: (value, meta) {
+              //             String text = '';
+              //             switch (value.toInt()) {
+              //               case 1:
+              //                 text = '100';
+              //                 break;
+              //               case 2:
+              //                 text = '500';
+              //                 break;
+              //               case 3:
+              //                 text = '1000';
+              //                 break;
+              //               case 4:
+              //                 text = '1500';
+              //                 break;
+              //               case 5:
+              //                 text = '2000';
+              //                 break;
+              //             }
+
+              //             return Text(
+              //               text,
+              //               style: const TextStyle(
+              //                 color: Colors.black,
+              //                 fontWeight: FontWeight.bold,
+              //                 fontSize: 12,
+              //               ),
+              //             );
+              //           },
+              //         )),
+              //         topTitles:
+              //             AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              //         rightTitles:
+              //             AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              //       ),
+              //       lineBarsData: [
+              //         // The red line
+              //         LineChartBarData(
+              //           spots: dummyData1,
+              //           isCurved: true,
+              //           barWidth: 3,
+              //           color: Colors.indigo,
+              //         ),
+              //         // The orange line
+              //         LineChartBarData(
+              //           spots: dummyData2,
+              //           isCurved: true,
+              //           barWidth: 3,
+              //           color: Colors.red,
+              //         ),
+              //         // The blue line
+              //         LineChartBarData(
+              //           preventCurveOverShooting: true,
+              //           isStrokeCapRound: true,
+              //           curveSmoothness: 0.35,
+              //           spots: dummyData3,
+              //           isCurved: true,
+              //           barWidth: 3,
+              //           color: Colors.blue,
+              //         ),
+              //         LineChartBarData(
+              //           spots: dummyData5,
+              //           isCurved: true,
+              //           barWidth: 3,
+              //           color: Colors.black,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               const SizedBox(
                 height: 25,
               ),
@@ -450,4 +634,33 @@ class _HomepageState extends State<Homepage> {
       },
     );
   }
+
+  // SideTitles get _bottomTitles => SideTitles(
+  //       showTitles: true,
+  //       getTitlesWidget: (value, meta) {
+  //         String text = '';
+  //         switch (value.toInt()) {
+  //           case 1:
+  //             text = 'Jan';
+  //             break;
+  //           case 3:
+  //             text = 'Mar';
+  //             break;
+  //           case 5:
+  //             text = 'May';
+  //             break;
+  //           case 7:
+  //             text = 'Jul';
+  //             break;
+  //           case 9:
+  //             text = 'Sep';
+  //             break;
+  //           case 11:
+  //             text = 'Nov';
+  //             break;
+  //         }
+
+  //         return Text(text);
+  //       },
+  //     );
 }

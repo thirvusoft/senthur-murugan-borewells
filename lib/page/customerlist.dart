@@ -113,20 +113,12 @@ class _CusomerlistState extends State<Cusomerlist> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Container(
-                                              width: 45,
-                                              height: 45,
+                                              width: 40,
+                                              height: 40,
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(10),
-                                                color: const Color(0xFF752FFF),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                    color: Color.fromRGBO(
-                                                        230, 233, 230, 1),
-                                                    spreadRadius: 2,
-                                                    blurRadius: 5,
-                                                  ),
-                                                ],
+                                                    BorderRadius.circular(5),
+                                                color: const Color(0xFFeee6ff),
                                               ),
                                               child: IconButton(
                                                 onPressed: () {
@@ -366,7 +358,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                 },
                                                 icon: const HeroIcon(
                                                   HeroIcons.pencilSquare,
-                                                  color: Colors.white,
+                                                  color: Color(0xFF752FFF),
                                                 ),
                                               )),
                                         ],

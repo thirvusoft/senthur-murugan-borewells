@@ -1,12 +1,12 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:senthur_murugan/page/attendance.dart';
 import 'package:senthur_murugan/page/customerlist.dart';
+import 'package:senthur_murugan/page/epenselist.dart';
 import 'package:senthur_murugan/widgets/bottom_navigation.dart';
 import 'package:senthur_murugan/page/home_page.dart';
 import 'package:senthur_murugan/page/login_page.dart';
 import 'package:senthur_murugan/page/splash_page.dart';
 import '../page/customer_creation.dart';
-import '../page/expense_entry.dart';
 
 class Routes {
   static String customercreation = '/Customercreation';
@@ -17,6 +17,7 @@ class Routes {
   static String bottomnavigation = '/Bottomnavigation';
   static String customerlist = '/customerlist';
   static String expense = '/customerlist';
+  static String dashboard = '/dashboard';
 }
 
 final getPages = [
@@ -48,8 +49,9 @@ final getPages = [
     name: Routes.customerlist,
     page: () => const Cusomerlist(),
   ),
+  
   GetPage(
-    name: Routes.expense,
-    page: () => const Expenseentry(),
+    name: Routes.dashboard,
+    page: () => const Epensedashboard(),
   ),
 ];
