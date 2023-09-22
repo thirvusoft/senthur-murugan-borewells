@@ -12,6 +12,7 @@ import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/page/popup.dart';
 import 'package:senthur_murugan/widgets/appbar.dart';
 import 'package:senthur_murugan/widgets/bottomsheet.dart';
+import 'package:senthur_murugan/widgets/contants.dart';
 import 'package:senthur_murugan/widgets/custom_button.dart';
 import 'package:senthur_murugan/widgets/datepicker.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
@@ -29,14 +30,16 @@ class _EmployeeState extends State<Employee> {
   final Customer customer = Get.put(Customer());
   final _attendanceFormKey = GlobalKey<FormState>();
   final TextEditingController _amountController = TextEditingController();
-
+  bool valuefirst = false;
+  bool valuesecond = false;
   final TextEditingController searchcontroller = TextEditingController();
   final TextEditingController _dojcontroller = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _expensetypeController = TextEditingController();
-
+  final TextEditingController _vechileController = TextEditingController();
+  final TextEditingController _odaController = TextEditingController();
   List gender = ["Male", "Female"];
   var sort = "";
   @override
@@ -302,136 +305,238 @@ class _EmployeeState extends State<Employee> {
                                                       context: context,
                                                       builder: (BuildContext
                                                           context) {
+                                                        bool employee = false;
+                                                        bool vechile = false;
+
                                                         return PopupWidget(
-                                                          title:
-                                                              'Expense Entry',
-                                                          content: user[
-                                                              'first_name'],
-                                                          child: Column(
-                                                            children: [
-                                                              SearchField(
-                                                                controller:
-                                                                    _expensetypeController,
-                                                                suggestions: customer
-                                                                    .expenselist
-                                                                    .map((String) =>
-                                                                        SearchFieldListItem(
-                                                                            String))
-                                                                    .toList(),
-                                                                suggestionState:
-                                                                    Suggestion
-                                                                        .expand,
-                                                                onSuggestionTap:
-                                                                    (f) async {
-                                                                  FocusScope.of(
-                                                                          context)
-                                                                      .unfocus();
-                                                                },
-                                                                suggestionsDecoration: SuggestionDecoration(
-                                                                    padding: const EdgeInsets
-                                                                        .only(
-                                                                        top:
-                                                                            10.0,
-                                                                        left: 5,
-                                                                        bottom:
-                                                                            20),
-                                                                    color: Colors
-                                                                        .white,
-                                                                    borderRadius:
-                                                                        const BorderRadius
-                                                                            .all(
-                                                                            Radius.circular(10))),
-                                                                textInputAction:
-                                                                    TextInputAction
-                                                                        .next,
-                                                                marginColor:
-                                                                    Colors
-                                                                        .white,
-                                                                searchStyle:
-                                                                    TextStyle(
-                                                                  fontSize: 15,
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.8),
-                                                                ),
-                                                                searchInputDecoration: const InputDecoration(
-                                                                    labelText:
-                                                                        "Expense Type",
-                                                                    suffixIcon: HeroIcon(
-                                                                        HeroIcons
-                                                                            .queueList),
-                                                                    border: OutlineInputBorder(
-                                                                        borderSide:
-                                                                            BorderSide(color: Color(0x0ff2d2e4)))),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 15,
-                                                              ),
-                                                              ReusableDatePickerTextField(
-                                                                controller:
-                                                                    _dateController,
-                                                                labelText:
-                                                                    'Date',
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 15,
-                                                              ),
-                                                              ReusableTextField(
-                                                                readyonly:
-                                                                    false,
-                                                                labelText:
-                                                                    'Amount',
-                                                                maxLength: 6,
-                                                                keyboardType:
-                                                                    TextInputType
-                                                                        .phone,
-                                                                controller:
-                                                                    _amountController,
-                                                                obscureText:
-                                                                    false,
-                                                                suffixIcon:
-                                                                    HeroIcons
-                                                                        .currencyRupee,
-                                                              ),
-                                                              const SizedBox(
-                                                                width: 15,
-                                                              ),
-                                                              CustomFormButton(
-                                                                  innerText:
-                                                                      'Submit',
-                                                                  onPressed:
-                                                                      () async {
-                                                                    
-                                                                    final response =
-                                                                        await apiService.get(
-                                                                            "ssm_bore_wells.ssm_bore_wells.utlis.api.journal_entry_creation",
-                                                                            {
-                                                                          "exp_type":
-                                                                              _expensetypeController.text,
-                                                                          "date":
-                                                                              _dateController.text,
-                                                                          "amount":
-                                                                              _amountController.text,
-                                                                          "custom_employee":
-                                                                              user['name'],
-                                                                        });
-                                                                    if (response
-                                                                            .statusCode ==
-                                                                        200) {
-                                                                      _expensetypeController
-                                                                          .clear();
-                                                                      _dateController
-                                                                          .clear();
-                                                                      _amountController
-                                                                          .clear();
-                                                                      Get.back();
-                                                                    }
-                                                                   
-                                                                  })
-                                                            ],
-                                                          ),
-                                                        );
+                                                            title:
+                                                                'Expense Entry',
+                                                            content: user[
+                                                                'first_name'],
+                                                            child:
+                                                                StatefulBuilder(
+                                                              builder: (BuildContext
+                                                                      context,
+                                                                  StateSetter
+                                                                      setState) {
+                                                                return Column(
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        SizedBox(
+                                                                            width:
+                                                                                100,
+                                                                            child: ListTile(
+                                                                                title: IconButton(
+                                                                                    onPressed: () {
+                                                                                      setState(() {
+                                                                                        vechile = false;
+                                                                                        employee = true;
+                                                                                      });
+                                                                                    },
+                                                                                    icon: const HeroIcon(HeroIcons.user)))),
+                                                                        const SizedBox(
+                                                                          width:
+                                                                              50,
+                                                                        ),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                100,
+                                                                            child:
+                                                                                ListTile(
+                                                                              title: IconButton(
+                                                                                onPressed: () {
+                                                                                  setState(() {
+                                                                                    vechile = true;
+                                                                                    employee = false;
+                                                                                  });
+                                                                                },
+                                                                                icon: const HeroIcon(HeroIcons.truck),
+                                                                              ),
+                                                                            )),
+                                                                      ],
+                                                                    ),
+                                                                    Visibility(
+                                                                        visible:
+                                                                            employee,
+                                                                        child:
+                                                                            SearchField(
+                                                                          controller:
+                                                                              _expensetypeController,
+                                                                          suggestions: customer
+                                                                              .expenselist
+                                                                              .map((String) => SearchFieldListItem(String))
+                                                                              .toList(),
+                                                                          suggestionState:
+                                                                              Suggestion.expand,
+                                                                          onSuggestionTap:
+                                                                              (f) async {
+                                                                            FocusScope.of(context).unfocus();
+                                                                          },
+                                                                          suggestionsDecoration: SuggestionDecoration(
+                                                                              padding: const EdgeInsets.only(top: 10.0, left: 5, bottom: 20),
+                                                                              color: Colors.white,
+                                                                              borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                                                          textInputAction:
+                                                                              TextInputAction.next,
+                                                                          marginColor:
+                                                                              Colors.white,
+                                                                          searchStyle:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                15,
+                                                                            color:
+                                                                                Colors.black.withOpacity(0.8),
+                                                                          ),
+                                                                          searchInputDecoration: const InputDecoration(
+                                                                              labelText: "Expense Type",
+                                                                              suffixIcon: HeroIcon(HeroIcons.queueList),
+                                                                              border: OutlineInputBorder(borderSide: BorderSide(color: Color(0x0ff2d2e4)))),
+                                                                        )),
+                                                                    Visibility(
+                                                                      visible:
+                                                                          vechile,
+                                                                      child:
+                                                                          SearchField(
+                                                                        controller:
+                                                                            _vechileController,
+                                                                        suggestions: customer
+                                                                            .vechilelist
+                                                                            .map((String) =>
+                                                                                SearchFieldListItem(String))
+                                                                            .toList(),
+                                                                        suggestionState:
+                                                                            Suggestion.expand,
+                                                                        onSuggestionTap:
+                                                                            (f) async {
+                                                                          FocusScope.of(context)
+                                                                              .unfocus();
+                                                                        },
+                                                                        suggestionsDecoration: SuggestionDecoration(
+                                                                            padding: const EdgeInsets.only(
+                                                                                top: 10.0,
+                                                                                left: 5,
+                                                                                bottom: 20),
+                                                                            color: Colors.white,
+                                                                            borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                                                        textInputAction:
+                                                                            TextInputAction.next,
+                                                                        marginColor:
+                                                                            Colors.white,
+                                                                        searchStyle:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              15,
+                                                                          color: Colors
+                                                                              .black
+                                                                              .withOpacity(0.8),
+                                                                        ),
+                                                                        searchInputDecoration: const InputDecoration(
+                                                                            labelText:
+                                                                                "Vehicle Name",
+                                                                            suffixIcon:
+                                                                                HeroIcon(HeroIcons.queueList),
+                                                                            border: OutlineInputBorder(borderSide: BorderSide(color: Color(0x0ff2d2e4)))),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          15,
+                                                                    ),
+                                                                    ReusableDatePickerTextField(
+                                                                      controller:
+                                                                          _dateController,
+                                                                      labelText:
+                                                                          'Date',
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          15,
+                                                                    ),
+                                                                    ReusableTextField(
+                                                                      readyonly:
+                                                                          false,
+                                                                      labelText:
+                                                                          'Amount',
+                                                                      maxLength:
+                                                                          6,
+                                                                      keyboardType:
+                                                                          TextInputType
+                                                                              .phone,
+                                                                      controller:
+                                                                          _amountController,
+                                                                      obscureText:
+                                                                          false,
+                                                                      suffixIcon:
+                                                                          HeroIcons
+                                                                              .currencyRupee,
+                                                                    ),
+                                                                    Visibility(
+                                                                        visible:
+                                                                            vechile,
+                                                                        child:
+                                                                            ReusableTextField(
+                                                                          readyonly:
+                                                                              false,
+                                                                          labelText:
+                                                                              'odometer',
+                                                                          maxLength:
+                                                                              6,
+                                                                          keyboardType:
+                                                                              TextInputType.phone,
+                                                                          controller:
+                                                                              _odaController,
+                                                                          obscureText:
+                                                                              false,
+                                                                          suffixIcon:
+                                                                              HeroIcons.currencyRupee,
+                                                                        )),
+                                                                    const SizedBox(
+                                                                      width: 15,
+                                                                    ),
+                                                                    CustomFormButton(
+                                                                        innerText:
+                                                                            'Submit',
+                                                                        onPressed:
+                                                                            () async {
+                                                                          if (employee) {
+                                                                            final response =
+                                                                                await apiService.get("/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.journal_entry_creation", {
+                                                                              "exp_type": _expensetypeController.text,
+                                                                              "date": _dateController.text,
+                                                                              "amount": _amountController.text,
+                                                                              "custom_employee": user['name'],
+                                                                            });
+                                                                            if (response.statusCode ==
+                                                                                200) {
+                                                                              _expensetypeController.clear();
+                                                                              _dateController.clear();
+                                                                              _amountController.clear();
+                                                                              Get.back();
+                                                                            }
+                                                                          } else {
+                                                                            final response =
+                                                                                await apiService.get("/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.vehicle_log_creation", {
+                                                                              "license_plate": _vechileController.text,
+                                                                              // "date": _dateController.text,
+                                                                              "odometer": _odaController.text,
+                                                                              "expense_amount": _amountController.text,
+                                                                              "employee": user['name'],
+                                                                            });
+
+                                                                            if (response.statusCode ==
+                                                                                200) {
+                                                                              _expensetypeController.clear();
+                                                                              _dateController.clear();
+                                                                              _amountController.clear();
+                                                                              Get.back();
+                                                                            }
+                                                                          }
+                                                                        })
+                                                                  ],
+                                                                );
+                                                              },
+                                                            ));
                                                       },
                                                     );
                                                   },
