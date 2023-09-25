@@ -147,7 +147,7 @@ class _EmployeeState extends State<Employee> {
                                                 onPressed: () async {
                                                   final response =
                                                       await apiService.get(
-                                                          "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
+                                                          "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
                                                           {
                                                         "employee": customer
                                                                 .employeelist[
@@ -227,7 +227,7 @@ class _EmployeeState extends State<Employee> {
                                                 onPressed: () async {
                                                   final response =
                                                       await apiService.get(
-                                                          "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
+                                                          "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employee_attendance",
                                                           {
                                                         "employee": customer
                                                                 .employeelist[
