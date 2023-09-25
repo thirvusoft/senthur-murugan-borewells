@@ -393,7 +393,10 @@ class _CusomerlistState extends State<Cusomerlist> {
                       onPressed: () {
                         Get.toNamed("Customercreation");
                       },
-                      child: const Icon(Icons.add),
+                      child: const Icon(
+                        Icons.add,
+                        color: Color(0xFF752FFF),
+                      ),
                     ),
                   ),
                 ],

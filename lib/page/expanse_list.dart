@@ -140,13 +140,6 @@ class _EpensedashboardState extends State<Epensedashboard> {
                                   borderRadius: BorderRadius.circular(5),
                                   color: dashboard[index]["container_color"]
                                       as Color,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Color.fromRGBO(230, 233, 230, 1),
-                                      spreadRadius: 2,
-                                      blurRadius: 5,
-                                    ),
-                                  ],
                                 ),
                                 child: Icon(
                                   dashboard[index]["icon"],
