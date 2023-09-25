@@ -129,15 +129,12 @@ class Customer extends GetxController {
     final response = await apiService.get("/api/resource/Vehicle", {
       "fields": jsonEncode(["name"])
     });
-    print("sdsdsdsdsdsdsdsd");
-    print(response.body);
+    
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       for (var temp in jsonResponse["data"]) {
-        print(temp["name"]);
         vechilelist.add(temp["name"]);
       }
-      // vechilelist.value = jsonResponse["data"];
     }
   }
 }

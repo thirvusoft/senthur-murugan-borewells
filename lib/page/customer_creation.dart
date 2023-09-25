@@ -8,13 +8,13 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:senthur_murugan/controller/api.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
-import 'package:senthur_murugan/widgets/appbar.dart';
-import 'package:senthur_murugan/widgets/custom_button.dart';
-import 'package:senthur_murugan/widgets/datepicker.dart';
+import 'package:senthur_murugan/widgets/reusable_appbar.dart';
+import 'package:senthur_murugan/widgets/reusable_custom_button.dart';
+import 'package:senthur_murugan/widgets/reusable_datepicker.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
 
-import '../widgets/textformfield.dart';
+import '../widgets/reusable_textformfield.dart';
 
 class Customercreation extends StatefulWidget {
   const Customercreation({super.key});
@@ -77,6 +77,7 @@ class _CustomercreationState extends State<Customercreation> {
                     return null;
                   },
                   readyonly: false,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
                   height: 20,
@@ -87,6 +88,7 @@ class _CustomercreationState extends State<Customercreation> {
                   obscureText: false,
                   suffixIcon: HeroIcons.envelope,
                   readyonly: false,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
                   height: 20,
@@ -107,6 +109,7 @@ class _CustomercreationState extends State<Customercreation> {
                   keyboardType: TextInputType.phone,
                   obscureText: false,
                   suffixIcon: HeroIcons.devicePhoneMobile,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
                   height: 20,
@@ -185,6 +188,7 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _districtController,
                   obscureText: false,
                   suffixIcon: HeroIcons.globeEuropeAfrica,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
                   height: 20,
@@ -195,6 +199,7 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _talukController,
                   obscureText: false,
                   suffixIcon: HeroIcons.buildingOffice,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
                   height: 20,
@@ -207,6 +212,7 @@ class _CustomercreationState extends State<Customercreation> {
                   controller: _pincodeController,
                   obscureText: false,
                   suffixIcon: HeroIcons.newspaper,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
                   height: 20,

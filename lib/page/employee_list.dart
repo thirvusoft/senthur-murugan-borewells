@@ -9,14 +9,14 @@ import 'package:provider/provider.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:senthur_murugan/controller/api.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
-import 'package:senthur_murugan/page/popup.dart';
-import 'package:senthur_murugan/widgets/appbar.dart';
-import 'package:senthur_murugan/widgets/bottomsheet.dart';
+import 'package:senthur_murugan/widgets/reusable_popup.dart';
+import 'package:senthur_murugan/widgets/reusable_appbar.dart';
+import 'package:senthur_murugan/widgets/reusable_bottomsheet.dart';
 import 'package:senthur_murugan/widgets/contants.dart';
-import 'package:senthur_murugan/widgets/custom_button.dart';
-import 'package:senthur_murugan/widgets/datepicker.dart';
+import 'package:senthur_murugan/widgets/reusable_custom_button.dart';
+import 'package:senthur_murugan/widgets/reusable_datepicker.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
-import 'package:senthur_murugan/widgets/textformfield.dart';
+import 'package:senthur_murugan/widgets/reusable_textformfield.dart';
 
 class Employee extends StatefulWidget {
   const Employee({super.key});
@@ -81,6 +81,7 @@ class _EmployeeState extends State<Employee> {
                   customer.fliter(sort);
                 }),
                 readyonly: false,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
             ),
             Container(
@@ -305,7 +306,7 @@ class _EmployeeState extends State<Employee> {
                                                       context: context,
                                                       builder: (BuildContext
                                                           context) {
-                                                        bool employee = false;
+                                                        bool employee = true;
                                                         bool vechile = false;
 
                                                         return PopupWidget(
@@ -319,11 +320,18 @@ class _EmployeeState extends State<Employee> {
                                                                       context,
                                                                   StateSetter
                                                                       setState) {
-                                                                return Column(
+                                                                return SingleChildScrollView(
+                                                                    child:
+                                                                        Column(
                                                                   children: [
                                                                     Row(
                                                                       children: [
-                                                                        SizedBox(
+                                                                        Container(
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              border: Border.all(width: 1, color: (employee) ? const Color(0xFF752FFF) : const Color(0Xffeee8f4)),
+                                                                              borderRadius: BorderRadius.circular(5),
+                                                                            ),
                                                                             width:
                                                                                 100,
                                                                             child: ListTile(
@@ -334,12 +342,19 @@ class _EmployeeState extends State<Employee> {
                                                                                         employee = true;
                                                                                       });
                                                                                     },
-                                                                                    icon: const HeroIcon(HeroIcons.user)))),
+                                                                                    icon: const HeroIcon(
+                                                                                      HeroIcons.user,
+                                                                                    )))),
                                                                         const SizedBox(
                                                                           width:
                                                                               50,
                                                                         ),
-                                                                        SizedBox(
+                                                                        Container(
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              border: Border.all(width: 1, color: (vechile) ? const Color(0xFF752FFF) : const Color(0Xffeee8f4)),
+                                                                              borderRadius: BorderRadius.circular(5),
+                                                                            ),
                                                                             width:
                                                                                 100,
                                                                             child:
@@ -351,10 +366,16 @@ class _EmployeeState extends State<Employee> {
                                                                                     employee = false;
                                                                                   });
                                                                                 },
-                                                                                icon: const HeroIcon(HeroIcons.truck),
+                                                                                icon: const HeroIcon(
+                                                                                  HeroIcons.truck,
+                                                                                ),
                                                                               ),
                                                                             )),
                                                                       ],
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          15,
                                                                     ),
                                                                     Visibility(
                                                                         visible:
@@ -470,16 +491,21 @@ class _EmployeeState extends State<Employee> {
                                                                       suffixIcon:
                                                                           HeroIcons
                                                                               .currencyRupee,
+                                                                      autovalidateMode:
+                                                                          AutovalidateMode
+                                                                              .onUserInteraction,
                                                                     ),
                                                                     Visibility(
                                                                         visible:
                                                                             vechile,
                                                                         child:
                                                                             ReusableTextField(
+                                                                          autovalidateMode:
+                                                                              AutovalidateMode.onUserInteraction,
                                                                           readyonly:
                                                                               false,
                                                                           labelText:
-                                                                              'odometer',
+                                                                              'Odometer',
                                                                           maxLength:
                                                                               6,
                                                                           keyboardType:
@@ -513,28 +539,86 @@ class _EmployeeState extends State<Employee> {
                                                                               _dateController.clear();
                                                                               _amountController.clear();
                                                                               Get.back();
+                                                                              var response_ = jsonDecode(response.body);
+                                                                              Get.snackbar(
+                                                                                "Success",
+                                                                                response_["message"],
+                                                                                icon: const HeroIcon(HeroIcons.check, color: Colors.white),
+                                                                                snackPosition: SnackPosition.BOTTOM,
+                                                                                backgroundColor: const Color(0xff35394e),
+                                                                                borderRadius: 20,
+                                                                                margin: const EdgeInsets.all(15),
+                                                                                colorText: Colors.white,
+                                                                                duration: const Duration(seconds: 4),
+                                                                                isDismissible: true,
+                                                                                forwardAnimationCurve: Curves.easeOutBack,
+                                                                              );
+                                                                            } else {
+                                                                              var response_ = jsonDecode(response.body);
+                                                                              Get.snackbar(
+                                                                                "failed",
+                                                                                response_["message"],
+                                                                                icon: const HeroIcon(HeroIcons.xCircle, color: Colors.white),
+                                                                                snackPosition: SnackPosition.BOTTOM,
+                                                                                backgroundColor: const Color(0xff35394e),
+                                                                                borderRadius: 20,
+                                                                                margin: const EdgeInsets.all(15),
+                                                                                colorText: Colors.white,
+                                                                                duration: const Duration(seconds: 4),
+                                                                                isDismissible: true,
+                                                                                forwardAnimationCurve: Curves.easeOutBack,
+                                                                              );
                                                                             }
                                                                           } else {
                                                                             final response =
                                                                                 await apiService.get("/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.vehicle_log_creation", {
                                                                               "license_plate": _vechileController.text,
-                                                                              // "date": _dateController.text,
                                                                               "odometer": _odaController.text,
                                                                               "expense_amount": _amountController.text,
                                                                               "employee": user['name'],
                                                                             });
-
                                                                             if (response.statusCode ==
                                                                                 200) {
                                                                               _expensetypeController.clear();
+                                                                              _vechileController.clear();
                                                                               _dateController.clear();
+                                                                              _odaController.clear();
                                                                               _amountController.clear();
                                                                               Get.back();
+                                                                              var response_ = jsonDecode(response.body);
+                                                                              Get.snackbar(
+                                                                                "Success",
+                                                                                response_["message"],
+                                                                                icon: const HeroIcon(HeroIcons.check, color: Colors.white),
+                                                                                snackPosition: SnackPosition.BOTTOM,
+                                                                                backgroundColor: const Color(0xff35394e),
+                                                                                borderRadius: 20,
+                                                                                margin: const EdgeInsets.all(15),
+                                                                                colorText: Colors.white,
+                                                                                duration: const Duration(seconds: 4),
+                                                                                isDismissible: true,
+                                                                                forwardAnimationCurve: Curves.easeOutBack,
+                                                                              );
+                                                                            } else {
+                                                                              var response_ = jsonDecode(response.body);
+                                                                              Get.snackbar(
+                                                                                "failed",
+                                                                                response_["message"],
+                                                                                icon: const HeroIcon(HeroIcons.xCircle, color: Colors.white),
+                                                                                snackPosition: SnackPosition.BOTTOM,
+                                                                                backgroundColor: const Color(0xff35394e),
+                                                                                borderRadius: 20,
+                                                                                margin: const EdgeInsets.all(15),
+                                                                                colorText: Colors.white,
+                                                                                duration: const Duration(seconds: 4),
+                                                                                isDismissible: true,
+                                                                                forwardAnimationCurve: Curves.easeOutBack,
+                                                                              );
                                                                             }
                                                                           }
                                                                         })
                                                                   ],
-                                                                );
+                                                                ));
                                                               },
                                                             ));
                                                       },
@@ -584,6 +668,8 @@ class _EmployeeState extends State<Employee> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         ReusableTextField(
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
                                           labelText: 'Name',
                                           controller: _nameController,
                                           obscureText: false,
@@ -723,8 +809,7 @@ class _EmployeeState extends State<Employee> {
                                                     snackPosition:
                                                         SnackPosition.BOTTOM,
                                                     backgroundColor:
-                                                        const Color(
-                                                            0x0ff35394E),
+                                                        const Color(0xff35394e),
                                                     borderRadius: 20,
                                                     margin:
                                                         const EdgeInsets.all(

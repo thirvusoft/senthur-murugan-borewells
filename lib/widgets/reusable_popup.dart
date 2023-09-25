@@ -22,7 +22,8 @@ class _PopupWidgetState extends State<PopupWidget> {
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, setState) {
-      return AlertDialog(
+      return SingleChildScrollView(
+          child: AlertDialog(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10))),
         title: Text(
@@ -33,7 +34,7 @@ class _PopupWidgetState extends State<PopupWidget> {
           textAlign: TextAlign.left,
         ),
         actions: [widget.child],
-      );
+      ));
     });
   }
 }

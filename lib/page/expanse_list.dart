@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:get/get.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
-import 'package:senthur_murugan/widgets/appbar.dart';
-import 'package:senthur_murugan/widgets/datepicker.dart';
+import 'package:senthur_murugan/widgets/reusable_appbar.dart';
+import 'package:senthur_murugan/widgets/reusable_datepicker.dart';
 
 class Epensedashboard extends StatefulWidget {
   const Epensedashboard({super.key});
@@ -35,10 +35,8 @@ class _EpensedashboardState extends State<Epensedashboard> {
   }
 
   chart(fdate, tdate) async {
-   
-
     final response = await apiService.get(
-        "ssm_bore_wells.ssm_bore_wells.utlis.api.account_amount",
+        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.account_amount",
         {"from_date": fdate, "to_date": tdate});
     var response_ = json.decode(response.body);
     for (var item in response_["message"]) {

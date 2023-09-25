@@ -6,11 +6,11 @@ import 'package:heroicons/heroicons.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:senthur_murugan/controller/api.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
-import 'package:senthur_murugan/widgets/appbar.dart';
-import 'package:senthur_murugan/widgets/bottomsheet.dart';
-import 'package:senthur_murugan/widgets/custom_button.dart';
-import 'package:senthur_murugan/widgets/datepicker.dart';
-import 'package:senthur_murugan/widgets/textformfield.dart';
+import 'package:senthur_murugan/widgets/reusable_appbar.dart';
+import 'package:senthur_murugan/widgets/reusable_bottomsheet.dart';
+import 'package:senthur_murugan/widgets/reusable_custom_button.dart';
+import 'package:senthur_murugan/widgets/reusable_datepicker.dart';
+import 'package:senthur_murugan/widgets/reusable_textformfield.dart';
 
 class Cusomerlist extends StatefulWidget {
   const Cusomerlist({super.key});
@@ -62,6 +62,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                   customer.customerfliter(sort);
                 }),
                 readyonly: false,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
             ),
             SizedBox(
@@ -165,6 +166,9 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                             .devicePhoneMobile,
                                                                     readyonly:
                                                                         false,
+                                                                    autovalidateMode:
+                                                                        AutovalidateMode
+                                                                            .onUserInteraction,
                                                                   ),
                                                                   const SizedBox(
                                                                     height: 10,
@@ -264,6 +268,9 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                     suffixIcon:
                                                                         HeroIcons
                                                                             .globeEuropeAfrica,
+                                                                    autovalidateMode:
+                                                                        AutovalidateMode
+                                                                            .onUserInteraction,
                                                                   ),
                                                                   const SizedBox(
                                                                     height: 20,
@@ -280,6 +287,9 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                     suffixIcon:
                                                                         HeroIcons
                                                                             .buildingOffice,
+                                                                    autovalidateMode:
+                                                                        AutovalidateMode
+                                                                            .onUserInteraction,
                                                                   ),
                                                                   const SizedBox(
                                                                     height: 20,
@@ -301,6 +311,9 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                     suffixIcon:
                                                                         HeroIcons
                                                                             .newspaper,
+                                                                    autovalidateMode:
+                                                                        AutovalidateMode
+                                                                            .onUserInteraction,
                                                                   ),
                                                                   const SizedBox(
                                                                     height: 20,
