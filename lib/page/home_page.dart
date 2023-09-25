@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,6 @@ import 'package:senthur_murugan/page/popup.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
-import 'dart:convert';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -34,24 +32,25 @@ class _HomepageState extends State<Homepage> {
   String fullname = "";
   String email = "";
   var calcount = [];
-  List<FlSpot> dummyData5 = [];
-  final List<FlSpot> dummyData1 = List.generate(7, (index) {
-    return FlSpot(index.toDouble(), index * Random().nextDouble());
-  });
 
-  // This will be used to draw the orange line
-  final List<FlSpot> dummyData2 = List.generate(7, (index) {
-    return FlSpot(index.toDouble(), index * Random().nextDouble());
-  });
+  // List<FlSpot> dummyData5 = [];
+  // final List<FlSpot> dummyData1 = List.generate(7, (index) {
+  //   return FlSpot(index.toDouble(), index * Random().nextDouble());
+  // });
 
-  // This will be used to draw the blue line
-  final List<FlSpot> dummyData3 = List.generate(7, (index) {
-    return FlSpot(index.toDouble(), index * Random().nextDouble());
-  });
+  // // This will be used to draw the orange line
+  // final List<FlSpot> dummyData2 = List.generate(7, (index) {
+  //   return FlSpot(index.toDouble(), index * Random().nextDouble());
+  // });
 
-  final List<FlSpot> dummyData4 = List.generate(7, (index) {
-    return FlSpot(index.toDouble(), index * Random().nextDouble());
-  });
+  // // This will be used to draw the blue line
+  // final List<FlSpot> dummyData3 = List.generate(7, (index) {
+  //   return FlSpot(index.toDouble(), index * Random().nextDouble());
+  // });
+
+  // final List<FlSpot> dummyData4 = List.generate(7, (index) {
+  //   return FlSpot(index.toDouble(), index * Random().nextDouble());
+  // });
 
   String imgurl =
       "https://i.pinimg.com/736x/87/67/64/8767644bc68a14c50addf8cb2de8c59e.jpg";
@@ -65,7 +64,8 @@ class _HomepageState extends State<Homepage> {
 
   creationcreate() async {
     final response = await apiService.get(
-        "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_customers_count", {});
+        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employee_customers_count",
+        {});
     var response_ = json.decode(response.body);
     setState(() {
       calcount = (response_["message"]);
@@ -111,10 +111,11 @@ class _HomepageState extends State<Homepage> {
     DateFormat dateFormat = DateFormat('yyyy-MM-dd');
     String formattedDate = dateFormat.format(today);
 
-    final response = await apiService
-        .get("ssm_bore_wells.ssm_bore_wells.utlis.api.attendance_count_day", {
-      "filters": jsonEncode({"attendance_date": formattedDate})
-    });
+    final response = await apiService.get(
+        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.attendance_count_day",
+        {
+          "filters": jsonEncode({"attendance_date": formattedDate})
+        });
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       var temp = jsonResponse["message"];
@@ -132,7 +133,7 @@ class _HomepageState extends State<Homepage> {
   Future count() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await apiService
-        .get("ssm_bore_wells.ssm_bore_wells.utlis.api.count", {});
+        .get("/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.count", {});
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       setState(() {
@@ -619,7 +620,8 @@ class _HomepageState extends State<Homepage> {
                       style: TextStyle(fontSize: 15),
                     ),
                     onPressed: () async {
-                      final response = await apiService.get("logout", {});
+                      final response =
+                          await apiService.get("/api/method/logout", {});
 
                       if (response.statusCode == 200) {
                         Get.offAllNamed("/loginpage");

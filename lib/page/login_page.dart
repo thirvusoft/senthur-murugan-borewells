@@ -121,7 +121,8 @@ class Loginpage extends StatelessWidget {
                       innerText: 'Login',
                       onPressed: () async {
                         if (_loginFormkey.currentState!.validate()) {
-                          final response = await apiService.get("login", {
+                          final response = await apiService.get(
+                              "/api/method/login", {
                             "usr": _mobilenumberController.text,
                             "pwd": _passwordController.text
                           });

@@ -13,15 +13,18 @@ class Customer extends GetxController {
   var employeelistisLoading = true.obs;
   var fliterlist = [].obs;
   var customerfliterlist = [].obs;
+  var vechilelist = [].obs;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     expensetype();
+    vechilelist_();
   }
 
   Future territory(name) async {
-    final response = await apiService.get("frappe.desk.search.search_link", {
+    final response =
+        await apiService.get("/api/method/frappe.desk.search.search_link", {
       "txt": name,
       "doctype": "Territory",
       "ignore_user_permissions": "1",
@@ -42,7 +45,8 @@ class Customer extends GetxController {
   }
 
   Future splash() async {
-    final response = await apiService.get("frappe.auth.get_logged_user", {});
+    final response =
+        await apiService.get("/api/method/frappe.auth.get_logged_user", {});
     if (response.statusCode == 200) {
       // await Future.delayed(const Duration(seconds: 3));
       Get.offAllNamed("/Bottomnavigation");
@@ -54,8 +58,8 @@ class Customer extends GetxController {
 
   Future employeelist_() async {
     employeelistisLoading.value = true;
-    final response = await apiService
-        .get("ssm_bore_wells.ssm_bore_wells.utlis.api.employeelist", {});
+    final response = await apiService.get(
+        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employeelist", {});
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       employeelist.value = jsonResponse["message"];
@@ -82,8 +86,8 @@ class Customer extends GetxController {
 
   Future customerlist_() async {
     customerlistisLoading.value = true;
-    final response = await apiService
-        .get("ssm_bore_wells.ssm_bore_wells.utlis.api.customerlist", {});
+    final response = await apiService.get(
+        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.customerlist", {});
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       customerlist.value = jsonResponse["message"];
@@ -112,11 +116,28 @@ class Customer extends GetxController {
 
   Future expensetype() async {
     expenselist.clear();
-    final response = await apiService
-        .get("ssm_bore_wells.ssm_bore_wells.utlis.api.expense_claim_type", {});
+    final response = await apiService.get(
+        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.expense_claim_type",
+        {});
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       expenselist.value = jsonResponse["message"];
+    }
+  }
+
+  Future vechilelist_() async {
+    final response = await apiService.get("/api/resource/Vehicle", {
+      "fields": jsonEncode(["name"])
+    });
+    print("sdsdsdsdsdsdsdsd");
+    print(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      for (var temp in jsonResponse["data"]) {
+        print(temp["name"]);
+        vechilelist.add(temp["name"]);
+      }
+      // vechilelist.value = jsonResponse["data"];
     }
   }
 }
