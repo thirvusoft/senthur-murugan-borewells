@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:senthur_murugan/page/customerlist.dart';
-import 'package:senthur_murugan/page/employee.dart';
+import 'package:senthur_murugan/page/customer_list.dart';
+import 'package:senthur_murugan/page/employee_list.dart';
 import 'package:senthur_murugan/page/home_page.dart';
 
 class Bottomnavigation extends StatefulWidget {

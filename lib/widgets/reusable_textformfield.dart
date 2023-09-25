@@ -11,6 +11,7 @@ class ReusableTextField extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final Function(String)? onChange;
   final bool readyonly;
+  final AutovalidateMode autovalidateMode;
   const ReusableTextField({
     super.key,
     required this.labelText,
@@ -22,6 +23,7 @@ class ReusableTextField extends StatefulWidget {
     this.validator,
     this.onChange,
     required this.readyonly,
+    required this.autovalidateMode,
   });
 
   @override
@@ -36,7 +38,7 @@ class _ReusableTextFieldState extends State<ReusableTextField> {
     return TextFormField(
       readOnly: widget.readyonly,
       controller: widget.controller,
-      autovalidateMode: AutovalidateMode.always,
+      autovalidateMode: widget.autovalidateMode,
       keyboardType: widget.keyboardType,
       obscureText:
           (widget.obscureText != true) ? widget.obscureText : _obscureText,

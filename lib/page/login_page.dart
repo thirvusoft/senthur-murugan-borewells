@@ -5,8 +5,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
-import 'package:senthur_murugan/widgets/custom_button.dart';
-import 'package:senthur_murugan/widgets/textformfield.dart';
+import 'package:senthur_murugan/widgets/reusable_custom_button.dart';
+import 'package:senthur_murugan/widgets/reusable_textformfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Loginpage extends StatelessWidget {
@@ -79,6 +79,7 @@ class Loginpage extends StatelessWidget {
                       },
                       maxLength: 10,
                       readyonly: false,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
                     const SizedBox(
                       height: 40,
@@ -95,6 +96,7 @@ class Loginpage extends StatelessWidget {
                         return null;
                       },
                       readyonly: false,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
                     const SizedBox(
                       height: 10,
