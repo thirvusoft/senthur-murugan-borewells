@@ -28,7 +28,8 @@ class Customer extends GetxController {
       "txt": name,
       "doctype": "Territory",
       "ignore_user_permissions": "1",
-      "reference_doctype": "Customer"
+      "reference_doctype": "Customer",
+      "filters": jsonEncode({"is_group": 0})
     });
     if (response.statusCode == 200) {
       territorylist_.clear();
@@ -129,7 +130,7 @@ class Customer extends GetxController {
     final response = await apiService.get("/api/resource/Vehicle", {
       "fields": jsonEncode(["name"])
     });
-    
+
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       for (var temp in jsonResponse["data"]) {

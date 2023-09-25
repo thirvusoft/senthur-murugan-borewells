@@ -11,7 +11,7 @@ class ApiService extends GetxService {
     String methodName,
     args,
   ) async {
- 
+    print(args);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final url = "${dotenv.env['API_URL']}$methodName";
     if ((prefs.getString('request-header') ?? "").toString().isNotEmpty) {

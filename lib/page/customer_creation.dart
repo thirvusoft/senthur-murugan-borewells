@@ -137,10 +137,12 @@ class _CustomercreationState extends State<Customercreation> {
                       onSuggestionTap: (f) async {
                         FocusScope.of(context).unfocus();
                         final response = await apiService.get(
-                            "ssm_bore_wells.ssm_bore_wells.utlis.api.state_district_list",
+                            "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.state_district_list",
                             {
                               "territory": _areaController.text,
                             });
+                        print("lllllllllllllllllllllllll");
+                        print(response.body);
 
                         if (response.statusCode == 200) {
                           final district = json.decode(response.body);
@@ -222,7 +224,7 @@ class _CustomercreationState extends State<Customercreation> {
                   onPressed: () async {
                     if (_customerFormKey.currentState!.validate()) {
                       final response = await apiService.get(
-                          'ssm_bore_wells.ssm_bore_wells.utlis.api.new_customer',
+                          '/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.new_customer',
                           {
                             "customer_name": _usernameController.text,
                             "customer_type": "Individual",

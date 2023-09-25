@@ -56,13 +56,13 @@ class _EpensedashboardState extends State<Epensedashboard> {
         item["icon"] = PhosphorIcons.first_aid_kit_light;
         item["container_color"] = const Color(0xFFfff5cc);
         item["icon_color"] = const Color(0xFFe6b800);
-      } else {
+      } else if (item["name"].contains("Vehicle")) {
         item["icon"] = PhosphorIcons.bag_light;
         item["container_color"] = const Color(0xFFccccff);
         item["icon_color"] = const Color(0xFF000099);
       }
     }
-    await Future.delayed(Duration(seconds: 2));
+    // await Future.delayed(Duration(seconds: 2));
 
     setState(() {
       dashboard = response_["message"];
@@ -113,7 +113,7 @@ class _EpensedashboardState extends State<Epensedashboard> {
               ),
             ),
             SizedBox(
-              height: 250,
+              height: MediaQuery.of(context).size.height / 2,
               child: (dashboard.isEmpty)
                   ? const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
