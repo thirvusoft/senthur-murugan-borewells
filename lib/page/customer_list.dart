@@ -173,9 +173,6 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                   const SizedBox(
                                                                     height: 10,
                                                                   ),
-                                                                  const SizedBox(
-                                                                    height: 10,
-                                                                  ),
                                                                   ReusableDatePickerTextField(
                                                                     controller:
                                                                         _dateController,
@@ -201,7 +198,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                           FocusScope.of(context)
                                                                               .unfocus();
                                                                           final response =
-                                                                              await apiService.get("ssm_bore_wells.ssm_bore_wells.utlis.api.state_district_list", {
+                                                                              await apiService.get("/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.state_district_list", {
                                                                             "territory":
                                                                                 _areaController.text,
                                                                           });
@@ -327,7 +324,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                             .currentState!
                                                                             .validate()) {
                                                                           final response =
-                                                                              await apiService.get("ssm_bore_wells.ssm_bore_wells.utlis.api.customer_update", {
+                                                                              await apiService.get("/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.customer_update", {
                                                                             "customer":
                                                                                 jsonEncode({
                                                                               "name": user['customer_name'],

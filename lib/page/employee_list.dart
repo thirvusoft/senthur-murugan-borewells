@@ -533,13 +533,16 @@ class _EmployeeState extends State<Employee> {
                                                                               "amount": _amountController.text,
                                                                               "custom_employee": user['name'],
                                                                             });
+                                                                            var response_ =
+                                                                                jsonDecode(response.body);
+                                                                            print("xxxxxxxxxxxxxxxxxxxzccZXzczxc");
                                                                             if (response.statusCode ==
                                                                                 200) {
                                                                               _expensetypeController.clear();
                                                                               _dateController.clear();
                                                                               _amountController.clear();
                                                                               Get.back();
-                                                                              var response_ = jsonDecode(response.body);
+
                                                                               Get.snackbar(
                                                                                 "Success",
                                                                                 response_["message"],
@@ -555,6 +558,9 @@ class _EmployeeState extends State<Employee> {
                                                                               );
                                                                             } else {
                                                                               var response_ = jsonDecode(response.body);
+                                                                              print("erorrororrrrrrrrrrrrrrrrrrrrrrrrrr");
+                                                                              print(response_["message"]);
+
                                                                               Get.snackbar(
                                                                                 "failed",
                                                                                 response_["message"],
@@ -577,6 +583,8 @@ class _EmployeeState extends State<Employee> {
                                                                               "expense_amount": _amountController.text,
                                                                               "employee": user['name'],
                                                                             });
+                                                                            print("'''''''''''''''''''''");
+                                                                            print(response.statusCode);
                                                                             if (response.statusCode ==
                                                                                 200) {
                                                                               _expensetypeController.clear();
@@ -600,10 +608,12 @@ class _EmployeeState extends State<Employee> {
                                                                                 forwardAnimationCurve: Curves.easeOutBack,
                                                                               );
                                                                             } else {
+                                                                              print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                                                                               var response_ = jsonDecode(response.body);
+                                                                              print(response_);
                                                                               Get.snackbar(
                                                                                 "failed",
-                                                                                response_["message"],
+                                                                                response_["_server_messages"],
                                                                                 icon: const HeroIcon(HeroIcons.xCircle, color: Colors.white),
                                                                                 snackPosition: SnackPosition.BOTTOM,
                                                                                 backgroundColor: const Color(0xff35394e),
@@ -777,7 +787,7 @@ class _EmployeeState extends State<Employee> {
                                                   .validate()) {
                                                 final response =
                                                     await apiService.get(
-                                                        "ssm_bore_wells.ssm_bore_wells.utlis.api.employee_creation",
+                                                        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employee_creation",
                                                         {
                                                       "name":
                                                           _nameController.text,
@@ -790,6 +800,7 @@ class _EmployeeState extends State<Employee> {
                                                           _dojcontroller.text,
                                                       "status": "Active"
                                                     });
+                                                print(response.body);
                                                 if (response.statusCode ==
                                                     200) {
                                                   customer.employeelist_();
