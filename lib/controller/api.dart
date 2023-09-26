@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
+import 'package:senthur_murugan/controller/lazy.dart';
+import 'package:senthur_murugan/controller/put.dart';
 
 class Customer extends GetxController {
   final ApiService apiService = ApiService();
@@ -139,3 +141,11 @@ class Customer extends GetxController {
     }
   }
 }
+
+// class Gobal {
+//   static Future<void> inidt() async {
+//     print("pppppppppppppppppppppppp");
+//     Get.put(put());
+//     Get.lazyPut(() => lazy());
+//   }
+// }

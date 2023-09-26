@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:senthur_murugan/controller/api.dart';
+import 'package:senthur_murugan/controller/put.dart';
 import 'controller/routes.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+
   runApp(const MyApp());
   await dotenv.load(fileName: ".env");
 }
