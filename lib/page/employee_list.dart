@@ -12,7 +12,6 @@ import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/widgets/reusable_popup.dart';
 import 'package:senthur_murugan/widgets/reusable_appbar.dart';
 import 'package:senthur_murugan/widgets/reusable_bottomsheet.dart';
-import 'package:senthur_murugan/widgets/contants.dart';
 import 'package:senthur_murugan/widgets/reusable_custom_button.dart';
 import 'package:senthur_murugan/widgets/reusable_datepicker.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
@@ -40,6 +39,8 @@ class _EmployeeState extends State<Employee> {
   final TextEditingController _expensetypeController = TextEditingController();
   final TextEditingController _vechileController = TextEditingController();
   final TextEditingController _odaController = TextEditingController();
+  final TextEditingController _purposeController = TextEditingController();
+
   List gender = ["Male", "Female"];
   var sort = "";
   @override
@@ -308,7 +309,7 @@ class _EmployeeState extends State<Employee> {
                                                           context) {
                                                         bool employee = true;
                                                         bool vechile = false;
-
+                                                        bool advance = false;
                                                         return PopupWidget(
                                                             title:
                                                                 'Expense Entry',
@@ -324,54 +325,87 @@ class _EmployeeState extends State<Employee> {
                                                                     child:
                                                                         Column(
                                                                   children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        Container(
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              border: Border.all(width: 1, color: (employee) ? const Color(0xFF752FFF) : const Color(0Xffeee8f4)),
-                                                                              borderRadius: BorderRadius.circular(5),
-                                                                            ),
-                                                                            width:
-                                                                                100,
-                                                                            child: ListTile(
-                                                                                title: IconButton(
-                                                                                    onPressed: () {
-                                                                                      setState(() {
-                                                                                        vechile = false;
-                                                                                        employee = true;
-                                                                                      });
-                                                                                    },
-                                                                                    icon: const HeroIcon(
-                                                                                      HeroIcons.user,
-                                                                                    )))),
-                                                                        const SizedBox(
-                                                                          width:
-                                                                              50,
-                                                                        ),
-                                                                        Container(
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              border: Border.all(width: 1, color: (vechile) ? const Color(0xFF752FFF) : const Color(0Xffeee8f4)),
-                                                                              borderRadius: BorderRadius.circular(5),
-                                                                            ),
-                                                                            width:
-                                                                                100,
-                                                                            child:
-                                                                                ListTile(
-                                                                              title: IconButton(
-                                                                                onPressed: () {
-                                                                                  setState(() {
-                                                                                    vechile = true;
-                                                                                    employee = false;
-                                                                                  });
-                                                                                },
-                                                                                icon: const HeroIcon(
-                                                                                  HeroIcons.truck,
-                                                                                ),
+                                                                    SizedBox(
+                                                                      width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width,
+                                                                      child: SingleChildScrollView(
+                                                                          scrollDirection: Axis.horizontal,
+                                                                          child: Row(
+                                                                            children: [
+                                                                              Container(
+                                                                                  decoration: BoxDecoration(
+                                                                                    border: Border.all(width: 1, color: (employee) ? const Color(0xFF752FFF) : const Color(0Xffeee8f4)),
+                                                                                    borderRadius: BorderRadius.circular(5),
+                                                                                  ),
+                                                                                  width: 100,
+                                                                                  child: ListTile(
+                                                                                      subtitle: Center(child: Text("Employee", style: TextStyle(fontSize: 10, fontWeight: (employee) ? FontWeight.bold : FontWeight.normal))),
+                                                                                      title: IconButton(
+                                                                                          onPressed: () {
+                                                                                            setState(() {
+                                                                                              vechile = false;
+                                                                                              employee = true;
+                                                                                            });
+                                                                                          },
+                                                                                          icon: const HeroIcon(
+                                                                                            HeroIcons.user,
+                                                                                          )))),
+                                                                              const SizedBox(
+                                                                                width: 50,
                                                                               ),
-                                                                            )),
-                                                                      ],
+                                                                              Container(
+                                                                                  decoration: BoxDecoration(
+                                                                                    border: Border.all(width: 1, color: (vechile) ? const Color(0xFF752FFF) : const Color(0Xffeee8f4)),
+                                                                                    borderRadius: BorderRadius.circular(5),
+                                                                                  ),
+                                                                                  width: 100,
+                                                                                  child: ListTile(
+                                                                                    subtitle: Center(child: Text("Vehicle", style: TextStyle(fontSize: 10, fontWeight: (vechile) ? FontWeight.bold : FontWeight.normal))),
+                                                                                    title: IconButton(
+                                                                                      onPressed: () {
+                                                                                        setState(() {
+                                                                                          vechile = true;
+                                                                                          employee = false;
+                                                                                          advance = false;
+                                                                                        });
+                                                                                      },
+                                                                                      icon: const HeroIcon(
+                                                                                        HeroIcons.truck,
+                                                                                      ),
+                                                                                    ),
+                                                                                  )),
+                                                                              const SizedBox(
+                                                                                width: 50,
+                                                                              ),
+                                                                              Container(
+                                                                                  decoration: BoxDecoration(
+                                                                                    border: Border.all(width: 1, color: (advance) ? const Color(0xFF752FFF) : const Color(0Xffeee8f4)),
+                                                                                    borderRadius: BorderRadius.circular(5),
+                                                                                  ),
+                                                                                  width: 100,
+                                                                                  child: ListTile(
+                                                                                      subtitle: Center(
+                                                                                        child: Text(
+                                                                                          "Advance",
+                                                                                          style: TextStyle(fontSize: 10, fontWeight: (advance) ? FontWeight.bold : FontWeight.normal),
+                                                                                        ),
+                                                                                      ),
+                                                                                      title: IconButton(
+                                                                                          onPressed: () {
+                                                                                            setState(() {
+                                                                                              vechile = false;
+                                                                                              employee = false;
+                                                                                              advance = true;
+                                                                                            });
+                                                                                          },
+                                                                                          icon: const Icon(
+                                                                                            PhosphorIcons.receipt_light,
+                                                                                            color: Color(0xFF2d2e4a),
+                                                                                          )))),
+                                                                            ],
+                                                                          )),
                                                                     ),
                                                                     const SizedBox(
                                                                       height:
@@ -517,6 +551,26 @@ class _EmployeeState extends State<Employee> {
                                                                           suffixIcon:
                                                                               HeroIcons.currencyRupee,
                                                                         )),
+                                                                    Visibility(
+                                                                        visible:
+                                                                            advance,
+                                                                        child:
+                                                                            ReusableTextField(
+                                                                          autovalidateMode:
+                                                                              AutovalidateMode.onUserInteraction,
+                                                                          readyonly:
+                                                                              false,
+                                                                          labelText:
+                                                                              'Purpose',
+                                                                          maxLength:
+                                                                              6,
+                                                                          controller:
+                                                                              _purposeController,
+                                                                          obscureText:
+                                                                              false,
+                                                                          suffixIcon:
+                                                                              HeroIcons.currencyRupee,
+                                                                        )),
                                                                     const SizedBox(
                                                                       width: 15,
                                                                     ),
@@ -535,7 +589,6 @@ class _EmployeeState extends State<Employee> {
                                                                             });
                                                                             var response_ =
                                                                                 jsonDecode(response.body);
-                                                                            print("xxxxxxxxxxxxxxxxxxxzccZXzczxc");
                                                                             if (response.statusCode ==
                                                                                 200) {
                                                                               _expensetypeController.clear();
@@ -558,8 +611,6 @@ class _EmployeeState extends State<Employee> {
                                                                               );
                                                                             } else {
                                                                               var response_ = jsonDecode(response.body);
-                                                                              print("erorrororrrrrrrrrrrrrrrrrrrrrrrrrr");
-                                                                              print(response_["message"]);
 
                                                                               Get.snackbar(
                                                                                 "failed",
@@ -575,7 +626,7 @@ class _EmployeeState extends State<Employee> {
                                                                                 forwardAnimationCurve: Curves.easeOutBack,
                                                                               );
                                                                             }
-                                                                          } else {
+                                                                          } else if (vechile) {
                                                                             final response =
                                                                                 await apiService.get("/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.vehicle_log_creation", {
                                                                               "license_plate": _vechileController.text,
@@ -583,8 +634,7 @@ class _EmployeeState extends State<Employee> {
                                                                               "expense_amount": _amountController.text,
                                                                               "employee": user['name'],
                                                                             });
-                                                                            print("'''''''''''''''''''''");
-                                                                            print(response.statusCode);
+                                                                           
                                                                             if (response.statusCode ==
                                                                                 200) {
                                                                               _expensetypeController.clear();
@@ -608,9 +658,54 @@ class _EmployeeState extends State<Employee> {
                                                                                 forwardAnimationCurve: Curves.easeOutBack,
                                                                               );
                                                                             } else {
-                                                                              print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                                                                               var response_ = jsonDecode(response.body);
-                                                                              print(response_);
+                                                                              Get.snackbar(
+                                                                                "failed",
+                                                                                response_["_server_messages"],
+                                                                                icon: const HeroIcon(HeroIcons.xCircle, color: Colors.white),
+                                                                                snackPosition: SnackPosition.BOTTOM,
+                                                                                backgroundColor: const Color(0xff35394e),
+                                                                                borderRadius: 20,
+                                                                                margin: const EdgeInsets.all(15),
+                                                                                colorText: Colors.white,
+                                                                                duration: const Duration(seconds: 4),
+                                                                                isDismissible: true,
+                                                                                forwardAnimationCurve: Curves.easeOutBack,
+                                                                              );
+                                                                            }
+                                                                          } else {
+                                                                            final response =
+                                                                                await apiService.get("/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employee_advance", {
+                                                                              "posting_date": _dateController.text,
+                                                                              "purpose": _purposeController.text,
+                                                                              "advance_amount": _amountController.text,
+                                                                              "advance_account": "Cash - SSMBW",
+                                                                              "mode_of_payment": "Cash",
+                                                                              "employee": user['name'],
+                                                                            });
+                                                                            if (response.statusCode ==
+                                                                                200) {
+                                                                              _amountController.clear();
+                                                                              _dateController.clear();
+                                                                              _purposeController.clear();
+
+                                                                              Get.back();
+                                                                              var response_ = jsonDecode(response.body);
+                                                                              Get.snackbar(
+                                                                                "Success",
+                                                                                response_["message"],
+                                                                                icon: const HeroIcon(HeroIcons.check, color: Colors.white),
+                                                                                snackPosition: SnackPosition.BOTTOM,
+                                                                                backgroundColor: const Color(0xff35394e),
+                                                                                borderRadius: 20,
+                                                                                margin: const EdgeInsets.all(15),
+                                                                                colorText: Colors.white,
+                                                                                duration: const Duration(seconds: 4),
+                                                                                isDismissible: true,
+                                                                                forwardAnimationCurve: Curves.easeOutBack,
+                                                                              );
+                                                                            } else {
+                                                                              var response_ = jsonDecode(response.body);
                                                                               Get.snackbar(
                                                                                 "failed",
                                                                                 response_["_server_messages"],
@@ -641,7 +736,10 @@ class _EmployeeState extends State<Employee> {
                                             ),
                                           ],
                                         ),
-                                        subtitle: Text(user['name']),
+                                        subtitle: Text(
+                                          "Salary Balance : ${(user["balance"] == null) ? "0.0" : user["balance"]}",
+                                          style: const TextStyle(fontSize: 13),
+                                        ),
                                         title: Text(user['first_name'])),
                                   ),
                                 );
@@ -772,7 +870,6 @@ class _EmployeeState extends State<Employee> {
                                           "doj": _dojcontroller.text,
                                           "status": "Active"
                                         });
-                                    print(response.body);
                                     if (response.statusCode == 200) {
                                       customer.employeelist_();
                                       _nameController.clear();

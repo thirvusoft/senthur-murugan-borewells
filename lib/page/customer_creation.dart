@@ -141,8 +141,7 @@ class _CustomercreationState extends State<Customercreation> {
                             {
                               "territory": _areaController.text,
                             });
-                        print("lllllllllllllllllllllllll");
-                        print(response.body);
+                   
 
                         if (response.statusCode == 200) {
                           final district = json.decode(response.body);
