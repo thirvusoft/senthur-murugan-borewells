@@ -649,210 +649,170 @@ class _EmployeeState extends State<Employee> {
                     }
                   },
                 )),
-            Container(
-              color: Colors.transparent,
-              height: 62,
-              child: Stack(children: [
-                Positioned(
-                  bottom: 0.0,
-                  right: 16.0,
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.white,
-                    onPressed: () {
-                      setState(() {
-                        showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: MediaQuery.of(context)
-                                        .viewInsets
-                                        .bottom),
-                                child: CustomBottomSheet(
-                                  title: 'Employee Creation',
-                                  child: SingleChildScrollView(
-                                      child: Form(
-                                    key: _attendanceFormKey,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ReusableTextField(
-                                          autovalidateMode: AutovalidateMode
-                                              .onUserInteraction,
-                                          labelText: 'Name',
-                                          controller: _nameController,
-                                          obscureText: false,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Please select name';
-                                            }
-
-                                            return null;
-                                          },
-                                          suffixIcon: HeroIcons.user,
-                                          readyonly: false,
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        SearchField(
-                                          controller: _genderController,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Please select gender';
-                                            }
-
-                                            return null;
-                                          },
-                                          suggestions: gender
-                                              .map((String) =>
-                                                  SearchFieldListItem(String))
-                                              .toList(),
-                                          suggestionState: Suggestion.expand,
-                                          suggestionsDecoration:
-                                              SuggestionDecoration(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10.0,
-                                                          left: 5,
-                                                          bottom: 20),
-                                                  color:
-                                                      const Color(0xFFfffbff),
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(10))),
-                                          textInputAction: TextInputAction.next,
-                                          marginColor: Colors.white,
-                                          searchStyle: TextStyle(
-                                            fontSize: 15,
-                                            color:
-                                                Colors.black.withOpacity(0.8),
-                                          ),
-                                          maxSuggestionsInViewPort: 6,
-                                          itemHeight: 25,
-                                          onSearchTextChanged: (p0) {},
-                                          searchInputDecoration:
-                                              const InputDecoration(
-                                                  labelText: "Gender",
-                                                  suffixIcon:
-                                                      HeroIcon(HeroIcons.users),
-                                                  border: OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Color(
-                                                              0x0ff2d2e4)))),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        ReusableDatePickerTextField(
-                                            controller: _dateController,
-                                            labelText: 'Date Of Brith',
-                                            validator: (value) {
-                                              if (value == null ||
-                                                  value.isEmpty) {
-                                                return 'Please select date';
-                                              }
-
-                                              return null;
-                                            }),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        ReusableDatePickerTextField(
-                                          controller: _dojcontroller,
-                                          labelText: 'Date Of Join',
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Please select date';
-                                            } else if (_dateController.text ==
-                                                _dojcontroller.text) {
-                                              return "DOB & DOJ are same";
-                                            }
-
-                                            return null;
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        CustomFormButton(
-                                            innerText: 'Submit',
-                                            onPressed: () async {
-                                              if (_attendanceFormKey
-                                                  .currentState!
-                                                  .validate()) {
-                                                final response =
-                                                    await apiService.get(
-                                                        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employee_creation",
-                                                        {
-                                                      "name":
-                                                          _nameController.text,
-                                                      "gender":
-                                                          _genderController
-                                                              .text,
-                                                      "dob":
-                                                          _dateController.text,
-                                                      "doj":
-                                                          _dojcontroller.text,
-                                                      "status": "Active"
-                                                    });
-                                                print(response.body);
-                                                if (response.statusCode ==
-                                                    200) {
-                                                  customer.employeelist_();
-                                                  _nameController.clear();
-                                                  _genderController.clear();
-                                                  _dateController.clear();
-                                                  _dojcontroller.clear();
-                                                  Get.back();
-                                                  final message = json
-                                                      .decode(response.body);
-                                                  Get.snackbar(
-                                                    "Success",
-                                                    message['message'],
-                                                    icon: const HeroIcon(
-                                                        HeroIcons.check,
-                                                        color: Colors.white),
-                                                    snackPosition:
-                                                        SnackPosition.BOTTOM,
-                                                    backgroundColor:
-                                                        const Color(0xff35394e),
-                                                    borderRadius: 20,
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            15),
-                                                    colorText: Colors.white,
-                                                    duration: const Duration(
-                                                        seconds: 4),
-                                                    isDismissible: true,
-                                                    forwardAnimationCurve:
-                                                        Curves.easeOutBack,
-                                                  );
-                                                }
-                                              }
-                                            })
-                                      ],
-                                    ),
-                                  )),
-                                ));
-                          },
-                        );
-                      });
-                    },
-                    child: const Icon(
-                      Icons.add,
-                      color: Color(0xFF752FFF),
-                    ),
-                  ),
-                ),
-              ]),
-            ),
           ],
         )),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: () {
+          setState(() {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (BuildContext context) {
+                return Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: CustomBottomSheet(
+                      title: 'Employee Creation',
+                      child: SingleChildScrollView(
+                          child: Form(
+                        key: _attendanceFormKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ReusableTextField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              labelText: 'Name',
+                              controller: _nameController,
+                              obscureText: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please select name';
+                                }
+
+                                return null;
+                              },
+                              suffixIcon: HeroIcons.user,
+                              readyonly: false,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SearchField(
+                              controller: _genderController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please select gender';
+                                }
+
+                                return null;
+                              },
+                              suggestions: gender
+                                  .map((String) => SearchFieldListItem(String))
+                                  .toList(),
+                              suggestionState: Suggestion.expand,
+                              suggestionsDecoration: SuggestionDecoration(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 5, bottom: 20),
+                                  color: const Color(0xFFfffbff),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10))),
+                              textInputAction: TextInputAction.next,
+                              marginColor: Colors.white,
+                              searchStyle: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black.withOpacity(0.8),
+                              ),
+                              maxSuggestionsInViewPort: 6,
+                              itemHeight: 25,
+                              onSearchTextChanged: (p0) {},
+                              searchInputDecoration: const InputDecoration(
+                                  labelText: "Gender",
+                                  suffixIcon: HeroIcon(HeroIcons.users),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color(0x0ff2d2e4)))),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            ReusableDatePickerTextField(
+                                controller: _dateController,
+                                labelText: 'Date Of Brith',
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please select date';
+                                  }
+
+                                  return null;
+                                }),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            ReusableDatePickerTextField(
+                              controller: _dojcontroller,
+                              labelText: 'Date Of Join',
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please select date';
+                                } else if (_dateController.text ==
+                                    _dojcontroller.text) {
+                                  return "DOB & DOJ are same";
+                                }
+
+                                return null;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            CustomFormButton(
+                                innerText: 'Submit',
+                                onPressed: () async {
+                                  if (_attendanceFormKey.currentState!
+                                      .validate()) {
+                                    final response = await apiService.get(
+                                        "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employee_creation",
+                                        {
+                                          "name": _nameController.text,
+                                          "gender": _genderController.text,
+                                          "dob": _dateController.text,
+                                          "doj": _dojcontroller.text,
+                                          "status": "Active"
+                                        });
+                                    print(response.body);
+                                    if (response.statusCode == 200) {
+                                      customer.employeelist_();
+                                      _nameController.clear();
+                                      _genderController.clear();
+                                      _dateController.clear();
+                                      _dojcontroller.clear();
+                                      Get.back();
+                                      final message =
+                                          json.decode(response.body);
+                                      Get.snackbar(
+                                        "Success",
+                                        message['message'],
+                                        icon: const HeroIcon(HeroIcons.check,
+                                            color: Colors.white),
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor:
+                                            const Color(0xff35394e),
+                                        borderRadius: 20,
+                                        margin: const EdgeInsets.all(15),
+                                        colorText: Colors.white,
+                                        duration: const Duration(seconds: 4),
+                                        isDismissible: true,
+                                        forwardAnimationCurve:
+                                            Curves.easeOutBack,
+                                      );
+                                    }
+                                  }
+                                })
+                          ],
+                        ),
+                      )),
+                    ));
+              },
+            );
+          });
+        },
+        child: const Icon(
+          Icons.add,
+          color: Color(0xFF752FFF),
+        ),
       ),
     );
   }

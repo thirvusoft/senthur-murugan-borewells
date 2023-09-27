@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,6 @@ class ApiService extends GetxService {
     String methodName,
     args,
   ) async {
-    print(args);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final url = "${dotenv.env['API_URL']}$methodName";
     if ((prefs.getString('request-header') ?? "").toString().isNotEmpty) {
@@ -32,7 +32,6 @@ class ApiService extends GetxService {
     } else {
       final uri = Uri.parse(url).replace(queryParameters: args);
       final response = await http.get(uri, headers: apiHeaders);
-
       if (response.headers.toString().contains("system_user=no")) {
         Get.toNamed("/loginpage");
       }

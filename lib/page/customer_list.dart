@@ -66,7 +66,7 @@ class _CusomerlistState extends State<Cusomerlist> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 1.48,
+              height: MediaQuery.of(context).size.height / 1.45,
               child: Obx(
                 () {
                   if (customer.customerlistisLoading.value) {
@@ -381,25 +381,17 @@ class _CusomerlistState extends State<Cusomerlist> {
                 },
               ),
             ),
-            SizedBox(
-              height: 60,
-              child: Stack(
-                children: [
-                  Positioned(
-                    bottom: 0.0,
-                    right: 16.0,
-                    child: FloatingActionButton(
-                      backgroundColor: Colors.white,
-                      onPressed: () {
-                        Get.toNamed("Customercreation");
-                      },
-                      child: const Icon(Icons.add),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ]),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: () {
+          Get.toNamed("Customercreation");
+        },
+        child: const Icon(
+          Icons.add,
+          color: Color(0xFF752FFF),
         ),
       ),
     );
