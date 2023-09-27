@@ -9,7 +9,10 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:senthur_murugan/controller/apiservice.dart';
 import 'package:senthur_murugan/controller/put.dart';
+import 'package:senthur_murugan/page/employee_list.dart';
 import 'package:senthur_murugan/page/tesr.dart';
+import 'package:senthur_murugan/widgets/bottom_navigation.dart';
+import 'package:senthur_murugan/widgets/contants.dart';
 import 'package:senthur_murugan/widgets/reusable_popup.dart';
 import 'package:senthur_murugan/widgets/internet_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -351,6 +354,16 @@ class _HomepageState extends State<Homepage> {
                 child: Row(
                   children: [
                     Expanded(
+                        child: InkWell(
+                      onTap: () {
+                        print(selectedTab);
+                        selectedTab = 2;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Bottomnavigation(),
+                            ));
+                      },
                       child: Container(
                         height: 100,
                         decoration: BoxDecoration(
@@ -385,11 +398,22 @@ class _HomepageState extends State<Homepage> {
                           ),
                         ),
                       ),
-                    ),
+                    )),
                     const SizedBox(
                       width: 15,
                     ),
                     Expanded(
+                        child: InkWell(
+                      onTap: () {
+                        print(selectedTab);
+                        selectedTab = 1;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Bottomnavigation(),
+                            ));
+                        // Get.toNamed('/Bottomnavigation');
+                      },
                       child: Container(
                         height: 100,
                         decoration: BoxDecoration(
@@ -419,7 +443,7 @@ class _HomepageState extends State<Homepage> {
                           ),
                         ),
                       ),
-                    ),
+                    )),
                   ],
                 ),
               ),

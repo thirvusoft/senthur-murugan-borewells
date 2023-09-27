@@ -4,6 +4,7 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:senthur_murugan/page/customer_list.dart';
 import 'package:senthur_murugan/page/employee_list.dart';
 import 'package:senthur_murugan/page/home_page.dart';
+import 'package:senthur_murugan/widgets/contants.dart';
 
 class Bottomnavigation extends StatefulWidget {
   const Bottomnavigation({super.key});
@@ -13,7 +14,6 @@ class Bottomnavigation extends StatefulWidget {
 }
 
 class _BottomnavigationState extends State<Bottomnavigation> {
-  var _selectedTab = 0;
   final List<Widget> _widgetOptions = <Widget>[
     const Homepage(),
     const Employee(),
@@ -24,10 +24,10 @@ class _BottomnavigationState extends State<Bottomnavigation> {
     return Scaffold(
       bottomNavigationBar: SalomonBottomBar(
         backgroundColor: const Color(0xFFF6F6F6),
-        currentIndex: _selectedTab,
+        currentIndex: selectedTab,
         onTap: (position) {
           setState(() {
-            _selectedTab = position;
+            selectedTab = position;
           });
         },
         items: [
@@ -45,7 +45,7 @@ class _BottomnavigationState extends State<Bottomnavigation> {
               icon: const HeroIcon(HeroIcons.userPlus)),
         ],
       ),
-      body: _widgetOptions.elementAt(_selectedTab),
+      body: _widgetOptions.elementAt(selectedTab),
     );
   }
 }
