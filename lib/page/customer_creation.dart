@@ -141,7 +141,6 @@ class _CustomercreationState extends State<Customercreation> {
                             {
                               "territory": _areaController.text,
                             });
-                   
 
                         if (response.statusCode == 200) {
                           final district = json.decode(response.body);
@@ -241,11 +240,12 @@ class _CustomercreationState extends State<Customercreation> {
                           });
 
                       if (response.statusCode == 200) {
+                        Get.back();
+                        print(response.body);
                         final Customer customer = Get.put(Customer());
 
                         customer.customerlist_();
 
-                        Get.back();
                         _usernameController.clear();
                         _pincodeController.clear();
                         _usernameController.clear();

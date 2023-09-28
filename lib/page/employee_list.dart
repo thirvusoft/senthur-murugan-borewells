@@ -100,7 +100,7 @@ class _EmployeeState extends State<Employee> {
                     } else {
                       return RefreshIndicator(
                           onRefresh: () async {
-                            await Future.delayed(Duration(seconds: 2));
+                            await Future.delayed(const Duration(seconds: 2));
                             customer.employeelist_();
                           },
                           child: ListView.builder(
@@ -562,14 +562,12 @@ class _EmployeeState extends State<Employee> {
                                                                               false,
                                                                           labelText:
                                                                               'Purpose',
-                                                                          maxLength:
-                                                                              6,
                                                                           controller:
                                                                               _purposeController,
                                                                           obscureText:
                                                                               false,
                                                                           suffixIcon:
-                                                                              HeroIcons.currencyRupee,
+                                                                              HeroIcons.listBullet,
                                                                         )),
                                                                     const SizedBox(
                                                                       width: 15,
@@ -634,7 +632,8 @@ class _EmployeeState extends State<Employee> {
                                                                               "expense_amount": _amountController.text,
                                                                               "employee": user['name'],
                                                                             });
-                                                                           
+                                                                            print(response.statusCode);
+                                                                            print(response.body);
                                                                             if (response.statusCode ==
                                                                                 200) {
                                                                               _expensetypeController.clear();
@@ -688,6 +687,7 @@ class _EmployeeState extends State<Employee> {
                                                                               _amountController.clear();
                                                                               _dateController.clear();
                                                                               _purposeController.clear();
+                                                                              customer.employeelist_();
 
                                                                               Get.back();
                                                                               var response_ = jsonDecode(response.body);
