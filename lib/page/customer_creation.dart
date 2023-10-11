@@ -35,7 +35,8 @@ class _CustomercreationState extends State<Customercreation> {
   final TextEditingController _talukController = TextEditingController();
   final TextEditingController _districtController = TextEditingController();
   final TextEditingController _pincodeController = TextEditingController();
-
+  final TextEditingController _feetController = TextEditingController();
+  final TextEditingController _boredateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +81,33 @@ class _CustomercreationState extends State<Customercreation> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ReusableDatePickerTextField(
+                        controller: _boredateController,
+                        labelText: 'Date',
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    Expanded(
+                      child: ReusableTextField(
+                        labelText: 'Feet',
+                        keyboardType: TextInputType.phone,
+                        controller: _feetController,
+                        obscureText: false,
+                        suffixIcon: HeroIcons.arrowDown,
+                        readyonly: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
                   height: 20,
                 ),
                 ReusableTextField(
@@ -116,7 +144,7 @@ class _CustomercreationState extends State<Customercreation> {
                 ),
                 ReusableDatePickerTextField(
                   controller: _dateController,
-                  labelText: 'Date Of Brith',
+                  labelText: 'Date Of Birth',
                 ),
                 const SizedBox(
                   height: 20,
@@ -227,6 +255,8 @@ class _CustomercreationState extends State<Customercreation> {
                             "customer_name": _usernameController.text,
                             "customer_type": "Individual",
                             "customer_group": "Individual",
+                            "date": _boredateController.text,
+                            "feet": _feetController.text,
                             "date_of_birth": _dateController.text,
                             "territory": _areaController.text,
                             "mobile_number": _mobileController.text,
@@ -260,13 +290,14 @@ class _CustomercreationState extends State<Customercreation> {
                         Get.snackbar(
                           "Success",
                           message['message'],
-                          icon: HeroIcon(HeroIcons.check, color: Colors.white),
+                          icon: const HeroIcon(HeroIcons.check,
+                              color: Colors.white),
                           snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Color(0x0ff35394E),
+                          backgroundColor: const Color(0xff35394e),
                           borderRadius: 20,
-                          margin: EdgeInsets.all(15),
+                          margin: const EdgeInsets.all(15),
                           colorText: Colors.white,
-                          duration: Duration(seconds: 4),
+                          duration: const Duration(seconds: 4),
                           isDismissible: true,
                           forwardAnimationCurve: Curves.easeOutBack,
                         );

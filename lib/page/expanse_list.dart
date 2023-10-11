@@ -60,6 +60,10 @@ class _EpensedashboardState extends State<Epensedashboard> {
         item["icon"] = PhosphorIcons.bag_light;
         item["container_color"] = const Color(0xFFccccff);
         item["icon_color"] = const Color(0xFF000099);
+      } else {
+        item["icon"] = PhosphorIcons.bag_light;
+        item["container_color"] = const Color(0xFFccccff);
+        item["icon_color"] = const Color(0xFF000099);
       }
     }
     // await Future.delayed(Duration(seconds: 2));

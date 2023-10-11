@@ -22,6 +22,7 @@ class Customer extends GetxController {
     super.onInit();
     expensetype();
     vechilelist_();
+    employeelist_();
   }
 
   Future territory(name) async {
@@ -63,6 +64,8 @@ class Customer extends GetxController {
     employeelistisLoading.value = true;
     final response = await apiService.get(
         "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.employeelist", {});
+
+    print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       employeelist.value = jsonResponse["message"];
@@ -81,6 +84,13 @@ class Customer extends GetxController {
         var name = <String, dynamic>{};
         name['first_name'] = i["first_name"];
         name['name'] = i["name"];
+        print(i["balance"]);
+        print(i["balance"] != null);
+
+        if (i["balance"] != null) {
+          name['balance'] = i["balance"];
+        }
+
         temp.add(name);
         fliterlist.value = temp;
       }
@@ -130,7 +140,8 @@ class Customer extends GetxController {
 
   Future vechilelist_() async {
     final response = await apiService.get("/api/resource/Vehicle", {
-      "fields": jsonEncode(["name"])
+      "fields": jsonEncode(["name"]),
+      "filters": jsonEncode({"company": "Sri Senthur Murugan Bore Wells"})
     });
 
     if (response.statusCode == 200) {
@@ -138,6 +149,8 @@ class Customer extends GetxController {
       for (var temp in jsonResponse["data"]) {
         vechilelist.add(temp["name"]);
       }
+      print("[[][][][][][][][][][]]");
+      print(vechilelist);
     }
   }
 }
