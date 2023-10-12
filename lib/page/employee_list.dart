@@ -467,6 +467,8 @@ class _EmployeeState extends State<Employee> {
                                                                           FocusScope.of(context)
                                                                               .unfocus();
                                                                         },
+                                                                        itemHeight:
+                                                                            75,
                                                                         suggestionsDecoration: SuggestionDecoration(
                                                                             padding: const EdgeInsets.only(
                                                                                 top: 10.0,
@@ -828,7 +830,7 @@ class _EmployeeState extends State<Employee> {
                             ),
                             ReusableDatePickerTextField(
                                 controller: _dateController,
-                                labelText: 'Date Of Brith',
+                                labelText: 'Date of Birth',
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please select date';

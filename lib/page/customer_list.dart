@@ -31,7 +31,8 @@ class _CusomerlistState extends State<Cusomerlist> {
   final TextEditingController _pincodeController = TextEditingController();
   final TextEditingController _districtController = TextEditingController();
   final TextEditingController _talukController = TextEditingController();
-
+  final TextEditingController _feetController = TextEditingController();
+  final TextEditingController _boredateController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -149,6 +150,45 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                     MainAxisSize
                                                                         .min,
                                                                 children: <Widget>[
+                                                                  Row(
+                                                                    children: [
+                                                                      Expanded(
+                                                                        child:
+                                                                            ReusableDatePickerTextField(
+                                                                          controller:
+                                                                              _boredateController,
+                                                                          labelText:
+                                                                              'Date',
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            25,
+                                                                      ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            ReusableTextField(
+                                                                          labelText:
+                                                                              'Feet',
+                                                                          keyboardType:
+                                                                              TextInputType.phone,
+                                                                          controller:
+                                                                              _feetController,
+                                                                          obscureText:
+                                                                              false,
+                                                                          suffixIcon:
+                                                                              HeroIcons.arrowDown,
+                                                                          readyonly:
+                                                                              false,
+                                                                          autovalidateMode:
+                                                                              AutovalidateMode.onUserInteraction,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 10,
+                                                                  ),
                                                                   ReusableTextField(
                                                                     maxLength:
                                                                         10,
@@ -177,7 +217,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                     controller:
                                                                         _dateController,
                                                                     labelText:
-                                                                        'Date Of Brith',
+                                                                        'Date of Birth',
                                                                   ),
                                                                   const SizedBox(
                                                                     height: 10,
@@ -334,10 +374,13 @@ class _CusomerlistState extends State<Cusomerlist> {
                                                                               "status": _talukController.text,
                                                                               "city": _districtController.text,
                                                                               "state": _talukController.text,
-                                                                              "pincode": _pincodeController.text
+                                                                              "pincode": _pincodeController.text,
+                                                                              "feet": _feetController.text,
+                                                                              "date": _boredateController.text,
                                                                             })
                                                                           });
-
+                                                                          print(
+                                                                              response.body);
                                                                           if (response.statusCode ==
                                                                               200) {
                                                                             Get.back();
