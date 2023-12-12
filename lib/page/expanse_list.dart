@@ -117,7 +117,7 @@ class _EpensedashboardState extends State<Epensedashboard> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 2,
+              height: MediaQuery.of(context).size.height / 1.5,
               child: (dashboard.isEmpty)
                   ? const Column(
                       mainAxisAlignment: MainAxisAlignment.center,

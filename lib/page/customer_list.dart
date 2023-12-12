@@ -80,7 +80,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                   } else {
                     return RefreshIndicator(
                         onRefresh: () async {
-                          await Future.delayed(Duration(seconds: 2));
+                          await Future.delayed(const Duration(seconds: 2));
                           customer.customerlist_();
                         },
                         child: ListView.builder(

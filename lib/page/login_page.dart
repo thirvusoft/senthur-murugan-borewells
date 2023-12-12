@@ -13,7 +13,7 @@ class Loginpage extends StatelessWidget {
   Loginpage({super.key});
   final _loginFormkey = GlobalKey<FormState>();
   final ApiService apiService = ApiService();
-
+  var userImage = "";
   final TextEditingController _mobilenumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -124,10 +124,11 @@ class Loginpage extends StatelessWidget {
                       onPressed: () async {
                         if (_loginFormkey.currentState!.validate()) {
                           final response = await apiService.get(
-                              "/api/method/login", {
-                            "usr": _mobilenumberController.text,
-                            "pwd": _passwordController.text
-                          });
+                              "/api/method/ssm_bore_wells.ssm_bore_wells.utlis.api.login",
+                              {
+                                "usr": _mobilenumberController.text,
+                                "pwd": _passwordController.text
+                              });
                           if (response.statusCode == 200) {
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
@@ -142,32 +143,16 @@ class Loginpage extends StatelessWidget {
 
                             await prefs.setString(
                                 'request-header', json.encode(response.header));
-                            var temp = json
-                                .encode(response.header["cookie"])
-                                .toString();
-                            Object extractUserImage(String input) {
-                              RegExp regExp = RegExp(r'user_image=([^;]+)');
-                              RegExp regExp1 = RegExp(r'user_id=([^;]+)');
-
-                              Match? match = regExp.firstMatch(input);
-                              Match? match1 = regExp1.firstMatch(input);
-
-                              if (match != null) {
-                                return {
-                                  "image": Uri.decodeComponent(match.group(1)!),
-                                  "email":
-                                      Uri.decodeComponent(match1!.group(1)!)
-                                };
-                              }
-
-                              return "";
+                            if (Response["image"] != null) {
+                              userImage =
+                                  "${dotenv.env['API_URL']}${Response["image"]}";
+                            } else {
+                              userImage =
+                                  "https://i.pinimg.com/736x/87/67/64/8767644bc68a14c50addf8cb2de8c59e.jpg";
                             }
 
-                            List t = [];
-                            t.add((extractUserImage(temp)));
-                            var userImage =
-                                "${dotenv.env['API_URL']}${t[0]["image"].toString()}";
-                            var email = t[0]["email"];
+                            var email = Response["email"];
+
                             await prefs.setString('image', userImage);
                             await prefs.setString('email', email);
                           }
