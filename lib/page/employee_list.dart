@@ -551,7 +551,7 @@ class _EmployeeState extends State<Employee> {
                                                                           obscureText:
                                                                               false,
                                                                           suffixIcon:
-                                                                              HeroIcons.currencyRupee,
+                                                                              HeroIcons.bars3,
                                                                         )),
                                                                     Visibility(
                                                                         visible:
