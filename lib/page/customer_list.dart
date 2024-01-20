@@ -416,7 +416,7 @@ class _CusomerlistState extends State<Cusomerlist> {
                                               )),
                                         ],
                                       ),
-                                      subtitle: Text(user['mobile_no'])),
+                                      subtitle: Text(user['mobile_no'] ?? "")),
                                 ),
                               );
                             }));
