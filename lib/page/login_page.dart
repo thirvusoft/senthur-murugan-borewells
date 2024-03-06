@@ -130,8 +130,10 @@ class Loginpage extends StatelessWidget {
                                 "pwd": _passwordController.text
                               });
                           if (response.statusCode == 200) {
+
                             SharedPreferences prefs =
                                 await SharedPreferences.getInstance();
+                                
                             final Response = json.decode(response.body);
                             await prefs.setString(
                                 'full_name', Response["full_name"]);

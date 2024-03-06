@@ -13,26 +13,43 @@ class ApiService extends GetxService {
     args,
   ) async {
     print(args);
+
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     final url = "${dotenv.env['API_URL']}$methodName";
+
     if ((prefs.getString('request-header') ?? "").toString().isNotEmpty) {
+
       json
           .decode(prefs.getString('request-header').toString())
           .forEach((k, v) => {apiHeaders[k.toString()] = v.toString()});
     }
+
     if (args.toString() == '{}') {
+
+
       final uri = Uri.parse(url);
       final response = await http.get(uri, headers: apiHeaders);
+
+
+
       if (response.headers.toString().contains("system_user=no")) {
         Get.toNamed("/loginpage");
       }
+
+
       return ApiResponse(
           statusCode: response.statusCode,
           body: response.body,
           header: response.headers);
-    } else {
+    } 
+    
+    
+    else {
       final uri = Uri.parse(url).replace(queryParameters: args);
       final response = await http.get(uri, headers: apiHeaders);
+      
       if (response.headers.toString().contains("system_user=no")) {
         Get.toNamed("/loginpage");
       }

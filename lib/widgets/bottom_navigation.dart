@@ -6,6 +6,8 @@ import 'package:senthur_murugan/page/employee_list.dart';
 import 'package:senthur_murugan/page/home_page.dart';
 import 'package:senthur_murugan/widgets/contants.dart';
 
+import '../page/drilling.dart';
+
 class Bottomnavigation extends StatefulWidget {
   const Bottomnavigation({super.key});
 
@@ -18,6 +20,7 @@ class _BottomnavigationState extends State<Bottomnavigation> {
     const Homepage(),
     const Employee(),
     const Cusomerlist(),
+    const Drilling()
   ];
   @override
   Widget build(BuildContext context) {
@@ -43,6 +46,10 @@ class _BottomnavigationState extends State<Bottomnavigation> {
               selectedColor: const Color(0xFF752FFF),
               title: const Text('Customer'),
               icon: const HeroIcon(HeroIcons.userPlus)),
+          SalomonBottomBarItem(
+              selectedColor: const Color(0xFF752FFF),
+              title: const Text('Drilling'),
+              icon: const HeroIcon(HeroIcons.clipboardDocument)),
         ],
       ),
       body: _widgetOptions.elementAt(selectedTab),

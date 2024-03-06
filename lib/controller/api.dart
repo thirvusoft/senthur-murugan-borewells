@@ -8,6 +8,9 @@ import 'package:senthur_murugan/controller/put.dart';
 class Customer extends GetxController {
   final ApiService apiService = ApiService();
   List territorylist_ = [].obs;
+  List customersearchlist_ = [].obs;
+  List employeesearchlist_ = [].obs;
+  List bitsizelist = [].obs;
   var employeelist = [].obs;
   var customerlist = [].obs;
   var expenselist = [].obs;
@@ -45,6 +48,80 @@ class Customer extends GetxController {
         }
       }
       territorylist_ += (valuesList);
+    }
+  }
+
+  Future customerName(name) async {
+    print(name);
+    print('ppppppppppppppppppppppppppppppp');
+    final response =
+        await apiService.get("/api/method/frappe.desk.search.search_link", {
+      "txt": name,
+      "doctype": "Customer",
+      "ignore_user_permissions": "1",
+      "reference_doctype": "Customer",
+      // "filters": jsonEncode({"company": "Sri Senthur Murugan Bore Wells"})
+    });
+    if (response.statusCode == 200) {
+      print(response.body);
+      print(response.statusCode);
+      customersearchlist_.clear();
+      List<String> valuesList = [];
+
+      final jsonResponse = json.decode(response.body);
+      for (var item in jsonResponse['results']) {
+        print(item);
+
+        if (item.containsKey('value')) {
+          valuesList.add(item['value']);
+        }
+      }
+      customersearchlist_ += (valuesList);
+    }
+  }
+
+  Future bitSize(name) async {
+    final response =
+        await apiService.get("/api/method/frappe.desk.search.search_link", {
+      "txt": name,
+      "doctype": "Bit Size",
+      "ignore_user_permissions": "1",
+      "reference_doctype": "Customer",
+    });
+    if (response.statusCode == 200) {
+      bitsizelist.clear();
+      List<String> valuesList = [];
+
+      final jsonResponse = json.decode(response.body);
+      for (var item in jsonResponse['results']) {
+        if (item.containsKey('value')) {
+          valuesList.add(item['value']);
+        }
+      }
+      bitsizelist += (valuesList);
+    }
+  }
+
+  Future employee(name) async {
+    final response =
+        await apiService.get("/api/method/frappe.desk.search.search_link", {
+      "txt": name,
+      "doctype": "Employee",
+      "ignore_user_permissions": "1",
+      "reference_doctype": "Employee",
+      "filters": jsonEncode({"department": "Driller"})
+    });
+    if (response.statusCode == 200) {
+      employeesearchlist_.clear();
+      List<String> valuesList = [];
+
+      final jsonResponse = json.decode(response.body);
+      for (var item in jsonResponse['results']) {
+        if (item.containsKey('value')) {
+          valuesList.add(item['value']);
+        }
+      }
+      employeesearchlist_ += (valuesList);
     }
   }
 
